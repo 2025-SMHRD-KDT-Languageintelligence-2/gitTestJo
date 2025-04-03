@@ -35,7 +35,7 @@ public class PageController {
             model.addAttribute("isLoggedIn", false);
         }
 
-        return "main";
+        return "mainsdafsdafsdafa";
     }
 
     @GetMapping("/mypage")
