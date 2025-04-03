@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../.css/리뷰작성.css"/>
-    <script src="../.js/리뷰작성.js" defer></script>
+    <meta charset="UTF-8"> <!-- 문자 인코딩 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 설정 -->
+    <link rel="stylesheet" href="../static/css/리뷰작성.css"/> <!-- 외부 CSS 연결 -->
+    <script src="../static/js/리뷰작성.js" defer></script> <!-- 외부 JS 연결 (defer로 렌더 후 실행) -->
     <title>Document</title>
 </head>
 <body>
-    <div class="div">
-        <img
-          class="_2025-03-10-122703-removebg-preview-4"
-          src="../img/logo.png"/>
-          <div class="rating">
+    <div class="div"> <!-- 전체 페이지를 감싸는 컨테이너 -->
+        <!-- 로고 이미지 -->
+        <img class="로고" src="../static/image/logo.png"/>
+
+        <!-- 별점 영역 -->
+        <div class="rating">
+            <!-- 별점 클릭 영역 (별 다섯 개) -->
             <div class="star" data-value="1"></div>
             <div class="star" data-value="2"></div>
             <div class="star" data-value="3"></div>
             <div class="star" data-value="4"></div>
             <div class="star" data-value="5"></div>
-          </div>
-          <div class="emoji" id="emoji">😐</div>
-   </div>
-          <div class="div2">리뷰 작성하기</div>
-        <div class="frame-146">
-          <div class="div3">별점을 선택해주세요</div>
         </div>
-        <div class="frame-148"></div>
-        <div class="rectangle-2404"></div>
-        <div class="frame-149">
-          <div class="frame-152">
+
+        <!-- 감정 이모지 출력 -->
+        <div class="emoji" id="emoji">😐</div>
+    </div>
+
+    <!-- 제목 텍스트 -->
+    <div class="div2">리뷰 작성하기</div>
+
+    <!-- 안내 문구 -->
+    <div class="frame-146">
+        <div class="div3">별점을 선택해주세요</div>
+    </div>
+
+    <!-- 여백 or 추가 요소용 빈 프레임 -->
+    <div class="frame-148"></div>
+
+    <!-- 리뷰 텍스트박스 테두리용 박스 -->
+    <div class="rectangle-2404"></div>
+
+    <!-- 리뷰 입력 영역 -->
+    <div class="frame-149">
+        <div class="frame-152">
             <div class="div5">
-              <input type="review" class="input"
-              id="review" name="review" class="input" 
-              placeholder="이 제품/서비스를 사용하면서 어떤점이 좋았나요?"/>
-              <button class="submit-btn">리뷰 등록하기</button>
+                <!-- 리뷰 입력창 -->
+                <input type="review" class="input"
+                       id="review" name="review" 
+                       placeholder="이 제품/서비스를 사용하면서 어떤점이 좋았나요?"/>
+                <!-- 리뷰 등록 버튼 -->
+                <button class="submit-btn">리뷰 등록하기</button>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 </body>
 </html>

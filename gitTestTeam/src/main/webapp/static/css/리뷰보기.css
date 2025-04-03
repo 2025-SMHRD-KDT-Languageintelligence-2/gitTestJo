@@ -1,0 +1,319 @@
+/* 리뷰 작성 페이지 CSS 파일 */
+/* 전체 바디 설정 */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+}
+/* 전체 div 요소에 공통 적용 */
+.div,
+.div * {
+box-sizing: border-box;
+}
+.div {
+background: #ffffff;
+height: 1957px;
+position: relative;
+overflow: hidden;
+width: 100%;
+max-width: 1280px;
+min-height: 100vh;
+}
+.div2 {
+text-align: left;
+font-family: "Inter-Regular", sans-serif;
+font-size: 25px;
+font-weight: 400;
+position: absolute;
+left: 255px;
+top: 1067px;
+}
+.div3 {
+color: #ffffff;
+text-align: left;
+font-family: "ABeeZee-Regular", sans-serif;
+font-size: 20px;
+font-weight: 400;
+position: absolute;
+left: 943px;
+top: 715px;
+}
+/* 샐러드 영상 스타일 */
+.샐러드 {
+background: #ffffff;
+border-radius: 10px;
+border-style: solid;
+border-color: #000000;
+border-width: 1px;
+width: 841px;
+height: 474px;
+position: absolute;
+left: 239px;
+top: 359px;
+}
+/* 제품 이미지 (예: 닭가슴살) 스타일 */
+.닭가슴살 {
+width: 285.78px;
+height: 204px;
+position: absolute;
+left: 245px;
+top: 136px;
+overflow: visible;
+object-fit: cover;
+aspect-ratio: 285.78/204;
+}
+/* 상품명, 가격 정보 영역 */
+.div4 {
+color: #000000;
+text-align: center;
+font-family: "Inter-Regular", sans-serif;
+font-size: 48px;
+line-height: 30px;
+font-weight: 400;
+position: absolute;
+left: 565px;
+top: 136px;
+width: 429px;
+height: 148px;
+}
+/* "상품평" 텍스트 영역 */
+.div6 {
+color: #000000;
+text-align: center;
+font-family: "Inter-Regular", sans-serif;
+font-size: 48px;
+line-height: 30px;
+font-weight: 400;
+position: absolute;
+left: 239px;
+top: 908px;
+width: 144px;
+height: 46px;
+}
+.group-7865 {
+position: absolute;
+inset: 0;
+}
+.vector5 {
+width: 58.33%;
+height: 58.33%;
+position: absolute;
+right: 20.83%;
+left: 20.83%;
+bottom: 20.83%;
+top: 20.83%;
+overflow: visible;
+}
+.group-7866 {
+position: absolute;
+inset: 0;
+aspect-ratio: 179.63/34;
+}
+
+.div8 {
+color: #000000;
+text-align: left;
+font-family: "Inter-Regular", sans-serif;
+font-size: 20px;
+font-weight: 400;
+position: absolute;
+left: 239px;
+top: 1335px;
+width: 841px;
+height: 32px;
+}
+.group-7867 {
+position: absolute;
+inset: 0;
+aspect-ratio: 179.63/34;
+}
+
+.div12 {
+color: #000000;
+text-align: left;
+font-family: "Inter-Regular", sans-serif;
+font-size: 20px;
+font-weight: 400;
+position: absolute;
+left: 370px;
+top: 1506px;
+}
+/* 상단 헤더 바 스타일 */
+.rectangle-2409 {
+  background: linear-gradient(to right, #fbd3e9, #c2e9fb);
+  border-radius: 20px;
+border-color: #000000;
+border-width: 1px;
+width: 1280px;
+height: 86px;
+position: absolute;
+left: 0px;
+top: 0px;
+}
+/* 로고 이미지 스타일 */
+.logo {
+border-radius: 20px;
+width: 144.81px;
+height: 46px;
+position: absolute;
+left: 11px;
+top: 14px;
+object-fit: cover;
+aspect-ratio: 144.81/46;
+}
+/* 좋아요 아이콘 스타일 */
+.div13 {
+color: #000000;
+text-align: left;
+font-family: "ABeeZee-Regular", sans-serif;
+font-size: 60px;
+font-weight: 400;
+position: absolute;
+left: 1191px;
+top: -6px;
+width: 90px;
+height: 90px;
+}
+/* 리뷰 등록 버튼 스타일 */
+.submit-btn {
+  padding: 16px 40px;
+  font-size: 20px;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #7F70F5, #45A8F5);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+  position: absolute;
+  left: 560px;
+  top: 1510px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #6A5DF1, #329DF3);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.average-rating {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.average-score {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #555;
+}/* 탭 컨테이너 */
+.tab-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+/* 일반 탭 버튼 스타일 */
+.tab {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: #eee;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  top: 990px;
+  left: 248px;
+}
+
+.tab:hover {
+  background-color: #ddd;
+}
+
+/* 선택된 탭 버튼 스타일 */
+.tab.active {
+  background-color: #dcdcff;
+  font-weight: bold;
+  position: relative;
+  top: 990px;
+  left: 240px;
+}
+/* 리뷰 카드 스타일 */
+.review-card {
+  width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  animation: fadeInUp 0.5s ease forwards;
+  position: relative;
+  left: 220px;
+  top: 980px;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+/* 리뷰 상단 유저 정보 영역 */
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* 유저 아바타 스타일 */
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+/* 유저 정보 컨테이너 */
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.review-date {
+  font-size: 13px;
+  color: #888;
+}
+
+/* 리뷰 본문 텍스트 */
+.review-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* 등장 애니메이션 */
+/* 등장 애니메이션 효과 */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 외부 CSS 파일 연결 -->
+  <link rel="stylesheet" href="../static/css/리뷰보기.css">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 전체 페이지 래퍼 -->
+  <div class="div">
+
+    <!-- "다음" 버튼 텍스트 (디자인 요소로 추정) -->
+    <div class="div3">다음</div>
+
+    <!-- 자동 재생되는 샐러드 비디오 -->
+    <video class="샐러드" autoplay loop muted playsinline>
+      <source src="../static/video/샐러드.mp4" type="video/mp4">
+      브라우저가 동영상을 지원하지 않습니다.
+    </video>
+
+    <!-- 제품 이미지 (예: 닭가슴살) -->
+    <img class="닭가슴살" src="../static/image/닭가슴살.png" />
+
+    <!-- 상품명, 용량, 가격 정보 표시 영역 -->
+    <div class="div4">
+      <br />
+      상품명, 용량, 개수
+      <br /><br />
+      가격
+      <br />
+    </div>
+
+    <!-- "상품평" 섹션 제목 -->
+    <div class="div6">상품평</div>
+
+    <!-- 상단 네비 바 배경용 사각형 -->
+    <div class="rectangle-2409"></div>
+
+    <!-- 로고 이미지 -->
+    <img class="logo" src="../static/image/logo.png"/>
+
+    <!-- 좋아요 하트 아이콘 -->
+    <div class="div13">❤️</div>
+
+    <!-- 위치만 잡고 실제 내용은 없는 div (디자인용?) -->
+    <div class="rectangle-2403"></div>
+
+    <!-- 리뷰 등록 버튼 -->
+    <button class="submit-btn">리뷰 등록하기</button>
+
+    <!-- 정렬 탭: 베스트순/최신순 -->
+    <div class="tab-container">
+      <div class="tab active">🌟 베스트순</div>
+      <div class="tab">🕒 최신순</div>
+    </div>
+
+    <!-- 아래는 실제 사용자 리뷰 카드들 -->
+
+    <!-- 리뷰 카드 1: 나루토 -->
+    <div class="review-card">
+      <div class="review-header">
+        <div class="avatar">👤</div>
+        <div class="user-info">
+          <span class="user-name">나루토</span>
+          <span class="review-date">📅 25.03.12</span>
+        </div>
+      </div>
+      <div class="review-text">
+        🍱 사장님이 <strong>맛있고</strong> 음식이 <strong>친절</strong>해요!
+      </div>
+    </div>
+
+    <!-- 리뷰 카드 2: 김건도 -->
+    <div class="review-card">
+      <div class="review-header">
+        <div class="avatar">👤</div>
+        <div class="user-info">
+          <span class="user-name">김건도</span>
+          <span class="review-date">📅 25.03.12</span>
+        </div>
+      </div>
+      <div class="review-text">
+        🥗 <strong>다이어트</strong> 중인데 <strong>칼로리 계산</strong>이 편해요!
+      </div>
+    </div>
+
+    <!-- 리뷰 카드 3: 하나코 -->
+    <div class="review-card">
+      <div class="review-header">
+        <div class="avatar">👧</div>
+        <div class="user-info">
+          <span class="user-name">하나코</span>
+          <span class="review-date">📅 25.03.12</span>
+        </div>
+      </div>
+      <div class="review-text">
+        🍰 <strong>디저트</strong>가 진짜 맛있고, <strong>포장도 깔끔</strong>해서 감동이에요!
+      </div>
+    </div>
+
+  </div> <!-- .div 끝 -->
+</body>
+</html>
