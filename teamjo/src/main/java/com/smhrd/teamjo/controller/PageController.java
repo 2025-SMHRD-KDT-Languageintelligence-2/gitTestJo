@@ -38,6 +38,7 @@ public class PageController {
         return "main";
     }
 
+    // 마이페이지 이동
     @GetMapping("/mypage")
     public String myPage(Model model, HttpSession session) {
         // 1. 세션에서 사용자 정보 꺼내기
@@ -61,12 +62,19 @@ public class PageController {
         return "mypage"; // templates/mypage.html
     }
 
+    // 개인정보변경 이동
     @GetMapping("/profile-edit")
     public String profileEditPage(HttpSession session, Model model) {
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
 
         if (loginUser == null){
             return "redirect:/";
+        }
+
+        Optional<UserInfo> userOpt = userRepository.findById(loginUser.getEmail());
+        if(userOpt.isPresent()){
+            UserInfo user = userOpt.get();
+            model.addAttribute("nickname", user.getName());
         }
 
         model.addAttribute("user", loginUser);
