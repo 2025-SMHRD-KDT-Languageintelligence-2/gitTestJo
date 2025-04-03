@@ -60,4 +60,16 @@ public class PageController {
 
         return "mypage"; // templates/mypage.html
     }
+
+    @GetMapping("/profile-edit")
+    public String profileEditPage(HttpSession session, Model model) {
+        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+
+        if (loginUser == null){
+            return "redirect:/";
+        }
+
+        model.addAttribute("user", loginUser);
+        return "profile-edit";
+    }
 }

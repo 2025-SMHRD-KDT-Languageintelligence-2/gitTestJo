@@ -31,11 +31,6 @@ public class UserService {
         user.setPassword(dto.getPassword()); // 나중에 암호화 처리 진행 하기 ***
         user.setName(dto.getName());
         user.setPhone(dto.getPhone());
-        user.setHeight(0.0);
-        user.setWeight(0.0);
-        user.setAge(0);
-        user.setSex("설정 전");
-        user.setProfile_img("/image/default_profile.png");
 
         user.setJoinedAt(now); // 가입일시 기록
         user.setRole("USER");
