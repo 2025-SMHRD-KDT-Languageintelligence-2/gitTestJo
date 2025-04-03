@@ -1,0 +1,568 @@
+/* 기본 박스 사이징 */
+.login-page,
+.login-page * {
+  box-sizing: border-box;
+}
+
+.login-page {
+  background: #ffffff;
+  height: 832px;
+  position: relative;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.container-35 {
+  background: #ffffff;
+  border-radius: 6px;
+  height: 64px;
+  position: absolute;
+  right: 0px;
+  left: 0px;
+  top: 0px;
+}
+.frame-96 {
+  background: #ffffff;
+  width: 1280px;
+  height: 833px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  overflow: hidden;
+}
+.header-menu-5 {
+  background: transparent;
+  width: 322px;
+  height: 48px;
+  position: absolute;
+  left: calc(50% - 159px);
+  top: calc(50% - 408.5px);
+}
+.frame {
+  background: transparent;
+  border-radius: 6px;
+  width: 114px;
+  height: 48px;
+  position: absolute;
+  left: 27px;
+  top: 0px;
+  overflow: hidden;
+}
+.features {
+  color: #565e6c;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 45px);
+  top: 50%;
+  transform: translate(0, -50%);
+  white-space: nowrap;
+}
+.chevron-down-large {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  /* 원본에서 left: calc(50% - -21px); 대신 조금 수정 */
+  left: calc(50% + 21px);
+  top: 50%;
+  transform: translate(0, -50%);
+  overflow: visible;
+}
+.frame2 {
+  background: transparent;
+  border-radius: 6px;
+  width: 70px;
+  height: 48px;
+  position: absolute;
+  left: 141px;
+  top: 0px;
+  overflow: hidden;
+}
+.pricing {
+  color: #565e6c;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+.frame3 {
+  background: transparent;
+  border-radius: 6px;
+  width: 84px;
+  height: 48px;
+  position: absolute;
+  left: 211px;
+  top: 0px;
+  overflow: hidden;
+}
+.about-us {
+  color: #565e6c;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+.button-19 {
+  background: #636ae8;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  width: 80px;
+  height: 36px;
+  position: absolute;
+  right: 24px;
+  top: calc(50% - 402.5px);
+  transform-origin: 0 0;
+  transform: rotate(0deg) scale(1, 1);
+  overflow: hidden;
+}
+.sign-up {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 25px);
+  top: 50%;
+  transform: translate(0, -50%);
+  white-space: nowrap;
+}
+.button-20 {
+  background: transparent;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  width: 69px;
+  height: 36px;
+  position: absolute;
+  right: 115px;
+  top: calc(50% - 402.5px);
+  transform-origin: 0 0;
+  transform: rotate(0deg) scale(1, 1);
+  overflow: hidden;
+}
+.sign-in {
+  color: #636ae8;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  position: absolute;
+  left: calc(50% - 22.5px);
+  top: 50%;
+  transform: translate(0, -50%);
+  white-space: nowrap;
+}
+.image-62 {
+  width: 187px;
+  height: 59px;
+  position: absolute;
+  left: 9px;
+  top: 2px;
+  object-fit: cover;
+  aspect-ratio: 187/59;
+}
+.image-63 {
+  border-radius: 16px;
+  position: absolute;
+  right: 132px;
+  left: 385px;
+  bottom: 31.4px;
+  top: 353.6px;
+  object-fit: cover;
+}
+.button-31 {
+  background: #636ae8;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  width: 200px;
+  height: 52px;
+  position: absolute;
+  left: calc(50% - 210px);
+  top: 257.6px;
+  transform-origin: 0 0;
+  transform: rotate(0deg) scale(1, 1);
+  overflow: hidden;
+}
+.join-us-now {
+  color: #ffffff;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+.button-32 {
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #636ae8;
+  width: 200px;
+  height: 52px;
+  position: absolute;
+  left: calc(50% + 10px);
+  top: 257.6px;
+  transform-origin: 0 0;
+  transform: rotate(0deg) scale(1, 1);
+  overflow: hidden;
+}
+.request-demo {
+  color: #636ae8;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+.website-heading-goes-here {
+  color: #171a1f;
+  text-align: center;
+  font-family: "Archivo-Bold", sans-serif;
+  font-size: 56px;
+  line-height: 78px;
+  font-weight: 700;
+  position: absolute;
+  left: calc(50% - 402px);
+  top: 105.6px;
+  transform-origin: 0 0;
+  transform: rotate(0deg) scale(1, 1);
+  white-space: nowrap;
+}
+.occaecat-est-ipsum-reprehenderit-reprehenderit-veniam-anim-laborum-est-esse-duis-occaecat-reprehenderit-pariatur {
+  color: #9095a0;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 400;
+  position: absolute;
+  left: 50%;
+  top: 183.6px;
+  transform: translate(-50%, 0);
+  width: 707px;
+  transform-origin: 0 0;
+  transform: rotate(0deg) scale(1, 1);
+}
+
+/* 모달 오버레이 및 중앙 모달 */
+.rectangle-2296 {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 999;
+}
+.group-7838 {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1078px;
+  height: 612px;
+  z-index: 1000;
+}
+.group-7836 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.rectangle-2294 {
+  background: #ffffff;
+  border-radius: 20px;
+  position: absolute;
+  left: 467px;
+  top: 0;
+  width: 618px;
+  height: 100%;
+  object-fit: cover;
+}
+.image-wrapper{
+    background-color: white;
+    padding:20px;
+    border-radius: 20px;
+    display: inline-block;
+}
+.rectangle-2293 {
+  border-radius: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 499px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rectangle-2297 {
+    position: absolute;
+    left: 615px;
+    top: 217px;
+    width: 416px;
+    height: 47px;
+    background: #ededed;
+    border-radius: 20px;
+  }
+.rectangle-2302 {
+  background: #ededed;
+  border-radius: 20px;
+  position: absolute;
+  left: 614px;
+  top: 356px;
+  width: 417px;
+  height: 47px;
+}
+.naver {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 30px;
+  position: absolute;
+  left: 517px;
+  top: 291px;
+}
+.rectangle-2301 {
+  background: #ededed;
+  border-radius: 20px;
+  position: absolute;
+  left: 614px;
+  top: 426px;
+  width: 417px;
+  height: 47px;
+}
+.apple {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 30px;
+  position: absolute;
+  left: 549px;
+  top: 364px;
+}
+.rectangle-2300 {
+  background: #ededed;
+  border-radius: 20px;
+  position: absolute;
+  left: 615px;
+  top: 285px;
+  width: 417px;
+  height: 47px;
+}
+.google {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 30px;
+  position: absolute;
+  left: 538px;
+  top: 434px;
+}
+.rectangle-2298 {
+  background: #ededed;
+  border-radius: 20px;
+  position: absolute;
+  left: 615px;
+  top: 148px;
+  width: 416px;
+  height: 47px;
+}
+.rectangle-2303 {
+  background: #636ae8;
+  border-radius: 20px;
+  position: absolute;
+  left: 565px;
+  top: 520px;
+  width: 467px;
+  height: 47px;
+}
+.div {
+  color: black;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 30px;
+  position: absolute;
+  left: 538px;
+  top: 157px;
+}
+.div2 {
+  color:black;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 30px;
+  position: absolute;
+  left: 538px;
+  top: 225px;
+}
+.div3{
+    color:white;
+    text-align: center;
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 13px;
+    line-height: 30px;
+    position: absolute;
+    left: 766px;
+    top: 527px;
+}
+.enter-your-password {
+  color: #adadad;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 13px;
+  line-height: 30px;
+  position: absolute;
+  left: 643px;
+  top: 225px;
+}
+.enter-your-email {
+    color: #adadad;
+    text-align: center;
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 13px;
+    line-height: 30px;
+    position: absolute;
+    left: 643px;
+    top: 155px;
+}
+.confrim-your-password{
+    color: #adadad;
+    text-align: center;
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 13px;
+    line-height: 30px;
+    position: absolute;
+    left: 643px;
+    top: 293px;
+}
+.enter-your-name{
+    color: #adadad;
+    text-align: center;
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 13px;
+    line-height: 30px;
+    position: absolute;
+    left: 643px;
+    top: 364px;
+}
+.enter-your-phone-number{
+    color: #adadad;
+    text-align: center;
+    font-family: "Inter-Regular", sans-serif;
+    font-size: 13px;
+    line-height: 30px;
+    position: absolute;
+    left: 643px;
+    top: 434px;
+}
+._2025-03-10-122703-removebg-preview-12 {
+  border-radius: 20px;
+  width: 238px;
+  height: 75px;
+  position: absolute;
+  left: 777px;
+  top: 135px;
+  object-fit: cover;
+  aspect-ratio: 238/75;
+}
+.ic-baseline-apple {
+  border-radius: 20px;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 795px;
+  top: 602px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+.vector {
+  border-radius: 0px;
+  width: 1.09%;
+  height: 2.04%;
+  position: absolute;
+  right: 34.69%;
+  left: 64.22%;
+  bottom: 25.24%;
+  top: 72.72%;
+  overflow: visible;
+}
+.simple-icons-naver {
+  border-radius: 20px;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: 822px;
+  top: 668px;
+  overflow: visible;
+  aspect-ratio: 1;
+}
+.mingcute-google-fill {
+  border-radius: 20px;
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  left: 819px;
+  top: 338px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+.group {
+  width: 82.35%;
+  height: 100%;
+  position: absolute;
+  right: 7.23%;
+  left: 10.42%;
+  bottom: -10.42%;
+  top: 10.42%;
+  overflow: visible;
+}
+.xnix-line-cross {
+  border-radius: 20px;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 1159px;
+  top: 111px;
+}
+.vector2 {
+  height: auto;
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  overflow: visible;
+}
+.rectangle-2295{
+    border-radius: 20px;
+    position: absolute;
+    left: 196px;
+    top: 41px;
+    width: 238px;
+    object-fit: cover;
+}

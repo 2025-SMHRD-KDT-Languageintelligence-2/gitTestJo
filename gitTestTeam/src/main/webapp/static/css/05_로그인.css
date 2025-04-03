@@ -1,0 +1,63 @@
+.div,
+.div * {
+  box-sizing: border-box;
+}
+.div {
+  background: #ffffff;
+  height: 832px;
+  position: relative;
+  overflow: hidden;
+}
+._2025-03-10-122703-removebg-preview-3 {
+  border-radius: 20px;
+  width: 488px;
+  height: 155px;
+  position: absolute;
+  left: 665px;
+  top: 127px;
+  object-fit: cover;
+  aspect-ratio: 488/155;
+}
+.div2 {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 48px;
+  line-height: 30px;
+  font-weight: 400;
+  position: absolute;
+  left: 705px;
+  top: 341px;
+}
+.div3 {
+  color: #000000;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 400;
+  position: absolute;
+  left: 785px;
+  top: 490px;
+}
+.rectangle-2316 {
+  background: #636ae8;
+  border-radius: 20px;
+  width: 462px;
+  height: 50px;
+  position: absolute;
+  left: 720px;
+  top: 609px;
+}
+.div4 {
+  color: #ffffff;
+  text-align: center;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 400;
+  position: absolute;
+  left: 853px;
+  top: 619px;
+  width: 199px;
+}

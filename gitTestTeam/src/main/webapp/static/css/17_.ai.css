@@ -1,0 +1,229 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+.div,
+.div * {
+  box-sizing: border-box;
+}
+.div {
+  background: #ffffff;
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+.ai-removebg-preview-1 {
+  width: 243px;
+  height: 426px;
+  position: absolute;
+  top: 223px;
+  object-fit: cover;
+  aspect-ratio: 243/426;
+}
+.frame-138 {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 343px;
+  top: 279px;
+}
+.eat-ai {
+  color: #636ae8;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  position: relative;
+}
+._2025-03-10-122703-removebg-preview-5 {
+  border-radius: 20px;
+  width: 248px;
+  height: 79px;
+  position: absolute;
+  left: 26px;
+  top: 15px;
+  object-fit: cover;
+  aspect-ratio: 248/79;
+}
+.xnix-line-message {
+  width: 191px;
+  height: 191px;
+  position: absolute;
+  left: 0px;
+  top: 183px;
+}
+.vector {
+  width: 58.33%;
+  height: 58.33%;
+  position: absolute;
+  right: 20.83%;
+  left: 20.83%;
+  bottom: 20.83%;
+  top: 20.83%;
+  overflow: visible;
+}
+.div2 {
+  color: #000000;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 63px;
+  top: 250px;
+  width: 73px;
+  height: 67px;
+}
+.frame-139 {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 806px;
+  top: 281px;
+}
+.ai {
+  color: #636ae8;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: relative;
+}
+.frame-140 {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 806px;
+  top: 355px;
+}
+.div3 {
+  color: #636ae8;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: relative;
+}
+.frame-141 {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 806px;
+  top: 429px;
+}
+.frame-142 {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 806px;
+  top: 503px;
+  overflow: hidden;
+}
+.rectangle-2389 {
+  background: #d1d4e5;
+  width: 100%;
+  height: 83px;
+  position: absolute;
+  left: 0px;
+  top: 749px;
+}
+.diet-placer-with-ai-com {
+  color: #636ae8;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  position: absolute;
+  left: 447px;
+  top: 772px;
+  width: 385px;
+  height: 38px;
+}
+.rectangle-2317 {
+  background: #636ae8;
+  border-radius: 20px;
+  width: 181px;
+  height: 50px;
+  position: absolute;
+  left: 973px;
+  top: 29px;
+}
+.frame-143 {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 1009px;
+  top: 31px;
+}
+.div4 {
+  color: #ffffff;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: relative;
+}
+.div5 {
+  color: #000000;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  position: absolute;
+  left: 758px;
+  top: 272px;
+}
+.div6 {
+  color: #000000;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  position: absolute;
+  left: 758px;
+  top: 349px;
+}
+.div7 {
+  color: #000000;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  position: absolute;
+  left: 758px;
+  top: 426px;
+}
+.div8 {
+  color: #000000;
+  text-align: left;
+  font-family: "ABeeZee-Regular", sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  position: absolute;
+  left: 758px;
+  top: 503px;
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../.css/13_선호식단조사.css"/>
+</head>
+<body>
+    <div class="div">
+        <div class="profile">Profile</div>
+        <img
+          class="_2025-03-10-122703-removebg-preview-4"
+          src="./img/로고 2025-03-11 134849.png"
+        />
+        <div class="rectangle-2322"></div>
+        <div class="div2">선호도 조사</div>
+        <div class="div3">기본정보 입력</div>
+        <div class="ellipse-365"></div>
+        <div class="ellipse-366"></div>
+        <div class="_1">1</div>
+        <div class="_2">2</div>
+        <div class="rectangle-2323"></div>
+        <div class="rectangle-2324"></div>
+        <div class="div4">개인정보 입력</div>
+        <div class="div5">신체정보 입력</div>
+        <img class="vector" src="./img/사람.png" />
+        <img class="hugeicons-body-part-muscle"src="./img/헬스.png"/>
+        <div class="rectangle-2334"></div>
+        <div class="div6">칼로리 측정</div>
+        <div class="line-42"></div>
+        <div class="line-43"></div>
+        <div class="rectangle-2333"></div>
+        <a href="14_선호도식단조사.html">
+        <div class="div7">다음</div>
+      </a>
+        <img class="vector2" src="./img/불.png" />
+        <div class="rectangle-2335"></div>
+        <div class="div8">식단 생성 조건</div>
+        <img class="vector3" src="./img/바구니.png" />
+        <div class="div15">건장한 감량을 원하시는 분들에게 추천드려요!</div>
+        <div class="frame-80">
+        <div class="div14">빠른 감량을 원하시는 분들에게 추천드려요!</div>
+          <div class="frame-802">
+            <div class="div9">단기간 감량 (1개월)</div>
+            <div class="group-7839">
+              <div class="xnix-line-arrow-down">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="div10">감량 기간은 어느정도가 좋을까요?</div>
+        <div class="frame-100"></div>
+        <div class="div11">장기간 감량 (6개월)</div>
+        <div class="div16">원하는 감량기간이 있어요!</div>
+        <div class="div17">감량 기간 세부설정</div>
+        </div>
+    <!-- 드롭다운 헤더 (기본 표시값 + 화살표) -->
+    <div class="dropdown-header" onclick="toggleDropdown()">
+      <span id="selectedValue">4개월</span>
+      <span class="arrow">&#9662;</span>
+    </div>
+
+    <!-- 실제 목록 (1개월~12개월) -->
+    <ul class="dropdown-list" id="dropdownList">
+      <li onclick="selectItem('1개월')">1개월</li>
+      <li onclick="selectItem('2개월')">2개월</li>
+      <li onclick="selectItem('3개월')">3개월</li>
+      <li onclick="selectItem('4개월')">4개월</li>
+      <li onclick="selectItem('5개월')">5개월</li>
+      <li onclick="selectItem('6개월')">6개월</li>
+      <li onclick="selectItem('7개월')">7개월</li>
+      <li onclick="selectItem('8개월')">8개월</li>
+      <li onclick="selectItem('9개월')">9개월</li>
+      <li onclick="selectItem('10개월')">10개월</li>
+      <li onclick="selectItem('11개월')">11개월</li>
+      <li onclick="selectItem('12개월')">12개월</li>
+    </ul>
+  </div>
+  <script>
+    const dropdownList = document.getElementById("dropdownList");
+    const selectedValue = document.getElementById("selectedValue");
+    function toggleDropdown() {
+      dropdownList.classList.toggle("show");
+    }
+    function selectItem(value) {
+      selectedValue.textContent = value;
+      dropdownList.classList.remove("show");
+    }
+    document.addEventListener("click", function(event) {
+      const dropdown = document.querySelector(".custom-dropdown");
+      if (!dropdown.contains(event.target)) {
+        dropdownList.classList.remove("show");
+      }
+    });
+  </script>
+</body>
+</html>
+        </div>
+        </div>
+        </div>
+        <div class="ellipse-371"></div>
+        <div class="ellipse-372"></div>
+        <div class="ellipse-373"></div>
+        <div class="ellipse-374"></div>
+      </div>
+</body>
+</html>
