@@ -4,6 +4,8 @@ package com.smhrd.teamjo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -56,4 +58,7 @@ public class UserInfo {
 
     @Column(name = "U_NICK")
     private String nick;
+
+    @Column(name = "RECOM_CAL")
+    private BigDecimal recomCal;
 }
