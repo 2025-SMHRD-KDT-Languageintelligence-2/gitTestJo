@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>리뷰 기반 추천 결과</title>
+
+  <!-- 외부 CSS: 스타일 적용 -->
+  <link rel="stylesheet" href="./리뷰기반test.css" />
+
+  <!-- 외부 JS: 리뷰 기반 동적 표시용 -->
+  <script src="./리뷰기반test.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- ✅ 인사 메시지 -->
+    <h1>🎉 리뷰 감사합니다!</h1>
+    <p class="sub">당신의 리뷰를 바탕으로 이런 식단을 추천드려요 💡</p>
+
+    <!-- ✅ 사용자가 남긴 리뷰를 다시 보여주는 박스 -->
+    <div class="review-box">
+      <p><strong>⭐ 별점:</strong> <span id="display-rating">5</span>점</p>
+      <p><strong>📝 내용:</strong> <span id="display-text">부드럽고 고단백이 좋아요</span></p>
+    </div>
+
+    <!-- ✅ 추천 식단 카드 2개 -->
+    <div class="recommend-section">
+      <!-- 🥩 첫 번째 추천 (훈제 닭가슴살) -->
+      <div class="recommend-card">
+        <video src="./static/video/훈제 닭가슴살.mp4" autoplay muted loop playsinline></video>
+        <h3>훈제 닭가슴살</h3>
+        <p>부드러운 식감과 고단백! 운동 후 추천</p>
+        <button>구매하러 가기</button>
+      </div>
+
+      <!-- 🐟 두 번째 추천 (연어 샐러드) -->
+      <div class="recommend-card">
+        <video src="./static/video/날치알 연어샐러드.mp4" autoplay muted loop playsinline></video> 
+        <h3>연어 샐러드</h3>
+        <p>오메가3 가득한 영양만점 식단</p>
+        <button>구매하러 가기</button>
+      </div>
+    </div>
+
+    <!-- ✅ 하단 네비게이션 버튼 -->
+    <div class="buttons">
+      <a href="./리뷰작성test.html">← 리뷰 다시 쓰기</a>
+      <a href="home.html">🏠 홈으로</a>
+    </div>
+  </div>
+
+  <!-- (선택사항) 다른 JS 파일 연결 - 현재 사용되지 않으면 삭제 가능 -->
+  <script src="review-result.js"></script>
+</body>
+</html>
