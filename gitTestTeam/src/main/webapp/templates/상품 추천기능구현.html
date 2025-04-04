@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>키워드 기반 식단 추천</title>
+  <link rel="stylesheet" href="../static/css/상품추천기능구현.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <header>
+    <h1>한 줄 키워드로 완성하는 식단</h1>
+    <p>당신만을 위한 건강한 추천 식단과 상품</p>
+  </header>
+
+  <div class="container">
+    <div class="keyword-input">
+      <input type="text" placeholder="예: 고단백, 저탄고지, 다이어트" />
+      <button>추천 받기</button>
+    </div>
+
+    <div class="meal-card">
+        <div class="salad">
+        <img src="../static/image/닭가슴살 샐러드.jpg" alt="샐러드"/>
+        </div>
+      <h3>추천 식단: 닭가슴살 샐러드</h3>
+      <p class="nutrients">🔥 320kcal | 탄수화물 20g | 단백질 35g | 지방 10g</p>
+      <p><b>₩4,000,000</b></p>
+      <button class="add-to-cart">장바구니 담기</button>
+    </div>
+    </div>
+    <div class="products">
+        <h4>추천 식재료</h4>
+        <div class="product-list">
+          <div class="chicken-item">
+            <video src="../static/video/훈제 닭가슴살.mp4" autoplay muted loop playsinline></video>
+            <p>양념 닭가슴살</p>
+            <span>₩2,000,000</span>
+            <button>구매</button>
+          </div>
+          <div class="chicken-item">
+            <video class='salmon' src="../static/video/날치알 연어샐러드.mp4" autoplay muted loop playsinline></video>
+            <p>날치알 연어샐러드</p>
+            <span>₩3,500,000</span>
+            <button>구매</button>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+body {
+    margin: 0;
+    font-family: 'Pretendard', sans-serif;
+    background: linear-gradient(to bottom, #e6f4fb, #ffffff);
+    color: #333;
+  }
+  
+  header {
+    background-color: #a6dcf5;
+    padding: 40px 0;
+    text-align: center;
+    border-bottom: 1px solid #d0e7f5;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  header h1 {
+    font-size: 34px;
+    color: #06486c;
+    margin: 0;
+  }
+  
+  header p {
+    font-size: 16px;
+    color: #2d5a74;
+    margin-top: 8px;
+  }
+  
+  .container {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  
+  .keyword-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .keyword-input input {
+    flex: 1;
+    padding: 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.3s;
+  }
+  
+  .keyword-input input:focus {
+    outline: none;
+    border-color: #4cc9f0;
+    box-shadow: 0 0 6px rgba(76, 201, 240, 0.4);
+  }
+  
+  .keyword-input button {
+    padding: 14px 22px;
+    background-color: #4cc9f0;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .keyword-input button:hover {
+    background-color: #32b2e0;
+  }
+  
+  .meal-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,33%);
+    padding: 24px;
+    margin-bottom: 36px;
+    transition: transform 0.3s;
+  }
+  
+  .meal-card:hover {
+    transform: scale(1.01);
+  }
+  
+  .meal-card h3 {
+    margin-top: 0;
+    font-size: 20px;
+  }
+  
+  .nutrients {
+    font-size: 15px;
+    color: #444;
+    margin: 10px 0 16px;
+  }
+  
+  .add-to-cart {
+    background-color: #00b894;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .add-to-cart:hover {
+    background-color: #009873;
+  }
+  
+  .products h4 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    left: 480px;
+    top: -10px;
+  }
+  
+  .product-list {
+    display: flex;
+    justify-content: center; /* ⭐ 핵심 */
+    gap: 40px;                /* 🔼 여유있게 간격도 넓히자 */
+    flex-wrap: wrap;
+  }
+  
+  .product-list {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .chicken-item {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 33%); /* ✅ 여기 바꿔 */
+    transition: transform 0.2s ease;
+  }
+  
+  .chicken-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .chicken-item video,
+  .chicken-item img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    display: block;
+    position: relative;
+    left: 30px;
+  }
+  
+  .chicken-item p {
+    margin: 8px 0 4px;
+    font-weight: 500;
+  }
+  
+  .chicken-item span {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .chicken-item button {
+    background-color: #00b894;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  
+  .chicken-item button:hover {
+    background-color: #009773;
+  }
+  
+  
+  footer {
+    text-align: center;
+    padding: 30px 0;
+    color: #999;
+    font-size: 14px;
+  }
+  .chicken-item video.salmon {
+    width: 170px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 28px;
+    left: 23px;
+    top: 16px;
+  }
+  .meal-card {
+    position: relative; /* ⭐ 필수: 이미지 오버레이를 가능하게 함 */
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 24px;
+    margin-bottom: 36px;
+  }
+  
+  .salad {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+  
+  .salad img {
+    width: 170px;
+    height: 160px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    left: -181px;
+    top: -11px;
+  }
+  
