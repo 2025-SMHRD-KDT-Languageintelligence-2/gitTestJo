@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>칼로리 처방 결과</title>
+  <link rel="stylesheet" href="/css/calorie-result.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <img src="/image/logo.png" alt="로고" class="logo-img">
+  </header>
+
+  <main class="result-container">
+    <h2>칼로리 처방 결과</h2>
+
+    <!-- ✅ 결과 요약 -->
+    <div class="result-grid">
+      <div class="result-item">
+        <p class="label">기초대사량 (BMR)</p>
+        <p class="value" th:text="${bmr} + ' kcal'">0 kcal</p>
+      </div>
+      <div class="result-item">
+        <p class="label">하루 유지 칼로리 (TDEE)</p>
+        <p class="value" th:text="${tdee} + ' kcal'">0 kcal</p>
+      </div>
+      <div class="result-item">
+        <p class="label">감량 목표</p>
+        <p class="value">
+          <span th:text="${loseWeight}">0</span>kg 감량
+          (<span th:text="${duration}">0</span>
+          <span th:text="${unit == 'month' ? '개월' : '일'}">일</span> 동안)
+        </p>
+      </div>
+      <div class="result-item">
+        <p class="label">하루 감량 칼로리</p>
+        <p class="value" th:text="${dailyDeficit} + ' kcal'">0 kcal</p>
+      </div>
+      <div class="result-item highlight">
+        <p class="label">권장 섭취 칼로리</p>
+        <p class="value large" th:text="${targetCalories} + ' kcal'">0 kcal</p>
+      </div>
+    </div>
+
+    <!-- ✅ 시각화 그래프 -->
+    <div class="chart-box">
+      <h4>하루 소비 칼로리는 <span id="tdeeValue" style="color: #ff5722;">0</span> kcal</h4>
+      <canvas id="stackedBarChart" width="600" height="100"></canvas>
+      <div class="legend">
+        <span style="color: #4CAF50;">■</span> 기초대사량
+        <span style="color: #FFC107;">■</span> 활동대사량
+        <span style="color: #FF5722;">■</span> 소화에너지
+      </div>
+    </div>
+
+    <!-- ✅ 버튼 -->
+    <div class="button-area">
+      <a href="/calorie" class="retry-btn">다시 계산하기</a>
+      <a href="/mypage" class="back-btn">마이페이지로 돌아가기</a>
+    </div>
+  </main>
+
+  <!-- ✅ Chart.js -->
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    const bmr = [[${bmr}]];
+    const tdee = [[${tdee}]];
+    const digestion = Math.round(bmr * 0.1);
+    const activity = tdee - bmr - digestion;
+
+    document.getElementById('tdeeValue').innerText = tdee;
+
+    const ctx = document.getElementById('stackedBarChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [''],
+        datasets: [
+          {
+            label: '기초대사량',
+            data: [bmr],
+            backgroundColor: '#4CAF50'
+          },
+          {
+            label: '활동대사량',
+            data: [activity],
+            backgroundColor: '#FFC107'
+          },
+          {
+            label: '소화에너지',
+            data: [digestion],
+            backgroundColor: '#FF5722'
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            stacked: true,
+            display: false
+          },
+          y: {
+            stacked: true,
+            display: false
+          }
+        }
+      }
+    });
+    /*]]>*/
+  </script>
+</body>
+</html>

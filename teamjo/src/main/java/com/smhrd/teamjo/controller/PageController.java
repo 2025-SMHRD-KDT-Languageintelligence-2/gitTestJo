@@ -218,4 +218,9 @@ public class PageController {
         return "weight-chart"; // 이 뷰에서 그래프 출력
     }
     
+    @GetMapping("/calorie")
+    public String showCaloriePage() {
+        return "calorie";
+    }
+    
 }

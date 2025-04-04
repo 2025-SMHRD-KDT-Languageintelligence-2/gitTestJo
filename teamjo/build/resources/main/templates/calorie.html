@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>칼로리 처방받기</title>
+  <link rel="stylesheet" href="/css/calorie.css">
+</head>
+<body>
+  <!-- 로고 -->
+  <header>
+    <img src="/image/logo.png" alt="EAT AI 로고" class="logo-img">
+  </header>
+
+  <main class="calorie-container">
+    <!-- 입력 폼 -->
+    <section class="form-section">
+      <h2>칼로리 처방받기</h2>
+      <form action="/calorie-result" method="post">
+        <div class="form-group">
+            <label>성별</label>
+            <label><input type="radio" name="gender" value="male" checked> 남자</label>
+            <label><input type="radio" name="gender" value="female"> 여자</label>
+        </div>
+        <div class="form-group">
+          <label for="height">키</label>
+          <input type="number" name="height" required> <span>cm</span>
+        </div>
+
+        <div class="form-group">
+          <label for="currentWeight">현재 몸무게</label>
+          <input type="number" name="currentWeight" required> <span>kg</span>
+        </div>
+
+        <div class="form-group">
+          <label for="goalWeight">목표 몸무게</label>
+          <input type="number" name="goalWeight" required> <span>kg</span>
+        </div>
+
+        <div class="form-group birth-group">
+          <label>생년월일</label>
+          <div>
+            <input type="number" name="year" placeholder="2000" required> <span>년</span>
+            <input type="number" name="month" placeholder="04" required> <span>월</span>
+            <input type="number" name="day" placeholder="04" required> <span>일</span>
+          </div>
+        </div>
+
+        <div class="form-group duration-group">
+          <label>체중 감량 기간</label>
+          <div>
+            <input type="number" name="duration" required>
+            <label><input type="radio" name="unit" value="month" checked> 개월</label>
+            <label><input type="radio" name="unit" value="day"> 일</label>
+          </div>
+        </div>
+
+        <div class="form-group activity-group">
+          <label>평소 활동량</label>
+          <label><input type="radio" name="activity" value="1" checked> 활동 안함 (운동을 전혀 안해요.)</label>
+          <label><input type="radio" name="activity" value="2"> 가벼운 활동 (평소 가벼운 운동이나 스포츠를 즐겨요.)</label>
+          <label><input type="radio" name="activity" value="3"> 보통 활동 (평소 적당한 운동이나 스포츠를 즐겨요.)</label>
+          <label><input type="radio" name="activity" value="4"> 많은 활동 (평소 강렬한 운동이나 스포츠를 즐겨요.)</label>
+          <label><input type="radio" name="activity" value="5"> 매우 많은 활동 (평소 매우 강렬한 운동을 하거나 육체를 쓰는 직업이에요.)</label>
+        </div>
+
+        <button type="submit" class="submit-btn">처방받기</button>
+      </form>
+    </section>
+
+    <!-- 오른쪽 고정 버튼 영역 -->
+    <div class="fixed-button-area">
+        <a href="diet">
+          <div class="icon-button">
+            <img src="/image/icon1.png" alt="식단 생성">
+            <p>식단 생성하기</p>
+          </div>
+        </a>
+        <a href="/calorie">
+          <div class="icon-button">
+            <img src="/image/icon2.png" alt="칼로리 처방">
+            <p>칼로리 처방<br>받기</p>
+          </div>
+        </a>
+        <a href="healty-map">
+          <div class="icon-button">
+            <img src="/image/icon3.png" alt="인바디 찾기">
+            <p>인바디 측정<br>보건소 찾기</p>
+          </div>
+        </a>
+    </div>
+  </main>
+</body>
+</html>
