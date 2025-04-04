@@ -53,4 +53,7 @@ public class UserInfo {
 
     @Column(name = "U_IMG1")
     private String profile_img;
+
+    @Column(name = "U_NICK")
+    private String nick;
 }

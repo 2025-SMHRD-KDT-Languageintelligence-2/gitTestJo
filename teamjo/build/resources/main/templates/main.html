@@ -29,7 +29,7 @@
       <th:block th:if="${isLoggedIn}">
         <!-- 로그인한 경우 -->
          <div class="profile-info" id="profile-info">
-          <img src="/image/default_profile.png" alt="프로필 이미지" class="profile-img" />
+          <img th:src="@{${user.profile_img}}" alt="프로필 이미지" class="profile-img" />
           <span class="profile-name" id ="profile-name">
             <span th:text="${userName}">사용자 이름</span> ▾
           </span>
@@ -39,7 +39,7 @@
           <div class="profile-card hidden" id="profile-card">
             <!-- 상단 프로필 정보 -->
             <div class="card-header">
-              <img src="/image/default_profile.png" class="card-profile-img" />
+              <img th:src="@{${user.profile_img}}" class="card-profile-img" />
               <div class="card-user-info">
                 <div class="card-name" th:text="${userName} + 님">사용자님</div>
                 <div class="card-email" th:text="${userEmail} + 님">user@example.com</div>

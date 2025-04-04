@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.smhrd.teamjo.TeamjoApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-04-04T01:10:13.169Z" hostname="DESKTOP-QF8AEN8" time="0.466">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.smhrd.teamjo.TeamjoApplicationTests" time="0.466"/>
+  <system-out><![CDATA[10:10:09.447 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.smhrd.teamjo.TeamjoApplicationTests]: TeamjoApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:10:09.552 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.smhrd.teamjo.TeamjoApplication for test class com.smhrd.teamjo.TeamjoApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.4)
+
+2025-04-04T10:10:09.921+09:00  INFO 21096 --- [teamjo] [    Test worker] c.smhrd.teamjo.TeamjoApplicationTests    : Starting TeamjoApplicationTests using Java 17.0.14 with PID 21096 (started by smhrd in C:\Users\smhrd\Desktop\gitTestJo-1\teamjo)
+2025-04-04T10:10:09.922+09:00  INFO 21096 --- [teamjo] [    Test worker] c.smhrd.teamjo.TeamjoApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2025-04-04T10:10:10.450+09:00  INFO 21096 --- [teamjo] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-04T10:10:10.510+09:00  INFO 21096 --- [teamjo] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 48 ms. Found 2 JPA repository interfaces.
+2025-04-04T10:10:10.913+09:00  INFO 21096 --- [teamjo] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-04T10:10:10.968+09:00  INFO 21096 --- [teamjo] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-04-04T10:10:11.002+09:00  INFO 21096 --- [teamjo] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-04-04T10:10:11.268+09:00  INFO 21096 --- [teamjo] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-04T10:10:11.297+09:00  INFO 21096 --- [teamjo] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-04-04T10:10:11.665+09:00  INFO 21096 --- [teamjo] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1dcca426
+2025-04-04T10:10:11.666+09:00  INFO 21096 --- [teamjo] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-04-04T10:10:11.711+09:00  WARN 21096 --- [teamjo] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-04T10:10:11.712+09:00  WARN 21096 --- [teamjo] [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-04T10:10:11.730+09:00  INFO 21096 --- [teamjo] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-04T10:10:12.378+09:00  INFO 21096 --- [teamjo] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-04T10:10:12.380+09:00  INFO 21096 --- [teamjo] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04T10:10:12.776+09:00  WARN 21096 --- [teamjo] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-04T10:10:13.151+09:00  INFO 21096 --- [teamjo] [    Test worker] c.smhrd.teamjo.TeamjoApplicationTests    : Started TeamjoApplicationTests in 3.451 seconds (process running for 4.487)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

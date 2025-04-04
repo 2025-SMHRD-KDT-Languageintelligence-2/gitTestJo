@@ -136,6 +136,7 @@ body {
     display: flex;
     align-items: center;
     gap: 24px;
+    margin-bottom: 10px;
   }
   
   .current-img {
@@ -148,7 +149,24 @@ body {
   
   .img-buttons {
     display: flex;
-    gap: 8px;
+    flex-direction: column; /* 세로 정렬 */
+    gap: 5px; /* 버튼 간격 */
+    margin-top: 10px;
+  }
+
+  .img-buttons .btn {
+    width: 100px;
+    padding: 6px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .img-buttons .delete-btn {
+    color: red;
+    width: 113.8px;
+    padding: 6px;
+    font-size: 14px;
+    text-align: center;
   }
   
   .btn {
@@ -198,3 +216,17 @@ body {
     color: #333;
   }
   
+  /* 기존 사진 변경/삭제 버튼 감싸는 영역 아래에 배치 */
+#delete-form {
+  margin-top: -30px;       /* 위치 위로 끌어올리기 */
+  margin-left: 165px;      /* 사진변경 버튼 기준으로 오른쪽 위치 조정 */
+}
+
+#delete-form .delete-btn {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}

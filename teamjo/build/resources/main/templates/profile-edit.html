@@ -12,15 +12,15 @@
     <div class="logo-search">
       <img src="/image/logo.png" alt="로고" class="logo-img" />
     </div>
-    <div class="profile-info">
-      <img src="/image/default_profile.png" class="profile-img" />
-      <span class="profile-name">김건도</span>
-      <div class="profile-card hidden">
+    <div class="profile-info" id="profileToggle">
+      <img th:src="@{${user.profile_img}}" alt="프로필 이미지" class="profile-img" />
+      <span class="profile-name" th:text="${userName}">사용자이름</span>
+      <div class="profile-card hidden" id="profileCard">
         <div class="card-header">
-          <img src="/image/default_profile.png" class="card-profile-img" />
+          <img th:src="@{${user.profile_img}}" class="card-profile-img" />
           <div class="card-user-info">
-            <div class="card-name">김건도님</div>
-            <div class="card-email">123@naver.com님</div>
+            <div class="card-name" th:text="${userName}">사용자이름님</div>
+            <div class="card-email" th:text="${userEmail}">이메일</div>
           </div>
         </div>
         <div class="card-buttons">
@@ -36,16 +36,22 @@
 
   <!-- 본문: 개인정보 수정 폼 -->
   <main class="profile-edit-container">
+
+    <!-- 프로필 이미지 삭제 폼 (삭제만 따로 POST 전송됨) -->
+    <form id="deleteForm" action="/deleteProfileImage" method="post"></form>
+    
+    <!-- 개인정보 수정 폼 -->
     <form action="/updateProfile" method="post" enctype="multipart/form-data">
       <!-- 프로필 사진 영역 -->
       <div class="form-section">
         <label class="form-label">프로필 사진</label>
         <div class="profile-img-area">
-          <img src="/image/default_profile.png" alt="현재사진" class="current-img" />
+          <img th:src="@{${user.profile_img}}" alt="현재사진" class="current-img" id="preview-image" />
           <div class="img-buttons">
             <input type="file" name="profileImage" id="profileImage" class="file-input" hidden />
             <label for="profileImage" class="btn">사진변경</label>
-            <button type="button" class="btn delete-btn">삭제</button>
+
+            <button type="submit" class="btn delete-btn" form="deleteForm">사진 삭제</button>
           </div>
         </div>
       </div>
@@ -53,19 +59,31 @@
       <!-- 별명 입력 -->
       <div class="form-section">
         <label class="form-label">별명</label>
-        <input type="text" name="nickname" class="input-text" value="김건도" />
+        <input type="text" name="nickname" class="input-text" th:value="${nickname}"/>
       </div>
 
       <!-- 키 입력 -->
       <div class="form-section">
         <label class="form-label">키(cm)</label>
-        <input type="number" name="height" class="input-text" value="170" />
+        <input type="number" name="height" class="input-text" th:value="${height}"/>
       </div>
 
       <!-- 몸무게 입력 -->
       <div class="form-section">
         <label class="form-label">몸무게(kg)</label>
-        <input type="number" name="weight" class="input-text" value="65" />
+        <input type="number" name="weight" class="input-text" th:value="${weight}"/>
+      </div>
+
+      <!-- 나이 입력 -->
+      <div class="form-section">
+        <label class="form-label">나이</label>
+        <input type="number" name="age" class="input-text" th:value="${age}">
+      </div>
+
+      <!-- 성별 입력 -->
+      <div class="form-section">
+        <label class="form-label">성별</label>
+        <input type="text" name="sex" class="input-text" th:value="${sex}">
       </div>
 
       <!-- 버튼 -->
@@ -75,5 +93,37 @@
       </div>
     </form>
   </main>
+
+  <!-- 파일 선택 시 이미지 미리보기 스크립트 -->
+  <script>
+    document.getElementById('profileImage').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('preview-image').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 프로필 영역 클릭 시 카드 토글
+  document.getElementById('profileToggle').addEventListener('click', function () {
+    const card = document.getElementById('profileCard');
+    card.classList.toggle('hidden');
+  });
+
+  // 다른 곳 클릭하면 카드 닫기 (선택)
+  document.addEventListener('click', function (e) {
+    const toggle = document.getElementById('profileToggle');
+    const card = document.getElementById('profileCard');
+
+    // 클릭이 profile-info 영역이 아니면 닫기
+    if (!toggle.contains(e.target)) {
+      card.classList.add('hidden');
+    }
+  });
+  </script>
+
 </body>
 </html>
