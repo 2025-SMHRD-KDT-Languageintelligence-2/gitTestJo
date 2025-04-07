@@ -1,232 +1,232 @@
 /* 전체 설정 */
 body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-    color: #222;
-  }
-  
-  /* 상단 네비게이션 */
-  .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 24px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .logo-img {
-    height: 40px;
-  }
-  
-  /* 프로필 정보 */
-  .profile-info {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-  }
-  
-  .profile-img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-  }
-  
-  .profile-name {
-    font-weight: bold;
-  }
-  
-  .profile-card {
-    position: absolute;
-    top: 120%;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    padding: 12px 16px;
-    width: 200px;
-    z-index: 999;
-  }
-  
-  .profile-card.hidden {
-    display: none;
-  }
-  
-  .card-header {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .card-profile-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  
-  .card-user-info {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .card-name {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  .card-email {
-    font-size: 12px;
-    color: #666;
-  }
-  
-  .card-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  
-  .card-btn {
-    text-align: center;
-    padding: 8px;
-    background-color: #f5f5f5;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    text-decoration: none;
-    color: #333;
-    cursor: pointer;
-  }
-  
-  .logout-btn {
-    background-color: transparent;
-    color: #e60023;
-  }
-  
-  /* 개인정보 수정 폼 */
-  .profile-edit-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 24px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  
-  .form-section {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .form-label {
-    font-weight: 600;
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-  
-  /* 프로필 이미지 영역 */
-  .profile-img-area {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .current-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #ccc;
-    object-fit: cover;
-  }
-  
-  .img-buttons {
-    display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    gap: 5px; /* 버튼 간격 */
-    margin-top: 10px;
-  }
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #222;
+}
 
-  .img-buttons .btn {
-    width: 100px;
-    padding: 6px;
-    font-size: 14px;
-    text-align: center;
-  }
-  
-  .img-buttons .delete-btn {
-    color: red;
-    width: 113.8px;
-    padding: 6px;
-    font-size: 14px;
-    text-align: center;
-  }
-  
-  .btn {
-    padding: 8px 14px;
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .delete-btn {
-    color: #e60023;
-  }
-  
-  /* 입력창 스타일 */
-  .input-text {
-    width: 300px;
-    padding: 10px;
-    font-size: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  
-  /* 하단 버튼 영역 */
-  .button-area {
-    display: flex;
-    gap: 12px;
-    margin-top: 20px;
-  }
-  
-  .submit-btn, .cancel-btn {
-    padding: 10px 20px;
-    font-size: 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    border: none;
-  }
-  
-  .submit-btn {
-    background-color: #636ae8;
-    color: white;
-  }
-  
-  .cancel-btn {
-    background-color: #f1f1f1;
-    color: #333;
-  }
-  
-  /* 기존 사진 변경/삭제 버튼 감싸는 영역 아래에 배치 */
+/* 상단 네비게이션 */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo-img {
+  height: 40px;
+}
+
+/* 프로필 정보 */
+.profile-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.profile-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.profile-name {
+  font-weight: bold;
+}
+
+.profile-card {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  width: 200px;
+  z-index: 999;
+}
+
+.profile-card.hidden {
+  display: none;
+}
+
+.card-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.card-profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.card-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.card-email {
+  font-size: 12px;
+  color: #666;
+}
+
+.card-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-btn {
+  text-align: center;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.logout-btn {
+  background-color: transparent;
+  color: #e60023;
+}
+
+/* 개인정보 수정 폼 */
+.profile-edit-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+/* 프로필 이미지 영역 */
+.profile-img-area {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 10px;
+}
+
+.current-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ccc;
+  object-fit: cover;
+}
+
+.img-buttons {
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  gap: 5px; /* 버튼 간격 */
+  margin-top: 10px;
+}
+
+.img-buttons .btn {
+  width: 100px;
+  padding: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.img-buttons .delete-btn {
+  color: red;
+  width: 113.8px;
+  padding: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.btn {
+  padding: 8px 14px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  color: #e60023;
+}
+
+/* 입력창 스타일 */
+.input-text {
+  width: 300px;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* 하단 버튼 영역 */
+.button-area {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.submit-btn, .cancel-btn {
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.submit-btn {
+  background-color: #636ae8;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+/* 기존 사진 변경/삭제 버튼 감싸는 영역 아래에 배치 */
 #delete-form {
-  margin-top: -30px;       /* 위치 위로 끌어올리기 */
-  margin-left: 165px;      /* 사진변경 버튼 기준으로 오른쪽 위치 조정 */
+margin-top: -30px;       /* 위치 위로 끌어올리기 */
+margin-left: 165px;      /* 사진변경 버튼 기준으로 오른쪽 위치 조정 */
 }
 
 #delete-form .delete-btn {
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 0;
+background: none;
+border: none;
+color: red;
+cursor: pointer;
+font-size: 14px;
+padding: 0;
 }

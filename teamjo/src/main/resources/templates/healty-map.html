@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>인바디 측정 보건소 찾기</title>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a6cad566f51714cf4645da2c292748e9&libraries=services"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; }
+    #map { width: 100%; height: 100vh; }
+    #search-box {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+    }
+    #search-input {
+      width: 300px;
+      padding: 6px;
+      font-size: 14px;
+    }
+    #search-button, #locate-button, #back-button {
+      padding: 6px 10px;
+      margin-left: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🔍 검색창 + 📍 + 🔙 나가기 -->
+  <div id="search-box">
+    <input type="text" id="search-input" placeholder="지역을 입력하세요 (예: 광주 북구)">
+    <button id="search-button">검색</button>
+    <button id="locate-button">📍</button>
+    <button id="back-button">🔙</button>
+  </div>
+
+  <div id="map"></div>
+
+  <script>
+    const mapContainer = document.getElementById('map');
+    const mapOption = {
+      center: new kakao.maps.LatLng(37.5665, 126.9780),
+      level: 4
+    };
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+    const ps = new kakao.maps.services.Places();
+    let markers = [];
+
+    function displayHospitalsAround(location) {
+      markers.forEach(marker => marker.setMap(null));
+      markers = [];
+
+      ps.keywordSearch('보건소', function(data, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          for (let i = 0; i < data.length; i++) {
+            const place = data[i];
+            const position = new kakao.maps.LatLng(place.y, place.x);
+            const marker = new kakao.maps.Marker({
+              map: map,
+              position: position
+            });
+            markers.push(marker);
+
+            const infowindow = new kakao.maps.InfoWindow({
+              content: `
+                <div style="padding:8px; font-size:13px; line-height:1.5; min-width:200px; white-space:normal; word-break:keep-all;">
+                  <strong>${place.place_name}</strong><br>
+                  ${place.road_address_name || place.address_name}
+                </div>
+              `
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+              infowindow.open(map, marker);
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+              infowindow.close();
+            });
+          }
+        }
+      }, { location: location });
+    }
+
+    // 처음 로딩 시 내 위치
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const userPos = new kakao.maps.LatLng(lat, lon);
+        map.setCenter(userPos);
+        new kakao.maps.Marker({ map: map, position: userPos });
+        displayHospitalsAround(userPos);
+      });
+    }
+
+    // 검색
+    document.getElementById("search-button").addEventListener("click", function() {
+      const keyword = document.getElementById("search-input").value.trim();
+      if (keyword) {
+        ps.keywordSearch(keyword, function(data, status) {
+          if (status === kakao.maps.services.Status.OK) {
+            const centerPos = new kakao.maps.LatLng(data[0].y, data[0].x);
+            map.setCenter(centerPos);
+            displayHospitalsAround(centerPos);
+          } else {
+            alert("검색 결과가 없습니다.");
+          }
+        });
+      }
+    });
+
+    // 내 위치 버튼
+    document.getElementById("locate-button").addEventListener("click", function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const userPos = new kakao.maps.LatLng(lat, lon);
+          map.setCenter(userPos);
+          new kakao.maps.Marker({ map: map, position: userPos });
+          displayHospitalsAround(userPos);
+        });
+      } else {
+        alert("위치 정보를 사용할 수 없습니다.");
+      }
+    });
+
+    // 🔙 나가기 버튼 클릭 → 이전 페이지로 이동
+    document.getElementById("back-button").addEventListener("click", function() {
+      history.back();  // 또는 location.href = "/mypage"; 로 변경해도 돼
+    });
+  </script>
+</body>
+</html>

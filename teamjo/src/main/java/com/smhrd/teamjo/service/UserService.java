@@ -8,6 +8,8 @@ import com.smhrd.teamjo.entity.WeightRecord;
 import com.smhrd.teamjo.repository.UserRepository;
 import com.smhrd.teamjo.repository.WeightRecordRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,5 +70,15 @@ public class UserService {
             user.setWeight(weight);
             userRepository.save(user);
         });
+    }
+
+    @Transactional
+    public void updateRecomCal(String uid, double targetCalories) {
+        Optional<UserInfo> optionalUser = userRepository.findById(uid);
+        if (optionalUser.isPresent()) {
+            UserInfo user = optionalUser.get();
+            user.setRecomCal((int)Math.round(targetCalories));
+            userRepository.save(user);
+        }
     }
 }

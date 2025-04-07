@@ -60,5 +60,5 @@ public class UserInfo {
     private String nick;
 
     @Column(name = "RECOM_CAL")
-    private BigDecimal recomCal;
+    private Integer recomCal;
 }

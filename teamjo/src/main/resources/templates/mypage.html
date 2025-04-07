@@ -13,19 +13,16 @@
       <img src="/image/logo.png" alt="로고" class="logo-img" />
       <input type="text" placeholder="찾는 음식이 있으신가요?" class="search-input" />
     </div>
-
-    <!-- 식단 생성 버튼 추가 -->
-     <div class="header-buttons">
+    <div class="header-buttons">
       <button class="diet-generate-btn">식단 생성하기</button>
-     </div>
+    </div>
   </header>
 
   <!-- 본문 -->
   <main class="mypage-container">
-    <!-- 프로필 + 그래프 통합 영역 -->
+    <!-- 프로필 + 그래프 -->
     <section class="profile-chart-wrapper">
       <div class="profile-section">
-        <!-- 상단: 프로필 사진 + 정보 -->
         <div class="profile-top">
           <img th:src="@{${user.profile_img}}" alt="프로필" class="profile-img" />
           <div class="profile-info">
@@ -34,67 +31,74 @@
             <p><strong>성별:</strong> <span th:text="${userSex}">성별</span></p>
           </div>
         </div>
-
-        <!-- 하단: 버튼 두 개 -->
         <div class="profile-buttons">
           <a href="/profile-edit" class="action-btn">개인정보 변경</a>
           <button type="button" class="action-btn" id="openModalBtn">오늘 체중 등록하기</button>
         </div>
       </div>
 
-      <!-- 오른쪽: 체중 그래프 -->
       <div class="chart-section">
         <h4>📈 체중 추세</h4>
         <canvas id="weightChart" width="1050" height="220"></canvas>
       </div>
+    </section>
 
-      <script src="http://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script th:inline="javascript">
-        /*<![CDATA[*/
-        const records = /*[[${weightRecords}]]*/ [];
-        const labels = records.map(r => new Date(r.recordedAt).toLocaleDateString());
-        const weights = records.map(r => r.weight);
+    <!-- 요일별 식단 추천 -->
+    <section class="diet-section">
+      <p class="diet-title">체중감량을 원하는 00님을 위한 추천 식단!</p>
+      <div class="week-tabs">
+        <div class="day-tab" data-day="SUN">SUN</div>
+        <div class="day-tab" data-day="MON">MON</div>
+        <div class="day-tab" data-day="TUE">TUE</div>
+        <div class="day-tab" data-day="WED">WED</div>
+        <div class="day-tab" data-day="THU">THU</div>
+        <div class="day-tab" data-day="FRI">FRI</div>
+        <div class="day-tab" data-day="SAT">SAT</div>
+      </div>
+      <div class="meal-cards">
+        <div class="meal-card"><div class="image-placeholder"></div><p>아침</p></div>
+        <div class="meal-card"><div class="image-placeholder"></div><p>점심</p></div>
+        <div class="meal-card"><div class="image-placeholder"></div><p>저녁</p></div>
+      </div>
+    </section>
 
-        console.log(Chart.version);
-        const ctx = document.getElementById("weightChart").getContext("2d");
-        const chart = new Chart(ctx, {
-          type : 'line',
-          data : {
-            labels: labels,
-            datasets: [{
-              label: '체중 (kg)',
-              data: weights,
-              borderColor: 'rgba(75, 192, 192, 1)',
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              fill: true,
-              tension: 0.3, 
-              pointStyle: 'circle',        // 🔵 포인트를 동그라미로
-              pointRadius: 5,              // 🔵 포인트 크기
-              pointHoverRadius: 6          // 🔵 호버시 크기
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins:{
-              legend:{
-                usePointStyle: true,
-                labels:{
-                  usePointStyle: true,
-                }
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: false
-              }
-            }
-          }
-        });
-        /*]]>*/
-      </script>
+    <!-- 리뷰 기반 인기 메뉴 -->
+    <section class="popular-menu">
+      <h3>📊 다른 사용자들이 좋아하는 메뉴!</h3>
+      <p>이런 메뉴는 어떠세요?</p>
+      <div class="menu-card-container">
+        <div class="menu-card">
+          <div class="menu-img"></div>
+          <div class="menu-info">
+            <strong>청정채 오리볶음 (100g)</strong>
+            <p>열량 370kcal | 단백질 23g | 나트륨 472mg</p>
+            <p>평점 ⭐4.8</p>
+            <a href="#" class="detail-link">상세메뉴 보기 ></a>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-img"></div>
+          <div class="menu-info">
+            <strong>훈연 닭가슴살 (100g)</strong>
+            <p>열량 110kcal | 단백질 24g | 나트륨 110mg</p>
+            <p>평점 ⭐4.3</p>
+            <a href="#" class="detail-link">상세메뉴 보기 ></a>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="menu-img"></div>
+          <div class="menu-info">
+            <strong>연어샐러드 (230g)</strong>
+            <p>열량 328kcal | 단백질 6.6g | 나트륨 0mg</p>
+            <p>평점 ⭐4.9</p>
+            <a href="#" class="detail-link">상세메뉴 보기 ></a>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
+  <!-- 고정 버튼 -->
   <div class="fixed-button-area">
     <a href="diet">
       <div class="icon-button">
@@ -116,37 +120,8 @@
     </a>
   </div>
 
-  <!-- 식단 추천 영역 -->
-  <section class="diet-section">
-    <p class="diet-title">체중감량을 원하는 00님을 위한 추천 식단!</p>
-    <div class="week-tabs">
-      <div class="day-tab active" data-day="SUN">SUN</div>
-      <div class="day-tab" data-day="MON">MON</div>
-      <div class="day-tab" data-day="TUE">TUE</div>
-      <div class="day-tab" data-day="WED">WED</div>
-      <div class="day-tab" data-day="THU">THU</div>
-      <div class="day-tab" data-day="FRI">FRI</div>
-      <div class="day-tab" data-day="SAT">SAT</div>
-    </div>
-
-    <div class="meal-cards">
-      <div class="meal-card">
-        <div class="image-placeholder"></div>
-        <p>아침</p>
-      </div>
-      <div class="meal-card">
-        <div class="image-placeholder"></div>
-        <p>점심</p>
-      </div>
-      <div class="meal-card">
-        <div class="image-placeholder"></div>
-        <p>저녁</p>
-      </div>
-    </div>
-  </section>
-
   <!-- 체중 등록 모달 -->
-   <div id="weightModal" class="modal">
+  <div id="weightModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>오늘의 체중을 입력해주세요</h2>
@@ -155,60 +130,80 @@
         <button type="submit">등록</button>
       </form>
     </div>
-   </div>
+  </div>
 
-   <!-- 모달 동작 스크립트 -->
-    <script>
-      const modal = document.getElementById('weightModal');
-      const openBtn = document.getElementById('openModalBtn');
-      const closeBtn = document.querySelector('.modal .close');
-
-      openBtn.onclick = () => modal.style.display = 'block';
-      closeBtn.onclick = () => modal.style.display = 'none';
-      window.onclick = (e) => {
-        if (e.target === modal) {
-          modal.style.display = 'none';
+  <!-- JS -->
+  <script src="http://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script th:inline="javascript">
+    const records = /*[[${weightRecords}]]*/ [];
+    const labels = records.map(r => new Date(r.recordedAt).toLocaleDateString());
+    const weights = records.map(r => r.weight);
+    const ctx = document.getElementById("weightChart").getContext("2d");
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '체중 (kg)',
+          data: weights,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          fill: true,
+          tension: 0.3,
+          pointStyle: 'circle',
+          pointRadius: 5,
+          pointHoverRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            usePointStyle: true,
+            labels: { usePointStyle: true }
+          }
+        },
+        scales: {
+          y: { beginAtZero: false }
         }
       }
+    });
 
-      // 요일 탭 선택 처리
-      const tabs = document.querySelectorAll(".day-tab");
-      const mealCards = document.querySelectorAll(".meal-card p");
+    // 모달 제어
+    const modal = document.getElementById('weightModal');
+    const openBtn = document.getElementById('openModalBtn');
+    const closeBtn = document.querySelector('.modal .close');
+    openBtn.onclick = () => modal.style.display = 'block';
+    closeBtn.onclick = () => modal.style.display = 'none';
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; }
 
-      // 요일별 식단 예시 (이후 추천 알고리즘 결과로 대체)
-      const mealsByDay = {
-        SUN: ["삶은 달걀 + 바나나", "닭가슴살 샐러드", "현미밥 + 김치찌개"],
-        MON: ["오트밀 + 블루베리", "곤약볶음밥", "두부부침 + 나물무침"],
-        TUE: ["그릭요거트", "연어 샐러드", "닭가슴살 스테이크"],
-        WED: ["고구마 + 삶은계란", "잡곡밥 + 된장국", "현미밥 + 닭볶음탕"],
-        THU: ["시리얼 + 두유", "두부김치", "곤약비빔면"],
-        FRI: ["아보카도토스트", "닭죽", "샐러드 + 닭가슴살"],
-        SAT: ["사과 + 삶은 계란", "현미김밥", "버섯불고기 + 채소볶음"]
-      };
+    // 식단 요일 탭
+    const tabs = document.querySelectorAll(".day-tab");
+    const mealCards = document.querySelectorAll(".meal-card p");
+    const mealsByDay = {
+      SUN: ["삶은 달걀 + 바나나", "닭가슴살 샐러드", "현미밥 + 김치찌개"],
+      MON: ["오트밀 + 블루베리", "곤약볶음밥", "두부부침 + 나물무침"],
+      TUE: ["그릭요거트", "연어 샐러드", "닭가슴살 스테이크"],
+      WED: ["고구마 + 삶은계란", "잡곡밥 + 된장국", "현미밥 + 닭볶음탕"],
+      THU: ["시리얼 + 두유", "두부김치", "곤약비빔면"],
+      FRI: ["아보카도토스트", "닭죽", "샐러드 + 닭가슴살"],
+      SAT: ["사과 + 삶은 계란", "현미김밥", "버섯불고기 + 채소볶음"]
+    };
 
-      tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-          // 탭 시각적 효과
-          tabs.forEach(t => t.classList.remove("active"));
-          tab.classList.add("active");
-
-          const selectedDay = tab.dataset.day;
-          const meals = mealsByDay[selectedDay];
-
-          // 아침/점심/저녁 식단 반영
-          if (meals && meals.length === 3) {
-            mealCards.forEach((card, i) => {
-              card.textContent = meals[i];
-            });
-          }
-        });
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const meals = mealsByDay[tab.dataset.day];
+        if (meals) {
+          mealCards.forEach((card, i) => card.textContent = meals[i]);
+        }
       });
+    });
 
-      // 오늘 요일 자동 선택
-      const today = new Date();
-      const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-      const todayName = dayNames[today.getDay()];
-      document.querySelector(`.day-tab[data-day="${todayName}"]`).click();
-    </script>
+    const today = new Date();
+    const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    document.querySelector(`.day-tab[data-day="${dayNames[today.getDay()]}"]`).click();
+  </script>
 </body>
 </html>

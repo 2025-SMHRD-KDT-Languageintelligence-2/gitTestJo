@@ -1,15 +1,23 @@
 package com.smhrd.teamjo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.smhrd.teamjo.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
+
+import com.smhrd.teamjo.entity.UserInfo;
 
 import java.time.LocalDate;
 import java.time.Period;
 
 @Controller
 public class CalorieController {
+
+    @Autowired UserService userService;
 
     // 🔹 POST: 처방 계산 후 리다이렉트
     @PostMapping("/calorie-result")
@@ -24,6 +32,7 @@ public class CalorieController {
             @RequestParam String unit,
             @RequestParam String activity,
             @RequestParam String gender,
+            HttpSession session,
             RedirectAttributes rttr
     ) {
         // 1. 나이 계산
@@ -59,6 +68,11 @@ public class CalorieController {
 
         // 7. 권장 섭취 칼로리 (최소 1200 kcal 보장)
         double targetCalories = Math.max(tdee - dailyDeficit, 1200);
+
+        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+        if(loginUser != null){
+            userService.updateRecomCal(loginUser.getUid(), (int)Math.round(targetCalories));
+        }
 
         // 8. FlashAttributes로 값 전달
         rttr.addFlashAttribute("bmr", (int) bmr);

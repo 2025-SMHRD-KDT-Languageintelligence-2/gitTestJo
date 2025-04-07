@@ -222,5 +222,11 @@ public class PageController {
     public String showCaloriePage() {
         return "calorie";
     }
+
+    // 보건소 지도 페이지 이동
+    @GetMapping("/healty-map")
+    public String showMapPage(){
+        return "healty-map";
+    }
     
 }
