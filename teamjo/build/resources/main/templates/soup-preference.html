@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>국 선호도 설문</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    form {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 24px;
+    }
+    .question label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .question input[type="radio"] {
+      margin-right: 8px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🍲 국류 선호도 설문</h2>
+
+  <form action="/submitSoupSurvey" method="post">
+
+    <div class="question">
+      <label>1. 선호하는 국 종류는 무엇인가요?</label>
+      <input type="radio" name="soup_type" value="맑은국" required> 맑은국 (미역국, 북엇국)<br>
+      <input type="radio" name="soup_type" value="찌개류"> 된장/고추장 찌개류<br>
+      <input type="radio" name="soup_type" value="탕류"> 탕류 (순두부찌개 등)<br>
+      <input type="radio" name="soup_type" value="기타"> 기타 (직접 입력)
+      <input type="text" name="soup_type_other" placeholder="기타를 선택한 경우 입력하세요">
+    </div>
+  
+    <!-- 2. 맵기 정도 -->
+    <div class="question">
+      <label>2. 맵기 정도를 어떻게 선호하시나요?</label>
+      <input type="radio" name="spicy_level" value="전혀 맵지 않음" required> 전혀 맵지 않음<br>
+      <input type="radio" name="spicy_level" value="약간 매움"> 약간 매움<br>
+      <input type="radio" name="spicy_level" value="매운 국 좋아함"> 매운 국 좋아함
+    </div>
+  
+    <!-- 3. 국물 양 -->
+    <div class="question">
+      <label>3. 국물의 양에 대한 선호는 어떤가요?</label>
+      <input type="radio" name="soup_amount" value="국물이 많은 국 선호" required> 국물이 많은 국 선호<br>
+      <input type="radio" name="soup_amount" value="적당한 국물"> 적당한 국물<br>
+      <input type="radio" name="soup_amount" value="거의 없는 국"> 거의 없는 국/자박한 정도
+    </div>
+  
+    <!-- 4. 피하고 싶은 재료 -->
+    <div class="question">
+      <label>4. 알레르기나 피하고 싶은 재료가 있다면 입력해주세요.</label>
+      <input type="text" name="exclude_ingredients" placeholder="예: 멸치, 해산물, 고추 등"/>
+    </div>
+  
+    <!-- 5. 다이어트 중 자주 먹고 싶은 국 -->
+    <div class="question">
+      <label>5. 다이어트 중 어떤 국을 더 자주 먹고 싶으신가요?</label>
+      <input type="radio" name="diet_soup_pref" value="채소 위주 국" required> 채소 위주 국<br>
+      <input type="radio" name="diet_soup_pref" value="두부/콩류 국"> 두부/콩류 국<br>
+      <input type="radio" name="diet_soup_pref" value="해산물 국"> 해산물 국<br>
+      <input type="radio" name="diet_soup_pref" value="고기 포함 국"> 고기 포함 국도 괜찮음
+    </div>
+  
+    <button type="submit">다음</button>
+  </form>
+
+</body>
+</html>

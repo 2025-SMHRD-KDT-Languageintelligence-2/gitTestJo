@@ -18,36 +18,31 @@ import java.time.LocalDateTime;
 
 @Service
 public class UserService {
-    
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private WeightRecordRepository weightRecordRepository;
 
-    // 회원가입 처리 메서드
+    // 회원가입 처리
     public void join(UserDTO dto){
         System.out.println("회원가입 요청 들어옴: " + dto.getEmail());
 
-        // 이메일을 U_ID로 설정
         String uid = dto.getEmail();
-
-        // 현재 시간 기준 가입일 설정
         Timestamp now = new Timestamp(System.currentTimeMillis());
 
-        // UserInfo 엔티티로 변환
         UserInfo user = new UserInfo();
         user.setUid(uid);
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword()); // 나중에 암호화 처리 진행 하기 ***
+        user.setPassword(dto.getPassword());
         user.setName(dto.getName());
         user.setPhone(dto.getPhone());
 
-        user.setJoinedAt(now); // 가입일시 기록
+        user.setJoinedAt(now);
         user.setRole("USER");
         user.setLoginSrc("local");
 
-        // DB 저장
         userRepository.save(user);
     }
 
@@ -55,30 +50,37 @@ public class UserService {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
-    // 체중 기록 저장 및 USER_INFO 동기화
+    // 체중 기록 저장 + USER_INFO 업데이트
     public void saveWeight(String userId, double weight){
-        //1. 체중 기록 저장
         WeightRecord record = new WeightRecord();
         record.setUserId(userId);
         record.setWeight(weight);
         record.setRecordedAt(LocalDateTime.now());
         weightRecordRepository.save(record);
 
-        //2. USER_INFO 테이블의 U_WEIGHT도 업데이트
-        Optional<UserInfo> userOpt = userRepository.findById(userId);
-        userOpt.ifPresent(user -> {
+        userRepository.findById(userId).ifPresent(user -> {
             user.setWeight(weight);
             userRepository.save(user);
         });
     }
 
+    // 🔄 기존 메서드는 유지하면서, 아래 새 메서드 추가
     @Transactional
     public void updateRecomCal(String uid, double targetCalories) {
-        Optional<UserInfo> optionalUser = userRepository.findById(uid);
-        if (optionalUser.isPresent()) {
-            UserInfo user = optionalUser.get();
+        userRepository.findById(uid).ifPresent(user -> {
             user.setRecomCal((int)Math.round(targetCalories));
             userRepository.save(user);
-        }
+        });
+    }
+
+    // 🔄 식사 횟수와 시간대까지 함께 저장
+    @Transactional
+    public void updateCalorieAndMealInfo(String uid, int recomCal, int mealCount, String mealTimes) {
+        userRepository.findById(uid).ifPresent(user -> {
+            user.setRecomCal(recomCal);
+            user.setMealCount(mealCount);     // 하루 식사 횟수
+            user.setMealTimes(mealTimes);     // 아침,점심,저녁 형식
+            userRepository.save(user);
+        });
     }
 }

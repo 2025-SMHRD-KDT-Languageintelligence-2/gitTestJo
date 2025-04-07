@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>반찬 선호도 설문</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    form {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 24px;
+    }
+    .question label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .question input[type="radio"] {
+      margin-right: 8px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🍽 반찬 선호도 설문</h2>
+
+  <form action="/processing" method="post">
+
+    <!-- 1. 선호하는 반찬 종류 -->
+    <div class="question">
+      <label>1. 선호하는 반찬 종류는?</label>
+      <input type="radio" name="side_type" value="나물/샐러드류" required> 나물, 샐러드류<br>
+      <input type="radio" name="side_type" value="고기반찬"> 고기반찬 (불고기, 닭가슴살 등)<br>
+      <input type="radio" name="side_type" value="해산물반찬"> 해산물반찬 (멸치볶음, 오징어 등)<br>
+      <input type="radio" name="side_type" value="기타"> 기타 (직접 입력)
+      <input type="text" name="side_type_other" placeholder="기타 반찬 입력">
+    </div>
+    
+    <!-- 2. 자주 먹는 반찬 맛 -->
+    <div class="question">
+      <label>2. 평소 자주 먹는 반찬의 맛은?</label>
+      <input type="radio" name="side_flavor" value="매운 맛" required> 매운 맛<br>
+      <input type="radio" name="side_flavor" value="짠 맛"> 짠 맛<br>
+      <input type="radio" name="side_flavor" value="담백한 맛"> 담백한 맛<br>
+      <input type="radio" name="side_flavor" value="단 맛"> 단 맛
+    </div>
+    
+    <!-- 3. 기피하는 재료 -->
+    <div class="question">
+      <label>3. 알레르기나 피하고 싶은 재료가 있다면 입력해주세요.</label>
+      <input type="text" name="exclude_ingredients" placeholder="예: 고추, 마늘, 해산물 등"/>
+    </div>
+    
+    <!-- 4. 다이어트 중이라 피하고 싶은 반찬 유형 -->
+    <div class="question">
+      <label>4. 다이어트 중이라 피하고 싶은 반찬 유형은?</label>
+      <input type="radio" name="avoid_type" value="튀김류" required> 튀김, 전류<br>
+      <input type="radio" name="avoid_type" value="설탕 많은 반찬"> 설탕이 많이 들어간 반찬<br>
+      <input type="radio" name="avoid_type" value="없음"> 없음 (다 괜찮음)
+    </div>
+    
+    <!-- 5. 선호하는 조리 방식 -->
+    <div class="question">
+      <label>5. 선호하는 반찬 조리 방식은?</label>
+      <input type="radio" name="cooking_method" value="삶기/찌기" required> 삶거나 찌기<br>
+      <input type="radio" name="cooking_method" value="굽기"> 굽기<br>
+      <input type="radio" name="cooking_method" value="생식"> 생식 or 무조리<br>
+      <input type="radio" name="cooking_method" value="상관없음"> 상관없음
+    </div>
+  
+    <button type="submit">제출하기</button>
+  </form>
+
+</body>
+</html>

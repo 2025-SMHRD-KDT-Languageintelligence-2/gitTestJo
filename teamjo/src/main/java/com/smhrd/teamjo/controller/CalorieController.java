@@ -5,21 +5,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.smhrd.teamjo.entity.UserInfo;
 import com.smhrd.teamjo.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
-
-import com.smhrd.teamjo.entity.UserInfo;
-
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 @Controller
 public class CalorieController {
 
-    @Autowired UserService userService;
+    @Autowired
+    private UserService userService;
 
-    // 🔹 POST: 처방 계산 후 리다이렉트
     @PostMapping("/calorie-result")
     public String calculateResult(
             @RequestParam double height,
@@ -32,6 +32,8 @@ public class CalorieController {
             @RequestParam String unit,
             @RequestParam String activity,
             @RequestParam String gender,
+            @RequestParam("meal_count") int mealCount,
+            @RequestParam("meal_times") List<String> mealTimes,
             HttpSession session,
             RedirectAttributes rttr
     ) {
@@ -44,7 +46,7 @@ public class CalorieController {
                 ? 10 * currentWeight + 6.25 * height - 5 * age + 5
                 : 10 * currentWeight + 6.25 * height - 5 * age - 161;
 
-        // 3. 활동 지수로 TDEE 계산
+        // 3. 활동지수로 TDEE 계산
         double activityFactor = switch (activity) {
             case "1" -> 1.2;
             case "2" -> 1.375;
@@ -69,12 +71,18 @@ public class CalorieController {
         // 7. 권장 섭취 칼로리 (최소 1200 kcal 보장)
         double targetCalories = Math.max(tdee - dailyDeficit, 1200);
 
+        // 8. 사용자 정보 저장
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
-        if(loginUser != null){
-            userService.updateRecomCal(loginUser.getUid(), (int)Math.round(targetCalories));
+        if (loginUser != null) {
+            userService.updateCalorieAndMealInfo(
+                loginUser.getUid(),
+                (int)Math.round(targetCalories),
+                mealCount,
+                String.join(",", mealTimes) // ["아침", "저녁"] → "아침,저녁"
+            );
         }
 
-        // 8. FlashAttributes로 값 전달
+        // 9. FlashAttributes로 결과 전달
         rttr.addFlashAttribute("bmr", (int) bmr);
         rttr.addFlashAttribute("tdee", (int) tdee);
         rttr.addFlashAttribute("dailyDeficit", (int) dailyDeficit);
@@ -86,7 +94,6 @@ public class CalorieController {
         return "redirect:/calorie-result";
     }
 
-    // 🔹 GET: Flash 값이 있으면 결과 페이지로 이동, 없으면 다시 입력 페이지로
     @GetMapping("/calorie-result")
     public String showResult(Model model) {
         if (!model.containsAttribute("bmr")) {

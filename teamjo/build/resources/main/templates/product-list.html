@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>상품 리스트</title>
+  <link rel="stylesheet" href="/css/product-list.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>🍱 식단 구성 상품 리스트</h2>
+
+    <!-- 🔍 검색 입력창 -->
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="상품명을 입력해보세요" />
+    </div>
+
+    <!-- 📌 카테고리 탭 -->
+    <div class="category-tabs">
+      <button class="tab-btn active" data-type="rice">밥</button>
+      <button class="tab-btn" data-type="soup">국</button>
+      <button class="tab-btn" data-type="side">반찬</button>
+    </div>
+
+    <!-- 🧾 상품 리스트 -->
+    <div id="product-list" class="product-list">
+      <!-- JS에서 상품 카드 삽입 -->
+    </div>
+  </div>
+
+  <script>
+    // 예시 상품 데이터
+    const products = [
+      { id: 1, name: "현미밥", calorie: 210, protein: 4, type: "rice", image: "/image/rice1.jpg" },
+      { id: 2, name: "잡곡밥", calorie: 230, protein: 5, type: "rice", image: "/image/rice2.jpg" },
+      { id: 3, name: "미역국", calorie: 90, protein: 2, type: "soup", image: "/image/soup1.jpg" },
+      { id: 4, name: "된장찌개", calorie: 150, protein: 6, type: "soup", image: "/image/soup2.jpg" },
+      { id: 5, name: "계란말이", calorie: 120, protein: 7, type: "side", image: "/image/side1.jpg" },
+      { id: 6, name: "오이무침", calorie: 50, protein: 1, type: "side", image: "/image/side2.jpg" },
+    ];
+
+    let currentCategory = "rice"; // 기본 카테고리
+
+    const productList = document.getElementById("product-list");
+    const categoryButtons = document.querySelectorAll(".tab-btn");
+    const searchInput = document.getElementById("searchInput");
+
+    // 상품 필터 및 렌더링 함수
+    function renderProducts() {
+      const searchKeyword = searchInput.value.trim().toLowerCase();
+
+      const filtered = products.filter(p => 
+        p.type === currentCategory && p.name.toLowerCase().includes(searchKeyword)
+      );
+
+      productList.innerHTML = "";
+
+      if (filtered.length === 0) {
+        productList.innerHTML = "<p>검색 결과가 없습니다.</p>";
+        return;
+      }
+
+      filtered.forEach(product => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" />
+          <div class="product-info">
+            <strong>${product.name}</strong>
+            <p>칼로리: ${product.calorie}kcal</p>
+            <p>단백질: ${product.protein}g</p>
+          </div>
+        `;
+        productList.appendChild(card);
+      });
+    }
+
+    // 카테고리 버튼 클릭 처리
+    categoryButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        currentCategory = button.dataset.type;
+        categoryButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        renderProducts();
+      });
+    });
+
+    // 검색 입력 이벤트 처리
+    searchInput.addEventListener("input", renderProducts);
+
+    // 초기 로딩 시 밥 카테고리 표시
+    renderProducts();
+  </script>
+</body>
+</html>

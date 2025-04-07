@@ -7,13 +7,17 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.smhrd.teamjo.entity.UserInfo;
@@ -50,6 +54,51 @@ public class PageController {
 
         return "main";
     }
+
+    // 식단 생성하기
+    @GetMapping("/start-diet")
+    public String startDietFlow(HttpSession session){
+        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+
+        if(loginUser == null || loginUser.getRecomCal() == 0){
+            return "redirect:/calorie";
+        }
+
+        return "redirect:/rice-preference";
+    }
+
+    @GetMapping("/rice-preference")
+    public String showRicePreference() {
+        return "rice-preference"; // templates/rice-preference.html 렌더링
+    }
+
+    @GetMapping("/soup-preference")
+    public String showSoupPreferencePage() {
+        return "soup-preference";
+    }
+
+    @GetMapping("/side-preference")
+    public String showSidePreferencePage() {
+        return "side-preference";
+    }
+
+    @PostMapping("/process-algorithm")
+    @ResponseBody
+    public ResponseEntity<String> processAlgorithm(HttpSession session) {
+        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        // [여기에 알고리즘 로직 삽입]
+        // - 권장 칼로리 기반 식재료 필터링
+        // - 사용자 설문 기반 유사도 검사
+        // - 결과를 DB에 저장 또는 세션에 저장
+
+        return ResponseEntity.ok("식단 생성 완료");
+    }
+
 
     // 마이페이지 이동
     @GetMapping("/mypage")
@@ -227,6 +276,11 @@ public class PageController {
     @GetMapping("/healty-map")
     public String showMapPage(){
         return "healty-map";
+    }
+    
+    @GetMapping("/product-list")
+    public String showProductListPage() {
+        return "product-list";
     }
     
 }

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>밥 선호도 설문</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .question {
+      margin-bottom: 25px;
+    }
+
+    .question p {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .submit-btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🍚 밥 선호도 설문</h2>
+
+    <form action="/submitRiceSurvey" method="post">
+
+      <!-- Q1: 밥 종류 -->
+      <div class="question">
+        <p>1. 어떤 종류의 밥을 더 선호하시나요?</p>
+        <label><input type="radio" name="rice_type" value="흰쌀밥" required /> 흰쌀밥</label>
+        <label><input type="radio" name="rice_type" value="현미밥" /> 현미밥</label>
+        <label><input type="radio" name="rice_type" value="잡곡밥" /> 잡곡밥</label>
+        <label><input type="radio" name="rice_type" value="귀리밥" /> 귀리밥</label>
+        <label><input type="radio" name="rice_type" value="보리밥" /> 보리밥</label>
+      </div>
+    
+      <!-- Q2: 식감 -->
+      <div class="question">
+        <p>2. 밥의 식감을 어떻게 선호하시나요?</p>
+        <label><input type="radio" name="stickiness" value="부드러운" required /> 부드러운</label>
+        <label><input type="radio" name="stickiness" value="쫀득한" /> 쫀득한</label>
+        <label><input type="radio" name="stickiness" value="고슬고슬한" /> 고슬고슬한</label>
+      </div>
+    
+      <!-- Q3: 잡곡 여부 -->
+      <div class="question">
+        <p>3. 잡곡이 포함된 밥을 선호하시나요?</p>
+        <label><input type="checkbox" name="grains" value="true" /> 잡곡 포함</label>
+      </div>
+    
+      <!-- Q4: 피하고 싶은 재료 -->
+      <div class="question">
+        <p>4. 알레르기 또는 피하고 싶은 곡류가 있으신가요?</p>
+        <input type="text" name="exclude_ingredients" placeholder="예: 보리, 귀리 등" />
+      </div>
+    
+      <!-- Q5: 다이어트 시 자주 먹고 싶은 밥 -->
+      <div class="question">
+        <p>5. 다이어트 중 자주 드시고 싶은 밥 종류는?</p>
+        <label><input type="radio" name="diet_rice_pref" value="곤약밥" required /> 곤약밥</label>
+        <label><input type="radio" name="diet_rice_pref" value="현미밥" /> 현미밥</label>
+        <label><input type="radio" name="diet_rice_pref" value="오트밀" /> 오트밀</label>
+        <label><input type="radio" name="diet_rice_pref" value="일반밥" /> 일반밥도 괜찮음</label>
+      </div>
+    
+      <!-- 제출 -->
+      <button type="submit" class="submit-btn">다음</button>
+    </form>
+  </div>
+</body>
+</html>

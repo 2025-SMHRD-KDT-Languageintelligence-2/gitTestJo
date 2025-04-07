@@ -54,6 +54,23 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="meal_count">하루 평균 식사 횟수</label>
+          <select name="meal_count" required>
+            <option value="" disabled selected>선택해주세요</option>
+            <option value="1">1끼</option>
+            <option value="2">2끼</option>
+            <option value="3">3끼</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>하루 중 식사하는 시간대를 선택해주세요</label>
+          <label><input type="checkbox" name="meal_times" value="아침"> 아침</label>
+          <label><input type="checkbox" name="meal_times" value="점심"> 점심</label>
+          <label><input type="checkbox" name="meal_times" value="저녁"> 저녁</label>
+        </div>
+
         <div class="form-group activity-group">
           <label>평소 활동량</label>
           <label><input type="radio" name="activity" value="1" checked> 활동 안함 (운동을 전혀 안해요.)</label>

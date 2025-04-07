@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>식단 생성 중...</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #4CAF50;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    p {
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🥗 식단을 추천 중입니다...</h2>
+  <div class="loader"></div>
+  <p>개인의 칼로리와 선호도를 기반으로 최적의 식단을 구성하고 있어요.</p>
+  <p>잠시만 기다려주세요.</p>
+
+  <script>
+    fetch('/process-algorithm', {
+      method: 'POST'
+    })
+    .then(response => {
+      if (response.ok) {
+        window.location.href = "/mypage";
+      } else {
+        alert("식단 생성 중 오류가 발생했습니다.");
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("서버 연결 오류가 발생했습니다.");
+    });
+  </script>
+
+</body>
+</html>
