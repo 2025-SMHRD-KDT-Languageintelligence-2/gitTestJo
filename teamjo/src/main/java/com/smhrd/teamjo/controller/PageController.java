@@ -2,26 +2,21 @@ package com.smhrd.teamjo.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.StackWalker.Option;
-import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.List;
-import java.util.Map;
+import java.time.*;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.smhrd.teamjo.entity.FoodInfo;
+import com.smhrd.teamjo.entity.RecommendedMeal;
 import com.smhrd.teamjo.entity.UserInfo;
 import com.smhrd.teamjo.entity.WeightRecord;
+import com.smhrd.teamjo.repository.FoodRepository;
+import com.smhrd.teamjo.repository.RecommendedMealRepository;
 import com.smhrd.teamjo.repository.UserRepository;
 import com.smhrd.teamjo.repository.WeightRecordRepository;
 
@@ -30,14 +25,15 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class PageController {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    // 생성자 주입 방식
-    public PageController(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private RecommendedMealRepository recommendedMealRepository;
 
-    // 메인 페이지
+    @Autowired
+    private WeightRecordRepository weightRecordRepository;
+
     @GetMapping({"/", "/main"})
     public String mainPage(HttpSession session, Model model){
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
@@ -45,7 +41,7 @@ public class PageController {
         if (loginUser != null) {
             model.addAttribute("isLoggedIn", true);
             model.addAttribute("userName", loginUser.getName());
-            model.addAttribute("userEmail", loginUser.getEmail());
+            model.addAttribute("userUid", loginUser.getUid());
             model.addAttribute("userProfileImg", loginUser.getProfile_img());
             model.addAttribute("user", loginUser);
         } else {
@@ -55,7 +51,6 @@ public class PageController {
         return "main";
     }
 
-    // 식단 생성하기
     @GetMapping("/start-diet")
     public String startDietFlow(HttpSession session){
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
@@ -64,95 +59,74 @@ public class PageController {
             return "redirect:/calorie";
         }
 
-        return "redirect:/rice-preference";
+        return "redirect:/preference-form";
     }
 
-    @GetMapping("/rice-preference")
-    public String showRicePreference() {
-        return "rice-preference"; // templates/rice-preference.html 렌더링
+    @GetMapping("/preference-form")
+    public String showPreferenceForm() {
+        return "preference-form"; // templates/preference-form.html
     }
 
-    @GetMapping("/soup-preference")
-    public String showSoupPreferencePage() {
-        return "soup-preference";
-    }
-
-    @GetMapping("/side-preference")
-    public String showSidePreferencePage() {
-        return "side-preference";
-    }
-
-    @PostMapping("/process-algorithm")
-    @ResponseBody
-    public ResponseEntity<String> processAlgorithm(HttpSession session) {
-        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
-
-        if (loginUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
-        }
-
-        // [여기에 알고리즘 로직 삽입]
-        // - 권장 칼로리 기반 식재료 필터링
-        // - 사용자 설문 기반 유사도 검사
-        // - 결과를 DB에 저장 또는 세션에 저장
-
-        return ResponseEntity.ok("식단 생성 완료");
-    }
-
-
-    // 마이페이지 이동
     @GetMapping("/mypage")
     public String myPage(Model model, HttpSession session) {
-        // 1. 세션에서 사용자 정보 꺼내기
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
 
         if (loginUser == null) {
-            return "redirect:/"; // 로그인 안 되어있으면 홈으로
+            return "redirect:/";
         }
 
-        // 2. 최신 정보가 필요하면 DB에서 조회 (선택 사항)
-        Optional<UserInfo> userOpt = userRepository.findById(loginUser.getEmail());
+        Optional<UserInfo> userOpt = userRepository.findById(loginUser.getUid());
         if (userOpt.isPresent()) {
             UserInfo user = userOpt.get();
-
             session.setAttribute("loginUser", user);
-            // 전체 user 객체를 넘겨줌
             model.addAttribute("user", user);
-
-            // 3. 모델에 필요한 값만 담기
             model.addAttribute("userName", user.getName());
             model.addAttribute("userAge", user.getAge());
             model.addAttribute("userSex", user.getSex());
 
-            // 한 달간 체중 기록 조회
             LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-            List<WeightRecord> records = weightRecordRepository.findByUserIdAndRecordedAtAfterOrderByRecordedAtAsc(user.getUid(), oneMonthAgo);
+            List<WeightRecord> records = weightRecordRepository
+                    .findByUserIdAndRecordedAtAfterOrderByRecordedAtAsc(user.getUid(), oneMonthAgo);
             model.addAttribute("weightRecords", records);
+
+            List<RecommendedMeal> meals = recommendedMealRepository.findByUserId(user.getUid());
+            Map<String, List<String>> mealsByDay = new HashMap<>();
+
+            for (String day : List.of("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")) {
+                mealsByDay.put(day, Arrays.asList("정보 없음", "정보 없음", "정보 없음"));
+            }
+
+            for (RecommendedMeal meal : meals) {
+                String day = meal.getWeekday();
+                String combined = meal.getRice() + " + " + meal.getSoup() + " + " + meal.getSide();
+                switch (meal.getTime()) {
+                    case "morning" -> mealsByDay.get(day).set(0, combined);
+                    case "lunch" -> mealsByDay.get(day).set(1, combined);
+                    case "dinner" -> mealsByDay.get(day).set(2, combined);
+                }
+            }
+
+            model.addAttribute("mealsByDay", mealsByDay);
         }
 
-        return "mypage"; // templates/mypage.html
+        return "mypage";
     }
 
-    // 개인정보변경 이동
     @GetMapping("/profile-edit")
     public String profileEditPage(HttpSession session, Model model) {
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+        if (loginUser == null) return "redirect:/";
 
-        if (loginUser == null){
-            return "redirect:/";
-        }
-
-        Optional<UserInfo> userOpt = userRepository.findById(loginUser.getEmail());
-        if(userOpt.isPresent()){
-            UserInfo user = userOpt.get();
+        Optional<UserInfo> userOpt = userRepository.findById(loginUser.getUid());
+        userOpt.ifPresent(user -> {
             model.addAttribute("nickname", user.getNick());
             model.addAttribute("height", user.getHeight());
             model.addAttribute("weight", user.getWeight());
             model.addAttribute("age", user.getAge());
             model.addAttribute("sex", user.getSex());
             model.addAttribute("userName", user.getName());
-            model.addAttribute("userEmail", user.getEmail());
-        }
+            model.addAttribute("userUid", user.getUid());
+        });
 
         model.addAttribute("user", loginUser);
         return "profile-edit";
@@ -169,43 +143,31 @@ public class PageController {
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
 
         if (loginUser != null) {
-            Optional<UserInfo> userOpt = userRepository.findById(loginUser.getEmail());
+            Optional<UserInfo> userOpt = userRepository.findById(loginUser.getUid());
             if (userOpt.isPresent()) {
                 UserInfo user = userOpt.get();
-
                 user.setNick(nickname);
                 user.setHeight(height);
                 user.setWeight(weight);
                 user.setAge(age);
                 user.setSex(sex);
 
-                String uploadDir = "C:/Users/smhrd/Desktop/gitTestJo-1/upload";
-                File uploadFolder = new File(uploadDir);
-                if (!uploadFolder.exists()){
-                    uploadFolder.mkdirs();
-                }
-
-                // 2. 프로필 이미지 처리
-                if (profileImage != null && !profileImage.isEmpty()){
-                    try{
-                        // 파일 저장 경로 설정
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    try {
                         String fileName = System.currentTimeMillis() + "_" + profileImage.getOriginalFilename();
-                        File dest = new File(uploadDir + "/" + fileName);
+                        File dest = new File("C:/Users/smhrd/Desktop/gitTestJo-1/upload/" + fileName);
                         profileImage.transferTo(dest);
-
-                        // DB에 경로 저장 (접근 가능한 경로)
                         user.setProfile_img("/upload/" + fileName);
-
-                    } catch (IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                
-                // DB 저장 및 세션 갱신
+
                 userRepository.save(user);
                 session.setAttribute("loginUser", user);
             }
         }
+
         return "redirect:/mypage";
     }
 
@@ -214,73 +176,66 @@ public class PageController {
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
 
         if(loginUser != null){
-            Optional<UserInfo> userOpt = userRepository.findById(loginUser.getEmail());
-            if (userOpt.isPresent()){
-                UserInfo user = userOpt.get();
-
-                // 기본 이미지 경로로 초기화
+            Optional<UserInfo> userOpt = userRepository.findById(loginUser.getUid());
+            userOpt.ifPresent(user -> {
                 user.setProfile_img("/image/default_profile.png");
-
                 userRepository.save(user);
                 session.setAttribute("loginUser", user);
-            }
+            });
         }
         return "redirect:/profile-edit";
     }
-
-    @Autowired
-    private WeightRecordRepository weightRecordRepository;
 
     @PostMapping("/recordWeight")
     public String recordWeight(@RequestParam("weight") double weight, HttpSession session){
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
 
         if (loginUser != null){
-            //1. 체중 기록 추가
             WeightRecord newRecord = new WeightRecord();
-            newRecord.setUserId(loginUser.getEmail());
+            newRecord.setUserId(loginUser.getUid());
             newRecord.setWeight(weight);
             weightRecordRepository.save(newRecord);
 
-            //2. USER_INFO의 현재 체중 업데이트
             loginUser.setWeight(weight);
             userRepository.save(loginUser);
             session.setAttribute("loginUser", loginUser);
         }
+
         return "redirect:/mypage";
     }
 
-    // 한 달간 체중 불러오기
-    @GetMapping("/weight-chart")
-    public String showWeightChart(HttpSession session, Model model) {
-        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
-
-        if (loginUser == null) {
-            return "redirect:/";
-        }
-
-        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-        List<WeightRecord> records = weightRecordRepository
-            .findByUserIdAndRecordedAtAfterOrderByRecordedAtAsc(loginUser.getUid(), oneMonthAgo);
-
-        model.addAttribute("weightRecords", records);
-        return "weight-chart"; // 이 뷰에서 그래프 출력
+    @GetMapping("/healty-map")
+    public String showMapPage() {
+        return "healty-map";
     }
-    
+
+    @Autowired
+    private FoodRepository foodRepository;
+
+    @GetMapping("/product-list")
+    public String showProductList(Model model) {
+        List<FoodInfo> foodList = foodRepository.findAll();
+        model.addAttribute("foodList", foodList);
+        return "product-list"; // templates/product-list.html
+    }
+
     @GetMapping("/calorie")
     public String showCaloriePage() {
         return "calorie";
     }
 
-    // 보건소 지도 페이지 이동
-    @GetMapping("/healty-map")
-    public String showMapPage(){
-        return "healty-map";
+    @GetMapping("/weight-chart")
+    public String showWeightChart(HttpSession session, Model model) {
+        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+        if (loginUser == null) return "redirect:/";
+
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        List<WeightRecord> records = weightRecordRepository
+                .findByUserIdAndRecordedAtAfterOrderByRecordedAtAsc(loginUser.getUid(), oneMonthAgo);
+
+        model.addAttribute("weightRecords", records);
+        return "weight-chart";
     }
-    
-    @GetMapping("/product-list")
-    public String showProductListPage() {
-        return "product-list";
-    }
+
     
 }

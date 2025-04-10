@@ -42,7 +42,7 @@
               <img th:src="@{${user.profile_img}}" class="card-profile-img" />
               <div class="card-user-info">
                 <div class="card-name" th:text="${userName} + 님">사용자님</div>
-                <div class="card-email" th:text="${userEmail} + 님">user@example.com</div>
+                <div class="card-email" th:text="${userUid} + 님">user@example.com</div>
               </div>
             </div>
             <button class="card-btn" onclick="location.href='/mypage'">마이페이지</button>
@@ -96,7 +96,7 @@
         <div>Login</div>
 
         <form action="/login" method="post">
-          <input type="email" name="email" placeholder="Enter your Email" class="modal-input" required />
+          <input type="text" name="uid" placeholder="Enter your ID" class="modal-input" required />
           <input type="password" name="password" placeholder="Enter your Password" class="modal-input" required />
           <button type="submit" class="modal-button primary">로그인</button>
         </form>
@@ -138,20 +138,20 @@
 
         <form action="/register" method="post">
           <label>이메일</label>
-          <input type="email" name="email" placeholder="Enter your Email" class="modal-input" required />
-
+          <input type="text" name="uid" placeholder="Enter your ID" class="modal-input" required />
+        
           <label>비밀번호</label>
           <input type="password" name="password" placeholder="Enter your Password" class="modal-input" required />
-
+        
           <label>비밀번호 확인</label>
           <input type="password" placeholder="Confirm your Password" class="modal-input" required />
-
+        
           <label>이름</label>
           <input type="text" name="name" placeholder="Enter your Name" class="modal-input" required />
-
+        
           <label>전화번호</label>
           <input type="tel" name="phone" placeholder="Enter your Phone Number" class="modal-input" required />
-
+        
           <button type="submit" class="modal-button primary">회원가입</button>
         </form>
       </div>

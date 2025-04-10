@@ -9,7 +9,6 @@ import com.smhrd.teamjo.repository.UserRepository;
 import com.smhrd.teamjo.repository.WeightRecordRepository;
 
 import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,27 +26,30 @@ public class UserService {
 
     // 회원가입 처리
     public void join(UserDTO dto){
-        System.out.println("회원가입 요청 들어옴: " + dto.getEmail());
+        System.out.println("회원가입 요청 들어옴: " + dto.getUid());
 
-        String uid = dto.getEmail();
+        String uid = dto.getUid();
         Timestamp now = new Timestamp(System.currentTimeMillis());
 
         UserInfo user = new UserInfo();
         user.setUid(uid);
-        user.setEmail(dto.getEmail());
         user.setPassword(dto.getPassword());
         user.setName(dto.getName());
         user.setPhone(dto.getPhone());
-
+        user.setHeight(0.0);
+        user.setWeight(0.0);
         user.setJoinedAt(now);
         user.setRole("USER");
         user.setLoginSrc("local");
+        user.setAge(0);
+        user.setSex("-");
+        user.setProfile_img("/image/default_profile.png");
 
         userRepository.save(user);
     }
 
-    public UserInfo login(String email, String password){
-        return userRepository.findByEmailAndPassword(email, password);
+    public UserInfo login(String uid, String password){
+        return userRepository.findByUidAndPassword(uid, password);
     }
 
     // 체중 기록 저장 + USER_INFO 업데이트

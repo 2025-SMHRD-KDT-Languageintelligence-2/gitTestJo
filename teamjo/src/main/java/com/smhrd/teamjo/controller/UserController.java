@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 
 @Controller
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
 
@@ -31,13 +31,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email,
+    public String login(@RequestParam("uid") String uid,
                         @RequestParam("password") String password,
                         HttpSession session,
                         Model model) {
-                            
-        UserInfo loginUser = userService.login(email, password);
-                            
+
+        UserInfo loginUser = userService.login(uid, password);
+
         if (loginUser != null){
             session.setAttribute("loginUser", loginUser);
             return "redirect:/main";
@@ -54,5 +54,4 @@ public class UserController {
         return "redirect:/main";
     }
 
-    
 }

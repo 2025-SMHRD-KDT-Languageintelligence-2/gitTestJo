@@ -10,7 +10,9 @@
   <!-- 상단 네비게이션 -->
   <header class="top-bar">
     <div class="logo-search">
-      <img src="/image/logo.png" alt="로고" class="logo-img" />
+      <a href="/main">
+        <img src="/image/logo.png" alt="로고" class="logo-img" />
+      </a>
       <input type="text" placeholder="찾는 음식이 있으신가요?" class="search-input" />
     </div>
     <div class="header-buttons">
@@ -45,7 +47,9 @@
 
     <!-- 요일별 식단 추천 -->
     <section class="diet-section">
-      <p class="diet-title">체중감량을 원하는 00님을 위한 추천 식단!</p>
+      <p class="diet-title" th:text="'체중감량을 원하는 ' + ${userName} + '님을 위한 추천 식단!'">
+        체중감량을 원하는 00님을 위한 추천 식단!
+      </p>
       <div class="week-tabs">
         <div class="day-tab" data-day="SUN">SUN</div>
         <div class="day-tab" data-day="MON">MON</div>
@@ -56,9 +60,9 @@
         <div class="day-tab" data-day="SAT">SAT</div>
       </div>
       <div class="meal-cards">
-        <div class="meal-card"><div class="image-placeholder"></div><p>아침</p></div>
-        <div class="meal-card"><div class="image-placeholder"></div><p>점심</p></div>
-        <div class="meal-card"><div class="image-placeholder"></div><p>저녁</p></div>
+        <div class="meal-card"><div class="image-placeholder"></div><p class="meal-text">아침</p></div>
+        <div class="meal-card"><div class="image-placeholder"></div><p class="meal-text">점심</p></div>
+        <div class="meal-card"><div class="image-placeholder"></div><p class="meal-text">저녁</p></div>
       </div>
     </section>
 
@@ -100,12 +104,12 @@
 
   <!-- 고정 버튼 -->
   <div class="fixed-button-area">
-    <a href="diet">
-      <div class="icon-button">
+    <form action="/start-diet" method="get">
+      <button type="submit" class="icon-button">
         <img src="/image/icon1.png" alt="식단 생성">
         <p>식단 생성하기</p>
-      </div>
-    </a>
+      </button>
+    </form>
     <a href="/calorie">
       <div class="icon-button">
         <img src="/image/icon2.png" alt="칼로리 처방">
@@ -185,16 +189,8 @@
 
     // 식단 요일 탭
     const tabs = document.querySelectorAll(".day-tab");
-    const mealCards = document.querySelectorAll(".meal-card p");
-    const mealsByDay = {
-      SUN: ["삶은 달걀 + 바나나", "닭가슴살 샐러드", "현미밥 + 김치찌개"],
-      MON: ["오트밀 + 블루베리", "곤약볶음밥", "두부부침 + 나물무침"],
-      TUE: ["그릭요거트", "연어 샐러드", "닭가슴살 스테이크"],
-      WED: ["고구마 + 삶은계란", "잡곡밥 + 된장국", "현미밥 + 닭볶음탕"],
-      THU: ["시리얼 + 두유", "두부김치", "곤약비빔면"],
-      FRI: ["아보카도토스트", "닭죽", "샐러드 + 닭가슴살"],
-      SAT: ["사과 + 삶은 계란", "현미김밥", "버섯불고기 + 채소볶음"]
-    };
+    const mealCards = document.querySelectorAll(".meal-card .meal-text");
+    const mealsByDay = /*[[${mealsByDay}]]*/ {};
 
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {

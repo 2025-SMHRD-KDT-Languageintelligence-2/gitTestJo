@@ -17,10 +17,6 @@ public class UserInfo {
     @Column(name = "U_ID", length = 50)
     private String uid;  // 고유 사용자 ID (이메일 기반)
 
-    // 🔐 로그인 관련
-    @Column(name = "U_EMAIL", length = 50, nullable = false)
-    private String email;
-
     @Column(name = "U_PW", length = 50, nullable = false)
     private String password;
 

@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserInfo, String> {
-    // String은 PK 타입(U_ID)을 의미함
     
-    // 이메일 중복 확인
-    boolean existsByEmail(String email);
+    // PK인 U_ID 기준으로 중복 확인
+    boolean existsById(String uid); // JpaRepository 기본 제공이지만 명시적으로 작성 가능
 
-    UserInfo findByEmailAndPassword(String email, String password);
+    // 로그인용: U_ID와 비밀번호 일치 확인
+    UserInfo findByUidAndPassword(String uid, String password);
 }
