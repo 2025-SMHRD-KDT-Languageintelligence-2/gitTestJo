@@ -6,21 +6,29 @@ import java.util.List;
 @Data
 public class SurveyRequestDTO {
 
-    private String dietGoal; // 식단 목표 (diet, protein, balance, normal)
+    // 0. 선호하는 밥 종류 (복수 선택)
+    private List<String> preferredRiceTypes;
 
-    private List<String> cookingStyles; // 조리 방식 (국물요리, 볶음요리 등)
+    // 1. 선호하는 조리 방식
+    private List<String> cookingStyles;
 
-    private List<String> dislikedFeatures; // 피하고 싶은 특성 (매운맛, 발효국 등)
+    // 2. 피하고 싶은 음식 특성
+    private List<String> dislikedFeatures;
 
-    private String dislikedIngredients; // 기피 재료 (텍스트로 입력, 쉼표 구분)
+    // 3. 기피하는 재료 (쉼표로 입력받음)
+    private String dislikedIngredients;
 
-    private String sugarSensitivity; // 당류 민감도 (무관심, 중간, 고)
+    // 4. 당류 민감도 (무관심 / 중간 / 고)
+    private String sugarSensitivity;
 
-    private List<String> preferredIngredients; // 선호 재료 (닭고기, 두부 등)
+    // 5. 선호하는 재료
+    private List<String> preferredIngredients;
 
-    private int spiceLevel; // 매운맛 선호도 (0~100)
+    // 6. 매운맛 선호 여부 (yes / no)
+    private String spicyPreference;
 
-    private int calRatioMorning; // 아침 비율 (%)
-    private int calRatioLunch;   // 점심 비율 (%)
-    private int calRatioDinner;  // 저녁 비율 (%)
+    // 7. 칼로리 분배 (식사 시간에 따라 일부 값만 들어올 수 있음)
+    private Integer calRatioMorning;
+    private Integer calRatioLunch;
+    private Integer calRatioDinner;
 }

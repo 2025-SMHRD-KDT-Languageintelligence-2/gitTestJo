@@ -1,30 +1,33 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>식단 추천 설문</title>
-  <style>
-    label { display: block; margin: 10px 0 5px; font-weight: bold; }
-    input[type="text"], select { width: 300px; padding: 5px; }
-    .section { margin-bottom: 30px; }
-  </style>
+  <link rel="stylesheet" href="/css/preference-form.css">
+  <title>맞춤형 식단 설문</title>
 </head>
 <body>
   <h1>맞춤형 식단 추천을 위한 설문</h1>
   <form action="/submit-survey" method="post">
 
+    <!-- 0. 선호하는 밥 종류 -->
     <div class="section">
-      <label for="dietGoal">1. 식단의 목표는 무엇인가요?</label>
-      <select name="dietGoal" id="dietGoal">
-        <option value="diet">체중 감량</option>
-        <option value="protein">단백질 보충</option>
-        <option value="balance">건강한 식습관 유지</option>
-        <option value="normal">일반 식사</option>
-      </select>
+      <label>0. 선호하는 밥 종류를 선택해주세요 (복수 선택 가능)</label>
+      <input type="checkbox" name="preferredRiceTypes" value="검정콩밥"> 검정콩밥
+      <input type="checkbox" name="preferredRiceTypes" value="귀리밥"> 귀리밥
+      <input type="checkbox" name="preferredRiceTypes" value="보리밥"> 보리밥
+      <input type="checkbox" name="preferredRiceTypes" value="수수밥"> 수수밥
+      <input type="checkbox" name="preferredRiceTypes" value="현미밥"> 현미밥
+      <input type="checkbox" name="preferredRiceTypes" value="쌀밥"> 쌀밥
+      <input type="checkbox" name="preferredRiceTypes" value="오곡밥"> 오곡밥
+      <input type="checkbox" name="preferredRiceTypes" value="잡곡밥"> 잡곡밥
+      <input type="checkbox" name="preferredRiceTypes" value="차조밥"> 차조밥
+      <input type="checkbox" name="preferredRiceTypes" value="찰밥"> 찰밥
+      <input type="checkbox" name="preferredRiceTypes" value="흑미밥"> 흑미밥
     </div>
 
+    <!-- 1. 선호 조리 방식 -->
     <div class="section">
-      <label>2. 선호하는 조리 방식 (복수 선택 가능)</label>
+      <label>1. 선호하는 조리 방식 (복수 선택 가능)</label>
       <input type="checkbox" name="cookingStyles" value="국물요리"> 국물 요리
       <input type="checkbox" name="cookingStyles" value="볶음요리"> 볶음 요리
       <input type="checkbox" name="cookingStyles" value="조림요리"> 조림 요리
@@ -32,27 +35,31 @@
       <input type="checkbox" name="cookingStyles" value="구이"> 구이
     </div>
 
+    <!-- 2. 피하고 싶은 음식 특성 -->
     <div class="section">
-      <label>3. 피하고 싶은 음식 특성</label>
+      <label>2. 피하고 싶은 음식 특성</label>
       <input type="checkbox" name="dislikedFeatures" value="매운맛"> 매운 음식
       <input type="checkbox" name="dislikedFeatures" value="발효국"> 발효된 음식
       <input type="checkbox" name="dislikedFeatures" value="고지방"> 기름진 음식
     </div>
 
+    <!-- 3. 기피 재료 -->
     <div class="section">
-      <label for="dislikedIngredients">4. 기피하는 재료 (쉼표로 구분)</label>
+      <label for="dislikedIngredients">3. 기피하는 재료 (쉼표로 구분)</label>
       <input type="text" name="dislikedIngredients" id="dislikedIngredients" placeholder="예: 돼지고기, 오징어, 김치">
     </div>
 
+    <!-- 4. 당류 민감도 -->
     <div class="section">
-      <label>5. 당류에 대한 민감도</label>
+      <label>4. 당류에 대한 민감도</label>
       <input type="radio" name="sugarSensitivity" value="무관심" checked> 신경 쓰지 않음
       <input type="radio" name="sugarSensitivity" value="중간"> 약간 신경 씀
       <input type="radio" name="sugarSensitivity" value="고"> 꼭 저당식 원함
     </div>
 
+    <!-- 5. 선호 재료 -->
     <div class="section">
-      <label>6. 선호하는 재료 (복수 선택 가능)</label>
+      <label>5. 선호하는 재료 (복수 선택 가능)</label>
       <input type="checkbox" name="preferredIngredients" value="닭고기"> 닭고기
       <input type="checkbox" name="preferredIngredients" value="두부"> 두부
       <input type="checkbox" name="preferredIngredients" value="계란"> 계란
@@ -60,19 +67,48 @@
       <input type="checkbox" name="preferredIngredients" value="곤약"> 곤약
     </div>
 
+    <!-- 6. 매운맛 선호 여부 -->
     <div class="section">
-      <label for="spiceLevel">7. 매운맛 선호도 (0=안맵게 ~ 100=매운거 좋아함)</label>
-      <input type="range" id="spiceLevel" name="spiceLevel" min="0" max="100" value="50">
+      <label>6. 매운맛을 선호하시나요?</label>
+      <input type="radio" name="spicyPreference" value="yes"> 선호함
+      <input type="radio" name="spicyPreference" value="no" checked> 선호하지 않음
     </div>
 
-    <div class="section">
-      <label>8. 하루 권장 섭취 칼로리 분배 (총합 100%)</label>
-      아침: <input type="number" name="calRatioMorning" value="30" min="0" max="100"> %<br>
-      점심: <input type="number" name="calRatioLunch" value="40" min="0" max="100"> %<br>
-      저녁: <input type="number" name="calRatioDinner" value="30" min="0" max="100"> %<br>
+    <!-- 7. 칼로리 분배 (동적 생성) -->
+    <div class="section" id="cal-ratio-section">
+      <label>7. 하루 권장 섭취 칼로리 분배 (총합 100%)</label>
+      <!-- 아침/점심/저녁 input 필드는 JS에서 생성 -->
     </div>
 
     <button type="submit">제출하고 식단 추천 받기</button>
   </form>
+
+  <!-- 🔽 동적 칼로리 분배 생성 스크립트 -->
+  <script th:inline="javascript">
+    let mealTimesRaw = /*[[${mealTimes}]]*/ '아침,점심,저녁';
+    if (!mealTimesRaw || mealTimesRaw === 'null') {
+      mealTimesRaw = '아침,점심,저녁';
+    }
+
+    const mealTimes = mealTimesRaw.split(',');
+    const mealKorToEng = {
+      "아침": "Morning",
+      "점심": "Lunch",
+      "저녁": "Dinner"
+    };
+
+    window.onload = function () {
+      const calRatioContainer = document.getElementById("cal-ratio-section");
+
+      mealTimes.forEach(meal => {
+        const eng = mealKorToEng[meal.trim()];
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = `
+          ${meal}: <input type="number" name="calRatio${eng}" value="33" min="0" max="100"> %
+        `;
+        calRatioContainer.appendChild(wrapper);
+      });
+    };
+  </script>
 </body>
 </html>

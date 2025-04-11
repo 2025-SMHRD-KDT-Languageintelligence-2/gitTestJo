@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.smhrd.teamjo.dto.FoodWithScore;
 import com.smhrd.teamjo.entity.FoodInfo;
 import com.smhrd.teamjo.entity.RecommendedMeal;
 import com.smhrd.teamjo.entity.UserInfo;
@@ -107,6 +108,15 @@ public class PageController {
             }
 
             model.addAttribute("mealsByDay", mealsByDay);
+
+            // 🔥 리뷰 기반 평점 포함된 인기 메뉴 (DTO)
+            List<FoodWithScore> reviewRiceList = foodRepository.findTop3ByTypeWithScore("밥류");
+            List<FoodWithScore> reviewSideList = foodRepository.findTop3ByTypeWithScore("반찬");
+            List<FoodWithScore> reviewSoupList = foodRepository.findTop3ByTypeWithScore("국류");
+
+            model.addAttribute("reviewRiceList", reviewRiceList);
+            model.addAttribute("reviewSideList", reviewSideList);
+            model.addAttribute("reviewSoupList", reviewSoupList);
         }
 
         return "mypage";
@@ -235,6 +245,17 @@ public class PageController {
 
         model.addAttribute("weightRecords", records);
         return "weight-chart";
+    }
+
+    @GetMapping("/food-detail/{id}")
+    public String showFoodDetail(@PathVariable("id") String id, Model model) {
+        Optional<FoodInfo> foodOpt = foodRepository.findById(id);
+        if (foodOpt.isPresent()) {
+            model.addAttribute("food", foodOpt.get());
+            return "food-detail";
+        } else {
+            return "redirect:/mypage";
+        }
     }
 
     

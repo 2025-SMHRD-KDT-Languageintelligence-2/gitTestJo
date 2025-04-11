@@ -66,36 +66,49 @@
       </div>
     </section>
 
-    <!-- 리뷰 기반 인기 메뉴 -->
+    <!-- 리뷰 기반 인기 메뉴 - 밥 -->
     <section class="popular-menu">
-      <h3>📊 다른 사용자들이 좋아하는 메뉴!</h3>
-      <p>이런 메뉴는 어떠세요?</p>
+      <h3>🍚 다른 사용자들이 선호한 밥류 TOP 3</h3>
       <div class="menu-card-container">
-        <div class="menu-card">
-          <div class="menu-img"></div>
+        <div class="menu-card" th:each="food : ${reviewRiceList}">
+          <img th:src="@{${food.img}}" class="menu-img" />
           <div class="menu-info">
-            <strong>청정채 오리볶음 (100g)</strong>
-            <p>열량 370kcal | 단백질 23g | 나트륨 472mg</p>
-            <p>평점 ⭐4.8</p>
-            <a href="#" class="detail-link">상세메뉴 보기 ></a>
+            <strong th:text="${food.name}"></strong>
+            <p th:text="'열량 ' + ${food.energy} + 'kcal | 단백질 ' + ${food.protein} + 'g | 지방 ' + ${food.province} + 'g'"></p>
+            <p th:text="'평점 ⭐' + ${#numbers.formatDecimal(food.avgScore, 1, 1)}"></p>
+            <a th:href="@{'/food-detail/' + ${food.foodId}}" class="detail-link">상세메뉴 보기 ></a>
           </div>
         </div>
-        <div class="menu-card">
-          <div class="menu-img"></div>
+      </div>
+    </section>
+
+    <!-- 리뷰 기반 인기 메뉴 - 반찬 -->
+    <section class="popular-menu">
+      <h3>🥗 다른 사용자들이 선호한 반찬류 TOP 3</h3>
+      <div class="menu-card-container">
+        <div class="menu-card" th:each="food : ${reviewSideList}">
+          <img th:src="@{${food.img}}" class="menu-img" />
           <div class="menu-info">
-            <strong>훈연 닭가슴살 (100g)</strong>
-            <p>열량 110kcal | 단백질 24g | 나트륨 110mg</p>
-            <p>평점 ⭐4.3</p>
-            <a href="#" class="detail-link">상세메뉴 보기 ></a>
+            <strong th:text="${food.name}"></strong>
+            <p th:text="'열량 ' + ${food.energy} + 'kcal | 단백질 ' + ${food.protein} + 'g | 지방 ' + ${food.province} + 'g'"></p>
+            <p th:text="'평점 ⭐' + ${#numbers.formatDecimal(food.avgScore, 1, 1)}"></p>
+            <a th:href="@{'/food-detail/' + ${food.foodId}}" class="detail-link">상세메뉴 보기 ></a>
           </div>
         </div>
-        <div class="menu-card">
-          <div class="menu-img"></div>
+      </div>
+    </section>
+
+    <!-- 리뷰 기반 인기 메뉴 - 국 -->
+    <section class="popular-menu">
+      <h3>🍲 다른 사용자들이 선호한 국류 TOP 3</h3>
+      <div class="menu-card-container">
+        <div class="menu-card" th:each="food : ${reviewSoupList}">
+          <img th:src="@{${food.img}}" class="menu-img" />
           <div class="menu-info">
-            <strong>연어샐러드 (230g)</strong>
-            <p>열량 328kcal | 단백질 6.6g | 나트륨 0mg</p>
-            <p>평점 ⭐4.9</p>
-            <a href="#" class="detail-link">상세메뉴 보기 ></a>
+            <strong th:text="${food.name}"></strong>
+            <p th:text="'열량 ' + ${food.energy} + 'kcal | 단백질 ' + ${food.protein} + 'g | 지방 ' + ${food.province} + 'g'"></p>
+            <p th:text="'평점 ⭐' + ${#numbers.formatDecimal(food.avgScore, 1, 1)}"></p>
+            <a th:href="@{'/food-detail/' + ${food.foodId}}" class="detail-link">상세메뉴 보기 ></a>
           </div>
         </div>
       </div>
@@ -124,7 +137,7 @@
     </a>
     <a href="product-list">
       <div class="icon-button">
-        <img src="/image/icon3.png" alt="인바디 찾기">
+        <img src="/image/icon3.png" alt="상품 검색">
         <p>상품정보<br>검색하기</p>
       </div>
     </a>

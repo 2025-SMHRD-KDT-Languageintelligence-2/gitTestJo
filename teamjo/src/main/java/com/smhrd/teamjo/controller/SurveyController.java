@@ -2,21 +2,19 @@ package com.smhrd.teamjo.controller;
 
 import com.smhrd.teamjo.dto.SurveyRequestDTO;
 import com.smhrd.teamjo.entity.UserInfo;
-import com.smhrd.teamjo.entity.FoodInfo;
-import com.smhrd.teamjo.entity.RecommendedMeal;
 import com.smhrd.teamjo.repository.FoodRepository;
-import com.smhrd.teamjo.repository.RecommendedMealRepository;
 import com.smhrd.teamjo.service.DietRecommendService;
 import com.smhrd.teamjo.service.DietRecommendService.Food;
+import com.smhrd.teamjo.service.RecommendedMealService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,8 +25,20 @@ import java.util.stream.Collectors;
 public class SurveyController {
 
     private final DietRecommendService recommendService;
+    private final RecommendedMealService recommendedMealService;
     private final FoodRepository foodRepository;
-    private final RecommendedMealRepository mealRepository;
+
+    // ✅ 0. 설문 페이지 열기 (식사시간 기반으로 칼로리 분배 필드 조절)
+    @GetMapping("/survey")
+    public String showSurveyForm(HttpSession session, Model model) {
+        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+
+        if (loginUser != null) {
+            model.addAttribute("mealTimes", loginUser.getMealTimes()); // 예: "아침,점심"
+        }
+
+        return "preference-form"; // templates/preference-form.html
+    }
 
     // 1. 설문 제출 → 세션에 설문 저장 후 로딩 페이지로 이동
     @PostMapping("/submit-survey")
@@ -54,7 +64,6 @@ public class SurveyController {
             return "error";
         }
 
-        String userId = loginUser.getUid();
         int recomCal = loginUser.getRecomCal();
 
         // FOOD_INFO → Food DTO로 변환
@@ -63,30 +72,14 @@ public class SurveyController {
                         e.getName(),
                         e.getType(),
                         e.getEnergy(),
-                        List.of() // 태그는 추후 필요 시 확장
+                        List.of() // 태그는 추후 확장 가능
                 )).collect(Collectors.toList());
 
-        // 알고리즘 실행
+        // 추천 알고리즘 실행
         List<Map<String, Object>> weeklyMeals = recommendService.recommendWeeklyMeals(survey, foodList, recomCal);
 
-        // DB 저장
-        LocalDate startDate = LocalDate.now();
-        for (Map<String, Object> meal : weeklyMeals) {
-            int dayOffset = (int) meal.get("day") - 1;
-            LocalDate mealDate = startDate.plusDays(dayOffset);
-
-            RecommendedMeal rm = new RecommendedMeal();
-            rm.setUserId(userId);
-            rm.setTime((String) meal.get("time"));
-            rm.setRice((String) meal.get("rice"));
-            rm.setSoup((String) meal.get("soup"));
-            rm.setSide((String) meal.get("side"));
-            rm.setTotalCalories((Double) meal.get("totalCal"));
-            rm.setMealDate(mealDate);
-            rm.setWeekday(mealDate.getDayOfWeek().name().substring(0, 3));
-
-            mealRepository.save(rm);
-        }
+        // 기존 식단 삭제 후 새 식단 저장
+        recommendedMealService.saveNewRecommendedMeals(loginUser, weeklyMeals);
 
         return "ok";
     }
