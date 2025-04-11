@@ -1,51 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title th:text="${food.name} + ' 상세정보'">음식 상세 정보</title>
   <link rel="stylesheet" href="/css/food-detail.css" />
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      padding: 40px;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      background: white;
-      padding: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border-radius: 8px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .food-img {
-      display: block;
-      margin: 0 auto 20px;
-      max-width: 300px;
-      border-radius: 10px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-    a {
-      display: inline-block;
-      margin-top: 30px;
-      text-decoration: none;
-      color: #4CAF50;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -53,11 +12,38 @@
     <img th:src="@{${food.img}}" alt="음식 이미지" class="food-img" />
 
     <ul>
+      <li><strong>유형:</strong> <span th:text="${food.type}"></span></li>
+      <li><strong>태그:</strong> <span th:text="${food.nutr}"></span></li>
       <li><strong>총칼로리:</strong> <span th:text="${food.energy}"></span> kcal</li>
       <li><strong>단백질:</strong> <span th:text="${food.protein}"></span> g</li>
       <li><strong>지방:</strong> <span th:text="${food.province}"></span> g</li>
       <li><strong>탄수화물:</strong> <span th:text="${food.carbo}"></span> g</li>
+      <li><strong>당:</strong> <span th:text="${food.sugar}"></span> g</li>
+      <li><strong>나트륨:</strong> <span th:text="${food.sodium}"></span> mg</li>
+      <li><strong>콜레스테롤:</strong> <span th:text="${food.col}"></span> mg</li>
+      <li><strong>포화지방:</strong> <span th:text="${food.sat}"></span> g</li>
+      <li><strong>트랜스지방:</strong> <span th:text="${food.trans}"></span> g</li>
+      <li><strong>가격:</strong> <span th:text="${food.price}"></span> 원</li>
     </ul>
+
+    <hr style="margin: 40px 0;" />
+
+    <h3>📢 사용자 리뷰</h3>
+    <div th:if="${reviews != null and !reviews.isEmpty()}">
+      <ul>
+        <li th:each="review : ${reviews}" style="margin-bottom: 25px;">
+          ⭐ <span th:text="${review.fScore}">0</span>점
+          <p th:text="${review.fReview}">리뷰 내용</p>
+          <p style="font-size: 13px; color: #888;">
+            <span th:text="'작성자: ' + ${review.uid}"></span> · 
+            <span th:text="${#temporals.format(review.createdAt, 'yyyy.MM.dd')}"></span>
+          </p>
+        </li>
+      </ul>
+    </div>
+    <div th:if="${reviews == null or reviews.isEmpty()}">
+      <p>아직 작성된 리뷰가 없습니다.</p>
+    </div>
 
     <a href="/mypage">← 마이페이지로 돌아가기</a>
   </div>

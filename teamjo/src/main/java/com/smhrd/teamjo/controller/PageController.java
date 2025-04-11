@@ -13,13 +13,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.smhrd.teamjo.dto.FoodWithScore;
 import com.smhrd.teamjo.entity.FoodInfo;
+import com.smhrd.teamjo.entity.FoodReview;
 import com.smhrd.teamjo.entity.RecommendedMeal;
 import com.smhrd.teamjo.entity.UserInfo;
 import com.smhrd.teamjo.entity.WeightRecord;
+import com.smhrd.teamjo.entity.FoodReview;
 import com.smhrd.teamjo.repository.FoodRepository;
+import com.smhrd.teamjo.repository.FoodReviewRepository;
 import com.smhrd.teamjo.repository.RecommendedMealRepository;
 import com.smhrd.teamjo.repository.UserRepository;
 import com.smhrd.teamjo.repository.WeightRecordRepository;
+import com.smhrd.teamjo.repository.FoodReviewRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -34,6 +38,9 @@ public class PageController {
 
     @Autowired
     private WeightRecordRepository weightRecordRepository;
+
+    @Autowired
+    private FoodReviewRepository foodReviewRepository;
 
     @GetMapping({"/", "/main"})
     public String mainPage(HttpSession session, Model model){
@@ -247,15 +254,15 @@ public class PageController {
         return "weight-chart";
     }
 
-    @GetMapping("/food-detail/{id}")
-    public String showFoodDetail(@PathVariable("id") String id, Model model) {
-        Optional<FoodInfo> foodOpt = foodRepository.findById(id);
-        if (foodOpt.isPresent()) {
-            model.addAttribute("food", foodOpt.get());
-            return "food-detail";
-        } else {
-            return "redirect:/mypage";
-        }
+    @GetMapping("/food-detail/{foodId}")
+    public String showFoodDetail(@PathVariable String foodId, Model model) {
+        FoodInfo food = foodRepository.findById(foodId).orElseThrow();
+        List<FoodReview> reviews = foodReviewRepository.findByFoodId(foodId);
+
+        model.addAttribute("food", food);
+        model.addAttribute("reviews", reviews);
+
+        return "food-detail";
     }
 
     
