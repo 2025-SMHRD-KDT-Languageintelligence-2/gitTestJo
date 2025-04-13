@@ -52,8 +52,14 @@ public class PageController {
             model.addAttribute("userUid", loginUser.getUid());
             model.addAttribute("userProfileImg", loginUser.getProfile_img());
             model.addAttribute("user", loginUser);
+
+            // ✅ Double 타입 그대로 넘김 (JS에서 숫자 비교 가능)
+            model.addAttribute("userRecomCal", loginUser.getRecomCal());
         } else {
             model.addAttribute("isLoggedIn", false);
+
+            // ✅ 비로그인 시도 기본값 0.0
+            model.addAttribute("userRecomCal", 0.0);
         }
 
         return "main";
@@ -92,31 +98,62 @@ public class PageController {
             model.addAttribute("userAge", user.getAge());
             model.addAttribute("userSex", user.getSex());
 
+            // 체중 기록
             LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
             List<WeightRecord> records = weightRecordRepository
                     .findByUserIdAndRecordedAtAfterOrderByRecordedAtAsc(user.getUid(), oneMonthAgo);
             model.addAttribute("weightRecords", records);
 
+            // 식단 기록
             List<RecommendedMeal> meals = recommendedMealRepository.findByUserId(user.getUid());
-            Map<String, List<String>> mealsByDay = new HashMap<>();
+            Map<String, List<Map<String, Object>>> mealsByDay = new HashMap<>();
 
+            // 요일 초기화
             for (String day : List.of("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")) {
-                mealsByDay.put(day, Arrays.asList("정보 없음", "정보 없음", "정보 없음"));
+                mealsByDay.put(day, Arrays.asList(
+                        new HashMap<>(), new HashMap<>(), new HashMap<>()
+                ));
             }
 
             for (RecommendedMeal meal : meals) {
                 String day = meal.getWeekday();
-                String combined = meal.getRice() + " + " + meal.getSoup() + " + " + meal.getSide();
-                switch (meal.getTime()) {
-                    case "morning" -> mealsByDay.get(day).set(0, combined);
-                    case "lunch" -> mealsByDay.get(day).set(1, combined);
-                    case "dinner" -> mealsByDay.get(day).set(2, combined);
+                int idx = switch (meal.getTime()) {
+                    case "morning" -> 0;
+                    case "lunch" -> 1;
+                    case "dinner" -> 2;
+                    default -> -1;
+                };
+
+                if (idx != -1) {
+                    String name = meal.getRice() + " + " + meal.getSoup() + " + " + meal.getSide();
+
+                    // 각 이미지 가져오기
+                    FoodInfo rice = foodRepository.findById(meal.getRice()).orElse(null);
+                    FoodInfo soup = foodRepository.findById(meal.getSoup()).orElse(null);
+                    FoodInfo side = foodRepository.findById(meal.getSide()).orElse(null);
+
+                    List<String> images = new ArrayList<>();
+                    images.add((rice != null && rice.getImg() != null) ? rice.getImg() : "/image/default_rice.png");
+                    images.add((soup != null && soup.getImg() != null) ? soup.getImg() : "/image/default_soup.png");
+                    images.add((side != null && side.getImg() != null) ? side.getImg() : "/image/default_side.png");
+
+                    Map<String, Object> mealInfo = new HashMap<>();
+                    mealInfo.put("name", name);
+                    mealInfo.put("images", images);
+
+                    mealsByDay.get(day).set(idx, mealInfo);
                 }
             }
 
-            model.addAttribute("mealsByDay", mealsByDay);
+            // mealsByDay를 JS에서 JSON으로 쓰기 위해 문자열로 변환
+            try {
+                String mealsJson = new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(mealsByDay);
+                model.addAttribute("mealsByDay", mealsJson);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            // 🔥 리뷰 기반 평점 포함된 인기 메뉴 (DTO)
+            // 리뷰 기반 인기 메뉴
             List<FoodWithScore> reviewRiceList = foodRepository.findTop3ByTypeWithScore("밥류");
             List<FoodWithScore> reviewSideList = foodRepository.findTop3ByTypeWithScore("반찬");
             List<FoodWithScore> reviewSoupList = foodRepository.findTop3ByTypeWithScore("국류");
@@ -128,6 +165,9 @@ public class PageController {
 
         return "mypage";
     }
+
+
+
 
     @GetMapping("/profile-edit")
     public String profileEditPage(HttpSession session, Model model) {

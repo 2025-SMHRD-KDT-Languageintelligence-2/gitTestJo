@@ -189,25 +189,56 @@ body {
 }
 
 /* 식단 카드 정렬 */
+/* mypage.css */
+
 .meal-cards {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-top: 24px;
+  justify-content: space-around;
+  margin-top: 30px;
 }
 
 .meal-card {
-  flex: 1;
-  max-width: 32%;     /* 3개니까 32% 정도로 */
+  width: 250px;
+  height: 250px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 10px;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  overflow: hidden;
+  position: relative;
 }
 
-.image-placeholder {
-  background-color: #c4c4c4;
-  height: 180px;
-  border-radius: 12px;
-  margin-bottom: 8px;
+/* 슬라이더 전체 영역 */
+.meal-img-slider {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
+
+.meal-slide {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* 슬라이드 중 보이는 이미지 */
+.meal-img-slider .meal-slide.active {
+  opacity: 1;
+}
+
+/* 식단 텍스트 */
+.meal-text {
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 
 /* 모달 스타일 */
 .modal {

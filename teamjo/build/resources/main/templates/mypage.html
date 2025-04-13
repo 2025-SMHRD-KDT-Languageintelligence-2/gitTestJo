@@ -60,9 +60,18 @@
         <div class="day-tab" data-day="SAT">SAT</div>
       </div>
       <div class="meal-cards">
-        <div class="meal-card"><div class="image-placeholder"></div><p class="meal-text">아침</p></div>
-        <div class="meal-card"><div class="image-placeholder"></div><p class="meal-text">점심</p></div>
-        <div class="meal-card"><div class="image-placeholder"></div><p class="meal-text">저녁</p></div>
+        <div class="meal-card">
+          <div class="meal-img-slider"></div>
+          <p class="meal-text">아침</p>
+        </div>
+        <div class="meal-card">
+          <div class="meal-img-slider"></div>
+          <p class="meal-text">점심</p>
+        </div>
+        <div class="meal-card">
+          <div class="meal-img-slider"></div>
+          <p class="meal-text">저녁</p>
+        </div>
       </div>
     </section>
 
@@ -162,6 +171,7 @@
     const labels = records.map(r => new Date(r.recordedAt).toLocaleDateString());
     const weights = records.map(r => r.weight);
     const ctx = document.getElementById("weightChart").getContext("2d");
+  
     new Chart(ctx, {
       type: 'line',
       data: {
@@ -191,7 +201,7 @@
         }
       }
     });
-
+  
     // 모달 제어
     const modal = document.getElementById('weightModal');
     const openBtn = document.getElementById('openModalBtn');
@@ -199,26 +209,62 @@
     openBtn.onclick = () => modal.style.display = 'block';
     closeBtn.onclick = () => modal.style.display = 'none';
     window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; }
-
-    // 식단 요일 탭
+  
+    // ✅ 요일별 식단 영역
     const tabs = document.querySelectorAll(".day-tab");
-    const mealCards = document.querySelectorAll(".meal-card .meal-text");
-    const mealsByDay = /*[[${mealsByDay}]]*/ {};
-
+    const mealCards = document.querySelectorAll(".meal-card");
+    const mealsByDay = JSON.parse(/*[[${mealsByDay}]]*/ '{}');
+  
+    console.log("📦 mealsByDay 전체:", mealsByDay);
+  
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         tabs.forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
         const meals = mealsByDay[tab.dataset.day];
+  
+        console.log(`🔍 선택된 요일: ${tab.dataset.day}`);
+        console.log("🍱 해당 요일의 meals:", meals);
+  
         if (meals) {
-          mealCards.forEach((card, i) => card.textContent = meals[i]);
+          mealCards.forEach((card, i) => {
+            const meal = meals[i];
+            console.log(`➡️ ${i}번 식사:`, meal);
+  
+            const text = card.querySelector(".meal-text");
+            const slider = card.querySelector(".meal-img-slider");
+            slider.innerHTML = "";
+  
+            if (meal?.images?.length > 0) {
+              meal.images.forEach(src => {
+                const encodedSrc = encodeURI(src);  // ✅ 경로 인코딩 처리!
+                console.log("🖼 이미지 경로:", encodedSrc);
+  
+                const img = document.createElement("img");
+                img.src = encodedSrc;
+                img.className = "meal-slide";
+                slider.appendChild(img);
+              });
+            } else {
+              console.warn("⚠️ 이미지 없음:", meal);
+            }
+  
+            if (text && meal?.name) {
+              text.textContent = meal.name;
+            }
+          });
+        } else {
+          console.warn("❌ meals 객체가 존재하지 않음!");
         }
       });
     });
-
+  
     const today = new Date();
-    const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-    document.querySelector(`.day-tab[data-day="${dayNames[today.getDay()]}"]`).click();
+    const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    const todayTab = document.querySelector(`.day-tab[data-day="${dayNames[today.getDay()]}"]`);
+    if (todayTab) todayTab.click();
   </script>
+  
+  
 </body>
 </html>

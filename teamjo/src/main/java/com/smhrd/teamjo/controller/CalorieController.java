@@ -74,12 +74,19 @@ public class CalorieController {
         // 8. 사용자 정보 저장
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
         if (loginUser != null) {
+            // DB 저장
             userService.updateCalorieAndMealInfo(
                 loginUser.getUid(),
                 (int)Math.round(targetCalories),
                 mealCount,
-                String.join(",", mealTimes) // ["아침", "저녁"] → "아침,저녁"
+                String.join(",", mealTimes)
             );
+
+            // ✅ 세션 값도 갱신
+            loginUser.setRecomCal((int)Math.round(targetCalories));
+            loginUser.setMealCount(mealCount);
+            loginUser.setMealTimes(String.join(",", mealTimes));
+            session.setAttribute("loginUser", loginUser); // 세션에 반영
         }
 
         // 9. FlashAttributes로 결과 전달

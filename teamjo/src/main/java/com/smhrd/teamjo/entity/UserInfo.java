@@ -58,7 +58,7 @@ public class UserInfo {
 
     // 🔥 권장 섭취 칼로리
     @Column(name = "RECOM_CAL")
-    private Integer recomCal;
+    private double recomCal;
 
     // 🍽 식사 관련 정보
     @Column(name = "U_MEAL_COUNT")

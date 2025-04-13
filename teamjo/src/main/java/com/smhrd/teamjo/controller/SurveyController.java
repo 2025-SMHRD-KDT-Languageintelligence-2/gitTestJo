@@ -64,7 +64,7 @@ public class SurveyController {
             return "error";
         }
 
-        int recomCal = loginUser.getRecomCal();
+        double recomCal = loginUser.getRecomCal();
 
         // FOOD_INFO → Food DTO로 변환
         List<Food> foodList = foodRepository.findAll().stream()

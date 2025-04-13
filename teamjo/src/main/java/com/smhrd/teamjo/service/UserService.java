@@ -43,6 +43,7 @@ public class UserService {
         user.setLoginSrc("local");
         user.setAge(0);
         user.setSex("-");
+        user.setRecomCal(0.0);
         user.setProfile_img("/image/default_profile.png");
 
         userRepository.save(user);

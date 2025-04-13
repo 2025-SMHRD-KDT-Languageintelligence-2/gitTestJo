@@ -17,13 +17,6 @@
       </div>
     </div>
 
-    <!-- 햄버거 버튼 (모바일용) -->
-    <div class="hamburger" id="hamburger-btn">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
     <!-- PC용 로그인/회원가입 -->
     <div class="nav-buttons" style="position: relative;">
       <th:block th:if="${isLoggedIn}">
@@ -71,9 +64,7 @@
     <h1 class="main-title">AI를 통해 식단을 자동완성 해보세요</h1>
     <p class="sub-title">원하는 조건에 맞는 식단을 AI와 함께 자동완성 해보세요</p>
     <div class="cta-buttons">
-      <form action="/start-diet" method="get">
-        <button type="submit" class="cta-btn filled">식단 생성하기</button>
-      </form>
+      <button id="start-diet-btn" type="button" class="cta-btn filled">식단 생성하기</button>
       <form action="explore.html" method="get">
         <button type="submit" class="cta-btn outline">둘러보기</button>
       </form>
@@ -110,21 +101,56 @@
     </div>
   </div>
 
-  <script th:inline="Javascript">
+  <script th:inline="javascript">
     /*<![CDATA[*/
-    let loginError = /*[[${loginError}]]*/ false;
-    if(loginError) {
-      alert("이메일 또는 비밀번호가 틀렸습니다.");
-
-      //로그인 모달 띄우기
-      document.getElementById("login-modal").classList.remove("hidden");
-
-      //입력값 초기화
-      const inputs = document.querySelectorAll('#login-modal input');
-      inputs.forEach(input => input.value = '');
-    }
+      document.addEventListener("DOMContentLoaded", () => {
+        const isLoggedIn = /*[[${isLoggedIn}]]*/ false;
+        const userRecomCal = /*[[${userRecomCal}]]*/ 0.0;
+        const loginError = /*[[${loginError}]]*/ false;
+        const registerError = /*[[${registerError}]]*/ null;
+    
+        const startDietBtn = document.getElementById("start-diet-btn");
+        const loginModal = document.getElementById("login-modal");
+        const signupModal = document.getElementById("signup-modal");
+    
+        console.log("isLoggedIn:", isLoggedIn);
+        console.log("userRecomCal:", userRecomCal);
+    
+        // 🔐 로그인 오류 처리
+        if (loginError) {
+          alert("이메일 또는 비밀번호가 틀렸습니다.");
+          loginModal.classList.remove("hidden");
+    
+          const inputs = document.querySelectorAll('#login-modal input');
+          inputs.forEach(input => input.value = '');
+        }
+    
+        // 📧 회원가입 중복 오류 처리
+        if (registerError) {
+          alert(registerError); // 예: "이미 사용 중인 이메일입니다."
+          signupModal.classList.remove("hidden");
+        }
+    
+        // 🍱 식단 생성 버튼 클릭 처리
+        if (startDietBtn) {
+          startDietBtn.addEventListener("click", () => {
+            if (!isLoggedIn) {
+              alert("로그인이 필요한 서비스입니다.");
+              loginModal.classList.remove("hidden");
+            } else {
+              if (parseFloat(userRecomCal) <= 0.0) {
+                window.location.href = "/calorie";
+              } else {
+                window.location.href = "/preference-form";
+              }
+            }
+          });
+        }
+      });
     /*]]>*/
-  </script>
+    </script>
+    
+    
 
   <!-- 회원가입 모달 -->
   <div id="signup-modal" class="modal hidden">
