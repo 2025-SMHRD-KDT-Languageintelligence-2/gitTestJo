@@ -60,19 +60,35 @@
         <div class="day-tab" data-day="SAT">SAT</div>
       </div>
       <div class="meal-cards">
-        <div class="meal-card">
-          <div class="meal-img-slider"></div>
-          <p class="meal-text">아침</p>
+      <!-- 아침 -->
+      <div class="meal-card">
+        <div class="meal-image-placeholder">
+          <button class="slide-btn prev-btn">←</button>
+          <img class="meal-img" />
+          <button class="slide-btn next-btn">→</button>
         </div>
-        <div class="meal-card">
-          <div class="meal-img-slider"></div>
-          <p class="meal-text">점심</p>
-        </div>
-        <div class="meal-card">
-          <div class="meal-img-slider"></div>
-          <p class="meal-text">저녁</p>
-        </div>
+        <p class="meal-text">아침</p>
       </div>
+      <!-- 점심 -->
+      <div class="meal-card">
+        <div class="meal-image-placeholder">
+          <button class="slide-btn prev-btn">←</button>
+          <img class="meal-img" />
+          <button class="slide-btn next-btn">→</button>
+        </div>
+        <p class="meal-text">점심</p>
+      </div>
+      <!-- 저녁 -->
+      <div class="meal-card">
+        <div class="meal-image-placeholder">
+          <button class="slide-btn prev-btn">←</button>
+          <img class="meal-img" />
+          <button class="slide-btn next-btn">→</button>
+        </div>
+        <p class="meal-text">저녁</p>
+      </div>
+      </div>
+      
     </section>
 
     <!-- 리뷰 기반 인기 메뉴 - 밥 -->
@@ -167,6 +183,7 @@
   <!-- JS -->
   <script src="http://cdn.jsdelivr.net/npm/chart.js"></script>
   <script th:inline="javascript">
+    // 체중 기록 그래프
     const records = /*[[${weightRecords}]]*/ [];
     const labels = records.map(r => new Date(r.recordedAt).toLocaleDateString());
     const weights = records.map(r => r.weight);
@@ -210,60 +227,69 @@
     closeBtn.onclick = () => modal.style.display = 'none';
     window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; }
   
-    // ✅ 요일별 식단 영역
+    // 요일별 식단 영역
+    const mealsByDay = JSON.parse(/*[[${mealsByDay}]]*/ '{}');
     const tabs = document.querySelectorAll(".day-tab");
     const mealCards = document.querySelectorAll(".meal-card");
-    const mealsByDay = JSON.parse(/*[[${mealsByDay}]]*/ '{}');
-  
-    console.log("📦 mealsByDay 전체:", mealsByDay);
-  
+
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         tabs.forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
+
         const meals = mealsByDay[tab.dataset.day];
-  
-        console.log(`🔍 선택된 요일: ${tab.dataset.day}`);
-        console.log("🍱 해당 요일의 meals:", meals);
-  
+
         if (meals) {
           mealCards.forEach((card, i) => {
             const meal = meals[i];
-            console.log(`➡️ ${i}번 식사:`, meal);
-  
+            const img = card.querySelector(".meal-img");
             const text = card.querySelector(".meal-text");
-            const slider = card.querySelector(".meal-img-slider");
-            slider.innerHTML = "";
-  
-            if (meal?.images?.length > 0) {
-              meal.images.forEach(src => {
-                const encodedSrc = encodeURI(src);  // ✅ 경로 인코딩 처리!
-                console.log("🖼 이미지 경로:", encodedSrc);
-  
-                const img = document.createElement("img");
-                img.src = encodedSrc;
-                img.className = "meal-slide";
-                slider.appendChild(img);
-              });
-            } else {
-              console.warn("⚠️ 이미지 없음:", meal);
-            }
-  
-            if (text && meal?.name) {
-              text.textContent = meal.name;
-            }
+
+            const riceImage = meal?.riceImage;
+            const soupImage = meal?.soupImage;
+            const sideImage = meal?.sideImage;
+
+            // ✅ 디버깅 로그 출력
+            console.log(`📅 ${tab.dataset.day} - ${i}번째 식사`);
+            console.log("🥄 meal.name:", meal?.name);
+            console.log("🍚 riceImage:", riceImage);
+            console.log("🍲 soupImage:", soupImage);
+            console.log("🥗 sideImage:", sideImage);
+
+            const images = [riceImage, soupImage, sideImage];
+            const labels = ['🍚 밥', '🍲 국', '🥗 반찬'];
+            let currentIndex = 0;
+
+            // 이미지 세팅
+            img.src = images[currentIndex] || '/image/rice_image/default_rice.png';
+            text.textContent = `${labels[currentIndex]}: ${meal?.name || ''}`;
+
+            const prevBtn = card.querySelector(".prev-btn");
+            const nextBtn = card.querySelector(".next-btn");
+
+            prevBtn.onclick = () => {
+              currentIndex = (currentIndex + 2) % 3;
+              img.src = images[currentIndex] || '/image/rice_image/default_rice.png';
+              text.textContent = `${labels[currentIndex]}: ${meal?.name || ''}`;
+            };
+
+            nextBtn.onclick = () => {
+              currentIndex = (currentIndex + 1) % 3;
+              img.src = images[currentIndex] || '/image/rice_image/default_rice.png';
+              text.textContent = `${labels[currentIndex]}: ${meal?.name || ''}`;
+            };
           });
-        } else {
-          console.warn("❌ meals 객체가 존재하지 않음!");
         }
       });
     });
-  
+
+    // 페이지 로드시 자동 클릭
     const today = new Date();
     const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     const todayTab = document.querySelector(`.day-tab[data-day="${dayNames[today.getDay()]}"]`);
     if (todayTab) todayTab.click();
   </script>
+  
   
   
 </body>

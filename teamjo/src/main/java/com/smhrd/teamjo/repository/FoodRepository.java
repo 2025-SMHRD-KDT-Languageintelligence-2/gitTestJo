@@ -7,10 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FoodRepository extends JpaRepository<FoodInfo, String> {
 
     List<FoodInfo> findByType(String type);
+    
+    Optional<FoodInfo> findByName(String name);
 
     // 기존 entity 반환은 유지하되, DTO로 평점까지 가져오는 쿼리 추가
     @Query(value = """

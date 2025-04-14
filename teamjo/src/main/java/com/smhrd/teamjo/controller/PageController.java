@@ -104,15 +104,12 @@ public class PageController {
                     .findByUserIdAndRecordedAtAfterOrderByRecordedAtAsc(user.getUid(), oneMonthAgo);
             model.addAttribute("weightRecords", records);
 
-            // 식단 기록
+            // 식단 기록 (밥 이미지만 포함)
             List<RecommendedMeal> meals = recommendedMealRepository.findByUserId(user.getUid());
             Map<String, List<Map<String, Object>>> mealsByDay = new HashMap<>();
 
-            // 요일 초기화
             for (String day : List.of("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")) {
-                mealsByDay.put(day, Arrays.asList(
-                        new HashMap<>(), new HashMap<>(), new HashMap<>()
-                ));
+                mealsByDay.put(day, Arrays.asList(new HashMap<>(), new HashMap<>(), new HashMap<>()));
             }
 
             for (RecommendedMeal meal : meals) {
@@ -123,29 +120,42 @@ public class PageController {
                     case "dinner" -> 2;
                     default -> -1;
                 };
-
+            
                 if (idx != -1) {
                     String name = meal.getRice() + " + " + meal.getSoup() + " + " + meal.getSide();
-
-                    // 각 이미지 가져오기
-                    FoodInfo rice = foodRepository.findById(meal.getRice()).orElse(null);
-                    FoodInfo soup = foodRepository.findById(meal.getSoup()).orElse(null);
-                    FoodInfo side = foodRepository.findById(meal.getSide()).orElse(null);
-
-                    List<String> images = new ArrayList<>();
-                    images.add((rice != null && rice.getImg() != null) ? rice.getImg() : "/image/default_rice.png");
-                    images.add((soup != null && soup.getImg() != null) ? soup.getImg() : "/image/default_soup.png");
-                    images.add((side != null && side.getImg() != null) ? side.getImg() : "/image/default_side.png");
-
+            
+                    // 🍚 밥
+                    String riceName = meal.getRice();
+                    FoodInfo rice = foodRepository.findByName(riceName).orElse(null);
+                    String riceImage = (rice != null && rice.getImg() != null)
+                            ? rice.getImg()
+                            : "/image/rice_image/default_rice.png";
+            
+                    // 🍲 국
+                    String soupName = meal.getSoup();
+                    FoodInfo soup = foodRepository.findByName(soupName).orElse(null);
+                    String soupImage = (soup != null && soup.getImg() != null)
+                            ? soup.getImg()
+                            : "/image/soup_image/default_soup.png";
+            
+                    // 🥗 반찬
+                    String sideName = meal.getSide();
+                    FoodInfo side = foodRepository.findByName(sideName).orElse(null);
+                    String sideImage = (side != null && side.getImg() != null)
+                            ? side.getImg()
+                            : "/image/side_image/default_side.png";
+            
+                    // 👉 JSON에 넣기
                     Map<String, Object> mealInfo = new HashMap<>();
                     mealInfo.put("name", name);
-                    mealInfo.put("images", images);
-
+                    mealInfo.put("riceImage", riceImage);   // 기본값으로 사용할 밥 이미지
+                    mealInfo.put("soupImage", soupImage);   // 국 이미지 (화면엔 처음에 안 보임)
+                    mealInfo.put("sideImage", sideImage);   // 반찬 이미지 (화면엔 처음에 안 보임)
+            
                     mealsByDay.get(day).set(idx, mealInfo);
                 }
             }
 
-            // mealsByDay를 JS에서 JSON으로 쓰기 위해 문자열로 변환
             try {
                 String mealsJson = new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(mealsByDay);
                 model.addAttribute("mealsByDay", mealsJson);
@@ -165,6 +175,8 @@ public class PageController {
 
         return "mypage";
     }
+
+
 
 
 
