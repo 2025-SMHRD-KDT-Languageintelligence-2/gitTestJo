@@ -94,3 +94,54 @@ body {
     margin: 25px 0;
   }
   
+  table.recommend-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  table.recommend-table th {
+    background-color: #3C8DBC;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+  }
+
+  table.recommend-table td {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 14px;
+    vertical-align: top;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  table.recommend-table tr td:first-child {
+    background-color: #f4f6f9;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  table.recommend-table td div {
+    margin-bottom: 4px;
+  }
+
+  .recommend-wrapper {
+    max-width: 1000px;
+    margin: 50px auto;
+    background: #fefefe;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  }
+
+  h2.recommend-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #3C8DBC;
+  }

@@ -77,7 +77,14 @@ public class PageController {
     }
 
     @GetMapping("/preference-form")
-    public String showPreferenceForm() {
+    public String showPreferenceForm(HttpSession session, Model model) {
+        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+
+        if (loginUser != null) {
+            model.addAttribute("userId", loginUser.getUid());
+            model.addAttribute("recomCal", loginUser.getRecomCal());
+        }
+
         return "preference-form"; // templates/preference-form.html
     }
 

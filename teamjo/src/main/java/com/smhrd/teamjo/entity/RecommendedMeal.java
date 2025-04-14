@@ -50,4 +50,7 @@ public class RecommendedMeal {
 
     @Column(name = "WEEKDAY")
     private String weekday;
+
+    @Column(name = "SIMILARITY")
+    private Double similarity;
 }
