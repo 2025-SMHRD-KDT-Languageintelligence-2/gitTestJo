@@ -57,4 +57,7 @@ public class FoodInfo {
 
     @Column(name = "F_IMG")
     private String img;
+
+    @Column(name = "F_TAGS")
+    private String tags;
 }

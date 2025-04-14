@@ -83,7 +83,7 @@ public class CalorieController {
             );
 
             // ✅ 세션 값도 갱신
-            loginUser.setRecomCal((int)Math.round(targetCalories));
+            loginUser.setRecomCal(Math.round(targetCalories * 10.0) / 10.0);
             loginUser.setMealCount(mealCount);
             loginUser.setMealTimes(String.join(",", mealTimes));
             session.setAttribute("loginUser", loginUser); // 세션에 반영

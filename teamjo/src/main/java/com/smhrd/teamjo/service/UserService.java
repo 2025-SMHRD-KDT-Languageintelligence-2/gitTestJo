@@ -71,14 +71,14 @@ public class UserService {
     @Transactional
     public void updateRecomCal(String uid, double targetCalories) {
         userRepository.findById(uid).ifPresent(user -> {
-            user.setRecomCal((int)Math.round(targetCalories));
+            user.setRecomCal(Math.round(targetCalories * 10.0) / 10.0);
             userRepository.save(user);
         });
     }
 
     // 🔄 식사 횟수와 시간대까지 함께 저장
     @Transactional
-    public void updateCalorieAndMealInfo(String uid, int recomCal, int mealCount, String mealTimes) {
+    public void updateCalorieAndMealInfo(String uid, double recomCal, int mealCount, String mealTimes) {
         userRepository.findById(uid).ifPresent(user -> {
             user.setRecomCal(recomCal);
             user.setMealCount(mealCount);     // 하루 식사 횟수

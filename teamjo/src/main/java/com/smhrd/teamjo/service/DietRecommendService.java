@@ -12,26 +12,26 @@ import java.util.stream.Collectors;
 public class DietRecommendService {
 
     private final List<String> allTags = Arrays.asList(
-        "고단백", "저칼로리", "중단백", "중간칼로리", "국물요리", "볶음요리", "조림요리",
-        "저당", "중간당", "매운맛", "발효국", "고지방",
-        "돼지고기", "닭고기", "두부", "계란", "버섯", "김치", "청국장", "구이", "곤약"
+        "가지", "감자", "고구마", "고단백", "고당", "고지방", "고칼로리", "곤약", "국물요리",
+        "굴", "김치", "낙지", "느타리", "닭", "닭고기", "당근", "돼지", "돼지고기",
+        "두부", "매운맛", "멸치", "무", "문어", "미역", "발효국", "버섯", "볶음요리",
+        "브로콜리", "새우", "소고기", "시금치", "애호박", "양배추", "양파", "연근", "오리고기",
+        "오이", "오징어", "우거지", "우엉", "저단백", "저당", "저지방", "저칼로리", "조림요리",
+        "중간당", "중간칼로리", "중단백", "중지방", "참치", "치즈", "콩", "콩나물", "파", "표고", "호박", "홍합"
     );
 
-    public List<String> extractUserTags(SurveyRequestDTO survey) {
-        List<String> tags = new ArrayList<>();
+    public static class Food {
+        public String name;
+        public String type;
+        public double cal;
+        public List<String> tags;
 
-        if (survey.getCookingStyles() != null)
-            tags.addAll(survey.getCookingStyles());
-
-        switch (survey.getSugarSensitivity()) {
-            case "고" -> tags.add("저당");
-            case "중간" -> tags.add("중간당");
+        public Food(String name, String type, double cal, List<String> tags) {
+            this.name = name;
+            this.type = type;
+            this.cal = cal;
+            this.tags = tags;
         }
-
-        if (survey.getPreferredIngredients() != null)
-            tags.addAll(survey.getPreferredIngredients());
-
-        return tags.stream().distinct().collect(Collectors.toList());
     }
 
     public int[] toVector(List<String> tags) {
@@ -52,50 +52,33 @@ public class DietRecommendService {
         return normA != 0 && normB != 0 ? dot / (Math.sqrt(normA) * Math.sqrt(normB)) : 0.0;
     }
 
-    public static class Food {
-        public String name;
-        public String type; // 밥류 / 국류 / 반찬
-        public double cal;
-        public List<String> tags;
-
-        public Food(String name, String type, double cal, List<String> tags) {
-            this.name = name;
-            this.type = type;
-            this.cal = cal;
-            this.tags = tags;
+    private boolean isAllowedFood(Food food, SurveyRequestDTO survey) {
+        if (survey.getDislikedTags() == null) return true;
+        for (String tag : survey.getDislikedTags()) {
+            if (food.tags.contains(tag)) return false;
         }
+        return true;
     }
 
     public List<Map<String, Object>> recommendWeeklyMeals(SurveyRequestDTO survey, List<Food> foodList, double dailyCal) {
         List<Map<String, Object>> result = new ArrayList<>();
 
-        // ✅ 기본값 처리
-        if (survey.getPreferredRiceTypes() == null || survey.getPreferredRiceTypes().isEmpty()) {
+        if (survey.getPreferredRiceTypes() == null || survey.getPreferredRiceTypes().isEmpty())
             survey.setPreferredRiceTypes(List.of("현미밥", "잡곡밥"));
-        }
-        if (survey.getDislikedFeatures() == null) {
-            survey.setDislikedFeatures(Collections.emptyList());
-        }
-        if (survey.getPreferredIngredients() == null) {
-            survey.setPreferredIngredients(Collections.emptyList());
-        }
-        if (survey.getSpicyPreference() == null) {
-            survey.setSpicyPreference("no");
-        }
-        if (survey.getSugarSensitivity() == null) {
-            survey.setSugarSensitivity("무관심");
-        }
-        if (survey.getCalRatioMorning() == null) survey.setCalRatioMorning(33);
-        if (survey.getCalRatioLunch() == null) survey.setCalRatioLunch(33);
-        if (survey.getCalRatioDinner() == null) survey.setCalRatioDinner(34);
+        if (survey.getUserTags() == null)
+            survey.setUserTags(new ArrayList<>());
+        if (survey.getDislikedTags() == null)
+            survey.setDislikedTags(new ArrayList<>());
+        if (survey.getCalRatioMorning() == null) survey.setCalRatioMorning(30);
+        if (survey.getCalRatioLunch() == null) survey.setCalRatioLunch(40);
+        if (survey.getCalRatioDinner() == null) survey.setCalRatioDinner(30);
 
         Map<String, Double> targetCals = new HashMap<>();
         targetCals.put("morning", dailyCal * survey.getCalRatioMorning() / 100.0);
         targetCals.put("lunch", dailyCal * survey.getCalRatioLunch() / 100.0);
         targetCals.put("dinner", dailyCal * survey.getCalRatioDinner() / 100.0);
 
-        List<String> userTags = extractUserTags(survey);
-        int[] userVector = toVector(userTags);
+        int[] userVector = toVector(survey.getUserTags());
 
         List<Food> riceList = foodList.stream()
             .filter(f -> f.type.equals("밥류"))
@@ -116,58 +99,55 @@ public class DietRecommendService {
         System.out.println("🍲 국 후보: " + soupList.size());
         System.out.println("🥗 반찬 후보: " + sideList.size());
 
-        if (riceList.isEmpty() || soupList.isEmpty() || sideList.isEmpty()) {
-            System.out.println("⚠️ 필터링 조건이 너무 엄격해서 식단 생성 불가");
-            return result;
-        }
+        if (riceList.isEmpty() || soupList.isEmpty() || sideList.isEmpty()) return result;
 
         Random rand = new Random();
         for (int day = 1; day <= 7; day++) {
             for (String time : targetCals.keySet()) {
-                for (int trial = 0; trial < 300; trial++) {
+                double target = targetCals.get(time);
+                double bestScore = -1;
+                Map<String, Object> bestMeal = null;
+
+                for (int i = 0; i < 300; i++) {
                     Food rice = riceList.get(rand.nextInt(riceList.size()));
                     Food soup = soupList.get(rand.nextInt(soupList.size()));
                     Food side = sideList.get(rand.nextInt(sideList.size()));
 
-                    double total = rice.cal + soup.cal + side.cal;
-                    double target = targetCals.get(time);
-                    if (Math.abs(total - target) <= 50) {
-                        Map<String, Object> meal = new HashMap<>();
-                        meal.put("day", day);
-                        meal.put("time", time);
-                        meal.put("rice", rice.name);
-                        meal.put("soup", soup.name);
-                        meal.put("side", side.name);
-                        meal.put("totalCal", total);
-                        result.add(meal);
-                        break;
+                    double totalCal = rice.cal + soup.cal + side.cal;
+                    if (Math.abs(totalCal - target) > 50) continue;
+
+                    List<String> combinedTags = new ArrayList<>();
+                    combinedTags.addAll(soup.tags);
+                    combinedTags.addAll(side.tags);
+
+                    int[] foodVector = toVector(combinedTags);
+                    double similarity = cosineSimilarity(userVector, foodVector);
+
+                    // ✅ 유사도 로그 출력
+                    System.out.println("추천 조합: " + rice.name + " + " + soup.name + " + " + side.name);
+                    System.out.println("   🔁 유사도: " + similarity);
+                    System.out.println("   🔎 총칼로리: " + totalCal + " / 목표: " + target);
+
+                    if (similarity > bestScore) {
+                        bestScore = similarity;
+                        bestMeal = Map.of(
+                            "day", day,
+                            "time", time,
+                            "rice", rice.name,
+                            "soup", soup.name,
+                            "side", side.name,
+                            "totalCal", totalCal,
+                            "similarity", similarity
+                        );
                     }
+                }
+
+                if (bestMeal != null) {
+                    result.add(bestMeal);
                 }
             }
         }
 
         return result;
-    }
-
-    private boolean isAllowedFood(Food food, SurveyRequestDTO survey) {
-        List<String> tags = food.tags;
-
-        if ("no".equals(survey.getSpicyPreference()) && tags.contains("매운맛")) return false;
-
-        if (survey.getDislikedFeatures() != null) {
-            for (String tag : survey.getDislikedFeatures()) {
-                if (tags.contains(tag)) return false;
-            }
-        }
-
-        if (survey.getDislikedIngredients() != null && !survey.getDislikedIngredients().isBlank()) {
-            List<String> ingrs = Arrays.stream(survey.getDislikedIngredients().split(","))
-                .map(String::trim).toList();
-            for (String ing : ingrs) {
-                if (tags.contains(ing)) return false;
-            }
-        }
-
-        return true;
     }
 }
