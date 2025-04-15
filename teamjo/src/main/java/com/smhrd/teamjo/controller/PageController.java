@@ -214,8 +214,10 @@ public class PageController {
                                 @RequestParam("weight") double weight,
                                 @RequestParam("age") int age,
                                 @RequestParam("sex") String sex,
+                                @RequestParam("address") String address, // ✅ 주소 받기
                                 @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
                                 HttpSession session) {
+
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
 
         if (loginUser != null) {
@@ -227,6 +229,7 @@ public class PageController {
                 user.setWeight(weight);
                 user.setAge(age);
                 user.setSex(sex);
+                user.setAddress(address); // ✅ 주소 저장
 
                 if (profileImage != null && !profileImage.isEmpty()) {
                     try {

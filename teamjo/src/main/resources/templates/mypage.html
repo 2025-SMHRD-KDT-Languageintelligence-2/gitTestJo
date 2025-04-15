@@ -12,11 +12,16 @@
     <div class="logo-search">
       <a href="/main">
         <img src="/image/logo.png" alt="로고" class="logo-img" />
+        <div class="logo-text">
+          <div class="logo-title">EAT AI</div>
+          <div class="logo-sub">DIET PLANNER WITH AI</div>
+        </div>
       </a>
-      <input type="text" placeholder="찾는 음식이 있으신가요?" class="search-input" />
     </div>
     <div class="header-buttons">
-      <button class="diet-generate-btn">식단 생성하기</button>
+      <form action="/logout" method="post">
+        <button type="submit" class="diet-generate-btn">로그아웃</button>
+      </form>
     </div>
   </header>
 
@@ -62,6 +67,7 @@
       <div class="meal-cards">
       <!-- 아침 -->
       <div class="meal-card">
+        <p>아침</p>
         <div class="meal-image-placeholder">
           <button class="slide-btn prev-btn">←</button>
           <img class="meal-img" />
@@ -71,6 +77,7 @@
       </div>
       <!-- 점심 -->
       <div class="meal-card">
+        <p>점심</p>
         <div class="meal-image-placeholder">
           <button class="slide-btn prev-btn">←</button>
           <img class="meal-img" />
@@ -80,6 +87,7 @@
       </div>
       <!-- 저녁 -->
       <div class="meal-card">
+        <p>저녁</p>
         <div class="meal-image-placeholder">
           <button class="slide-btn prev-btn">←</button>
           <img class="meal-img" />
@@ -242,6 +250,14 @@
         if (meals) {
           mealCards.forEach((card, i) => {
             const meal = meals[i];
+
+            if (meal.name == undefined) {
+              // 👉 식사가 없는 경우는 카드 숨김
+              card.style.display = "none";
+              return;
+            }
+
+            card.style.display = "block"; // 👉 있으면 보이게
             const img = card.querySelector(".meal-img");
             const text = card.querySelector(".meal-text");
 
@@ -249,18 +265,10 @@
             const soupImage = meal?.soupImage;
             const sideImage = meal?.sideImage;
 
-            // ✅ 디버깅 로그 출력
-            console.log(`📅 ${tab.dataset.day} - ${i}번째 식사`);
-            console.log("🥄 meal.name:", meal?.name);
-            console.log("🍚 riceImage:", riceImage);
-            console.log("🍲 soupImage:", soupImage);
-            console.log("🥗 sideImage:", sideImage);
-
             const images = [riceImage, soupImage, sideImage];
             const labels = ['🍚 밥', '🍲 국', '🥗 반찬'];
             let currentIndex = 0;
 
-            // 이미지 세팅
             img.src = images[currentIndex] || '/image/rice_image/default_rice.png';
             text.textContent = `${labels[currentIndex]}: ${meal?.name || ''}`;
 

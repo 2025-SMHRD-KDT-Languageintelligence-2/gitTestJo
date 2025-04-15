@@ -150,36 +150,36 @@
       <div class="form-group">
         <p>단백질</p>
         <div class="checkbox-grid">
-          <label><input type="checkbox" name="userTags" value="저단백"> 저단백</label>
-          <label><input type="checkbox" name="userTags" value="중단백"> 중단백</label>
-          <label><input type="checkbox" name="userTags" value="고단백"> 고단백</label>
+          <label><input type="radio" name="userTags_protein" value="저단백"> 저단백</label>
+          <label><input type="radio" name="userTags_protein" value="중단백"> 중단백</label>
+          <label><input type="radio" name="userTags_protein" value="고단백"> 고단백</label>
         </div>
       </div>
 
       <div class="form-group">
         <p>지방</p>
         <div class="checkbox-grid">
-          <label><input type="checkbox" name="userTags" value="저지방"> 저지방</label>
-          <label><input type="checkbox" name="userTags" value="중지방"> 중지방</label>
-          <label><input type="checkbox" name="userTags" value="고지방"> 고지방</label>
+          <label><input type="radio" name="userTags_fat" value="저지방"> 저지방</label>
+          <label><input type="radio" name="userTags_fat" value="중지방"> 중지방</label>
+          <label><input type="radio" name="userTags_fat" value="고지방"> 고지방</label>
         </div>
       </div>
 
       <div class="form-group">
         <p>당류</p>
         <div class="checkbox-grid">
-          <label><input type="checkbox" name="userTags" value="저당"> 저당</label>
-          <label><input type="checkbox" name="userTags" value="중간당"> 중간당</label>
-          <label><input type="checkbox" name="userTags" value="고당"> 고당</label>
+          <label><input type="radio" name="userTags_sugar" value="저당"> 저당</label>
+          <label><input type="radio" name="userTags_sugar" value="중간당"> 중간당</label>
+          <label><input type="radio" name="userTags_sugar" value="고당"> 고당</label>
         </div>
       </div>
 
       <div class="form-group">
         <p>칼로리</p>
         <div class="checkbox-grid">
-          <label><input type="checkbox" name="userTags" value="저칼로리"> 저칼로리</label>
-          <label><input type="checkbox" name="userTags" value="중간칼로리"> 중간칼로리</label>
-          <label><input type="checkbox" name="userTags" value="고칼로리"> 고칼로리</label>
+          <label><input type="radio" name="userTags_calorie" value="저칼로리"> 저칼로리</label>
+          <label><input type="radio" name="userTags_calorie" value="중간칼로리"> 중간칼로리</label>
+          <label><input type="radio" name="userTags_calorie" value="고칼로리"> 고칼로리</label>
         </div>
       </div>
 
@@ -209,7 +209,7 @@
       });
       document.getElementById(`step${stepNum}`).classList.add("active");
     }
-
+  
     document.getElementById("surveyForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
@@ -218,15 +218,36 @@
       };
 
       const formData = new FormData(this);
+
+      const getRatio = (name, defaultVal) => {
+        const val = formData.get(name);
+        return val === null || val === "" ? defaultVal : parseInt(val);
+      };
+
+      // ✅ 라디오 그룹에서 값 가져오기
+      const getRadioValue = (name) => {
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        return selected ? selected.value : null;
+      };
+
+      // ✅ userTags 조합 (체크박스 + 라디오값 포함)
+      const userTags = [
+        ...getCheckedValues("userTags"), // checkbox 방식 (요리방식, 재료 등)
+        getRadioValue("userTags_protein"),
+        getRadioValue("userTags_fat"),
+        getRadioValue("userTags_sugar"),
+        getRadioValue("userTags_calorie")
+      ].filter(Boolean); // null/undefined 제거
+
       const data = {
         userId: document.getElementById("userId").value,
         recomCal: parseFloat(document.getElementById("recomCal").value),
         preferredRiceTypes: getCheckedValues("preferredRiceTypes"),
-        userTags: getCheckedValues("userTags"),
+        userTags: userTags,
         dislikedTags: getCheckedValues("dislikedTags"),
-        calRatioMorning: parseInt(formData.get("calRatioMorning")) || 30,
-        calRatioLunch: parseInt(formData.get("calRatioLunch")) || 40,
-        calRatioEvening: parseInt(formData.get("calRatioEvening")) || 30
+        calRatioMorning: getRatio("calRatioMorning", 30),
+        calRatioLunch: getRatio("calRatioLunch", 40),
+        calRatioEvening: getRatio("calRatioEvening", 30)
       };
 
       console.log("📤 API로 보낼 데이터:", data);
@@ -250,10 +271,10 @@
         alert("추천 요청 중 오류가 발생했습니다.");
       }
     });
-
+  
     function renderResults(data) {
       const container = document.getElementById("resultArea");
-
+  
       let html = `
         <div class="recommend-wrapper">
           <h2 class="recommend-title">🍱 추천 식단 결과</h2>
@@ -268,10 +289,10 @@
             </thead>
             <tbody>
       `;
-
+  
       const days = Array.from(new Set(data.map(d => d.day))).sort((a, b) => a - b);
       const times = ["morning", "lunch", "dinner"];
-
+  
       for (let day of days) {
         html += `<tr><td>${day}일차</td>`;
         for (let time of times) {
@@ -292,30 +313,30 @@
         }
         html += `</tr>`;
       }
-
+  
       html += `
             </tbody>
           </table>
-
+  
           <div style="text-align: center; margin-top: 30px;">
             <button onclick="location.href='/preference-form'" style="padding: 10px 20px; margin-right: 15px; border: none; background: #ccc; border-radius: 6px; font-weight: bold; cursor: pointer;">🔁 다시하기</button>
             <button onclick="saveAndGoToMyPage()" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">📥 마이페이지로 이동</button>
           </div>
         </div>
       `;
-
+  
       container.innerHTML = html;
     }
-
+  
     async function saveAndGoToMyPage() {
       const userId = document.getElementById("userId").value;
       const meals = window.lastRecommendationResult;
-
+  
       if (!meals || meals.length === 0) {
         alert("저장할 식단이 없습니다. 먼저 추천을 받아주세요.");
         return;
       }
-
+  
       const payload = meals.map(m => ({
         userId: userId,
         time: m.time,
@@ -326,14 +347,14 @@
         day: m.day,
         similarity: m.similarity
       }));
-
+  
       try {
         const res = await fetch("http://localhost:8081/save-recommend", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
-
+  
         if (res.ok) {
           window.location.href = "/mypage";
         } else {

@@ -66,4 +66,8 @@ public class UserInfo {
 
     @Column(name = "U_MEAL_TIMES")
     private String mealTimes;   // 예: "아침,점심,저녁"
+
+    // 🏠 주소
+    @Column(name = "U_ADDRESS", length = 50)
+    private String address;
 }

@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>개인정보 수정</title>
   <link rel="stylesheet" href="/css/profile-edit.css" />
+
+  <!-- ✅ 카카오 주소 검색 API -->
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
   <!-- 상단 네비게이션 -->
@@ -86,6 +89,15 @@
         <input type="text" name="sex" class="input-text" th:value="${sex}">
       </div>
 
+      <!-- 주소 입력 -->
+      <div class="form-section">
+        <label class="form-label">주소</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="address" name="address" class="input-text" readonly />
+          <button type="button" onclick="execDaumPostcode()">주소 찾기</button>
+        </div>
+      </div>
+
       <!-- 버튼 -->
       <div class="button-area">
         <button type="submit" class="submit-btn">적용</button>
@@ -123,6 +135,15 @@
       card.classList.add('hidden');
     }
   });
+  
+  function execDaumPostcode() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        var fullAddr = data.roadAddress || data.jibunAddress;
+        document.getElementById('address').value = fullAddr;
+      }
+    }).open();
+  }
   </script>
 
 </body>

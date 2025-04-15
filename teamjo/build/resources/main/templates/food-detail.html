@@ -29,23 +29,70 @@
     <hr style="margin: 40px 0;" />
 
     <h3>📢 사용자 리뷰</h3>
-    <div th:if="${reviews != null and !reviews.isEmpty()}">
-      <ul>
-        <li th:each="review : ${reviews}" style="margin-bottom: 25px;">
-          ⭐ <span th:text="${review.fScore}">0</span>점
-          <p th:text="${review.fReview}">리뷰 내용</p>
-          <p style="font-size: 13px; color: #888;">
-            <span th:text="'작성자: ' + ${review.uid}"></span> · 
-            <span th:text="${#temporals.format(review.createdAt, 'yyyy.MM.dd')}"></span>
-          </p>
-        </li>
-      </ul>
-    </div>
+    <div id="reviewArea"></div>
+    <div id="pagination" style="text-align: center; margin-top: 20px;"></div>
+
     <div th:if="${reviews == null or reviews.isEmpty()}">
       <p>아직 작성된 리뷰가 없습니다.</p>
     </div>
 
     <a href="/mypage">← 마이페이지로 돌아가기</a>
   </div>
+
+  <!-- ✅ JS용 리뷰 데이터 바인딩 -->
+  <script th:inline="javascript">
+    const allReviews = [[${reviews}]];
+  </script>
+
+  <script>
+    const reviewArea = document.getElementById("reviewArea");
+    const pagination = document.getElementById("pagination");
+    const perPage = 5;
+    let currentPage = 1;
+
+    function renderReviews(page) {
+      reviewArea.innerHTML = "";
+      const start = (page - 1) * perPage;
+      const selected = allReviews.slice(start, start + perPage);
+
+      selected.forEach(review => {
+        const html = `
+          <div style="margin-bottom: 25px;">
+            ⭐ <strong>${review.fscore}</strong>점
+            <p>${review.freview}</p>
+            <p style="font-size: 13px; color: #888;">
+              작성자: ${review.uid} · ${new Date(review.createdAt).toLocaleDateString()}
+            </p>
+          </div>
+        `;
+        reviewArea.insertAdjacentHTML("beforeend", html);
+      });
+
+      renderPagination();
+    }
+
+    function renderPagination() {
+      pagination.innerHTML = "";
+      const totalPages = Math.ceil(allReviews.length / perPage);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.innerText = i;
+        pageBtn.style.margin = "0 5px";
+        pageBtn.style.fontWeight = i === currentPage ? "bold" : "normal";
+        pageBtn.onclick = () => {
+          currentPage = i;
+          renderReviews(i);
+        };
+        pagination.appendChild(pageBtn);
+      }
+    }
+
+    console.log(allReviews[0]);
+
+    if (allReviews.length > 0) {
+      renderReviews(currentPage);
+    }
+  </script>
 </body>
 </html>
