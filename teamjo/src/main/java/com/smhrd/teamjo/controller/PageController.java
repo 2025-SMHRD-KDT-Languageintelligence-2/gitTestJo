@@ -111,7 +111,7 @@ public class PageController {
                     .findByUserIdAndRecordedAtAfterOrderByRecordedAtAsc(user.getUid(), oneMonthAgo);
             model.addAttribute("weightRecords", records);
 
-            // 식단 기록 (밥 이미지만 포함)
+            // 식단 기록 (밥 + 국 + 반찬 이름 및 이미지 + 각 식품 ID 포함)
             List<RecommendedMeal> meals = recommendedMealRepository.findByUserId(user.getUid());
             Map<String, List<Map<String, Object>>> mealsByDay = new HashMap<>();
 
@@ -127,38 +127,45 @@ public class PageController {
                     case "dinner" -> 2;
                     default -> -1;
                 };
-            
+
                 if (idx != -1) {
                     String name = meal.getRice() + " + " + meal.getSoup() + " + " + meal.getSide();
-            
+
                     // 🍚 밥
                     String riceName = meal.getRice();
                     FoodInfo rice = foodRepository.findByName(riceName).orElse(null);
                     String riceImage = (rice != null && rice.getImg() != null)
                             ? rice.getImg()
                             : "/image/rice_image/default_rice.png";
-            
+
                     // 🍲 국
                     String soupName = meal.getSoup();
                     FoodInfo soup = foodRepository.findByName(soupName).orElse(null);
                     String soupImage = (soup != null && soup.getImg() != null)
                             ? soup.getImg()
                             : "/image/soup_image/default_soup.png";
-            
+
                     // 🥗 반찬
                     String sideName = meal.getSide();
                     FoodInfo side = foodRepository.findByName(sideName).orElse(null);
                     String sideImage = (side != null && side.getImg() != null)
                             ? side.getImg()
                             : "/image/side_image/default_side.png";
-            
+
                     // 👉 JSON에 넣기
                     Map<String, Object> mealInfo = new HashMap<>();
                     mealInfo.put("name", name);
-                    mealInfo.put("riceImage", riceImage);   // 기본값으로 사용할 밥 이미지
-                    mealInfo.put("soupImage", soupImage);   // 국 이미지 (화면엔 처음에 안 보임)
-                    mealInfo.put("sideImage", sideImage);   // 반찬 이미지 (화면엔 처음에 안 보임)
-            
+                    mealInfo.put("riceImage", riceImage);
+                    mealInfo.put("soupImage", soupImage);
+                    mealInfo.put("sideImage", sideImage);
+
+                    // ✅ 식품 ID 추가
+                    mealInfo.put("riceId", rice != null ? rice.getFoodId() : null);
+                    mealInfo.put("soupId", soup != null ? soup.getFoodId() : null);
+                    mealInfo.put("sideId", side != null ? side.getFoodId() : null);
+
+                    mealInfo.put("mealId", meal.getId());
+
                     mealsByDay.get(day).set(idx, mealInfo);
                 }
             }
@@ -182,11 +189,6 @@ public class PageController {
 
         return "mypage";
     }
-
-
-
-
-
 
     @GetMapping("/profile-edit")
     public String profileEditPage(HttpSession session, Model model) {

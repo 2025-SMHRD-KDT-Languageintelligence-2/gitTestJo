@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>장바구니</title>
+  <link rel="stylesheet" href="/css/cart.css" />
+</head>
+<body>
+  <h2>🛒 장바구니</h2>
+
+  <!-- ✅ 장바구니 비었을 때 -->
+  <div th:if="${#lists.isEmpty(cartItems)}" class="empty">장바구니가 비어 있어요.</div>
+
+  <!-- 🍚 밥류 -->
+  <div class="cart-section" th:if="${not #lists.isEmpty(cartItems)}">
+    <h3>🍚 밥류</h3>
+    <div th:each="item : ${cartItems}" th:if="${item.type == '밥류'}" class="cart-food-box">
+      <strong th:text="${item.name}">밥 이름</strong>
+      <p><span th:text="'가격: ' + ${item.price} + '원'"></span>, 
+         <span th:text="'칼로리: ' + ${item.calorie} + 'kcal'"></span></p>
+      <form th:action="@{/cart/delete}" method="post" style="margin-top:8px;">
+        <input type="hidden" name="cartId" th:value="${item.cartId}" />
+        <button type="submit" class="delete-btn">삭제</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 🍲 국류 -->
+  <div class="cart-section" th:if="${not #lists.isEmpty(cartItems)}">
+    <h3>🍲 국류</h3>
+    <div th:each="item : ${cartItems}" th:if="${item.type == '국류'}" class="cart-food-box">
+      <strong th:text="${item.name}">국 이름</strong>
+      <p><span th:text="'가격: ' + ${item.price} + '원'"></span>, 
+         <span th:text="'칼로리: ' + ${item.calorie} + 'kcal'"></span></p>
+      <form th:action="@{/cart/delete}" method="post" style="margin-top:8px;">
+        <input type="hidden" name="cartId" th:value="${item.cartId}" />
+        <button type="submit" class="delete-btn">삭제</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 🥗 반찬류 -->
+  <div class="cart-section" th:if="${not #lists.isEmpty(cartItems)}">
+    <h3>🥗 반찬류</h3>
+    <div th:each="item : ${cartItems}" th:if="${item.type == '반찬'}" class="cart-food-box">
+      <strong th:text="${item.name}">반찬 이름</strong>
+      <p><span th:text="'가격: ' + ${item.price} + '원'"></span>, 
+         <span th:text="'칼로리: ' + ${item.calorie} + 'kcal'"></span></p>
+      <form th:action="@{/cart/delete}" method="post" style="margin-top:8px;">
+        <input type="hidden" name="cartId" th:value="${item.cartId}" />
+        <button type="submit" class="delete-btn">삭제</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ 총합 -->
+  <div class="cart-summary" th:if="${not #lists.isEmpty(cartItems)}">
+    <h4>총합</h4>
+    <p><strong>총 가격:</strong> <span th:text="${totalPrice}">0</span> 원</p>
+    <p><strong>총 칼로리:</strong> <span th:text="${totalCalories}">0</span> kcal</p>
+  </div>
+
+  <!-- ✅ 버튼 영역 -->
+  <div class="cart-fixed-buttons">
+    <button onclick="history.back()" class="back-link">← 돌아가기</button>
+    <form th:action="@{/cart/clear}" method="post" style="display:inline;">
+      <button type="submit" class="delete-btn">🗑 장바구니 비우기</button>
+    </form>
+    <button class="checkout-btn">💳 결제하기</button>
+  </div>
+</body>
+</html>

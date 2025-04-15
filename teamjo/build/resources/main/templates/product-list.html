@@ -27,29 +27,36 @@
       <div 
         th:each="food : ${foodList}" 
         class="product-card" 
-        th:data-type="${food.type == '밥류' ? 'rice' : (food.type == '국류' ? 'soup' : 'side')}">
+        th:data-type="${food.type == '밥류' ? 'rice' : (food.type == '국류' ? 'soup' : 'side')}"
+        th:data-id="${food.foodId}">
 
         <img th:src="@{${food.img}}" th:alt="${food.name}" />
+        
         <div class="product-info">
-          <strong th:text="${food.name}"></strong>
-          <p th:text="'탄수화물: ' + ${food.carbo} + 'g'"></p>
-          <p th:text="'단백질: ' + ${food.protein} + 'g'"></p>
-          <p th:text="'지방: ' + ${food.province} + 'g'"></p>
+          <strong th:text="${food.name}">이름</strong>
+          <p th:text="'탄수화물: ' + ${food.carbo} + 'g'">탄수화물</p>
+          <p th:text="'단백질: ' + ${food.protein} + 'g'">단백질</p>
+          <p th:text="'지방: ' + ${food.province} + 'g'">지방</p>
           <a th:href="@{/detail/{id}(id=${food.foodId})}" class="detail-link">상세메뉴 보기 &gt;</a>
         </div>
+
+        <!-- ✅ 반드시 카드 내부에 위치 -->
+        <button class="add-to-cart-btn">🛒 장바구니 추가</button>
+
       </div>
     </div>
+
   </div>
 
   <script>
     const categoryButtons = document.querySelectorAll(".tab-btn");
     const searchInput = document.getElementById("searchInput");
     let currentCategory = "rice";
-
+  
     function filterProducts() {
       const keyword = searchInput.value.toLowerCase();
       const cards = document.querySelectorAll(".product-card");
-
+  
       cards.forEach(card => {
         const type = card.dataset.type;
         const name = card.querySelector("strong").textContent.toLowerCase();
@@ -58,7 +65,7 @@
         card.style.display = (matchType && matchKeyword) ? "block" : "none";
       });
     }
-
+  
     categoryButtons.forEach(btn => {
       btn.addEventListener("click", () => {
         categoryButtons.forEach(b => b.classList.remove("active"));
@@ -67,9 +74,39 @@
         filterProducts();
       });
     });
-
+  
     searchInput.addEventListener("input", filterProducts);
     window.addEventListener("DOMContentLoaded", filterProducts);
+  
+    // ✅ 장바구니 버튼 클릭 이벤트
+    document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const productCard = e.target.closest(".product-card");
+        const foodId = productCard.dataset.id;
+  
+        if (!foodId) return alert("상품 ID를 찾을 수 없습니다.");
+  
+        const confirmed = confirm("이 상품을 장바구니에 담을까요?");
+        if (!confirmed) return;
+  
+        fetch("/cart/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ foodId: foodId })
+        })
+        .then(res => res.text())
+        .then(msg => {
+          alert(msg);
+          window.location.href = "/cart";
+        })
+        .catch(err => {
+          alert("장바구니 추가 중 오류 발생");
+          console.error(err);
+        });
+      });
+    });
   </script>
+  
 </body>
 </html>

@@ -1,0 +1,208 @@
+/* 기본 레이아웃 */
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #f8f9fa;
+  padding: 30px;
+  margin-bottom: 100px; /* 하단 고정 버튼 가려지지 않도록 여백 추가 */
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+/* 🧾 장바구니 섹션 */
+.cart-section {
+  background: white;
+  padding: 20px 30px;
+  border-left: 6px solid #0077cc;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.cart-section:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.cart-section h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #0077cc;
+}
+
+.cart-section ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.cart-section li {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* 🧾 장바구니 아이템 카드 */
+.cart-item {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-item:hover {
+  transform: translateY(-2px);
+}
+
+.cart-item strong {
+  font-size: 20px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cart-item p {
+  font-size: 16px;
+  margin: 4px 0;
+}
+
+/* 삭제 버튼 */
+.cart-item button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cart-item button:hover {
+  background-color: #d9363e;
+}
+
+/* 🚫 장바구니 비었을 때 */
+.empty {
+  font-style: italic;
+  color: gray;
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* 📦 총합 영역 */
+.cart-summary-card {
+  background: #e6f2ff;
+  border-left: 6px solid #3399ff;
+  border-radius: 10px;
+  padding: 20px 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 30px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 🔽 하단 버튼 */
+.cart-fixed-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 12px 20px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart-fixed-buttons .back-link,
+.cart-fixed-buttons .delete-btn,
+.cart-fixed-buttons .checkout-btn {
+  font-size: 14px;
+  padding: 10px 16px;
+  margin: 0 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.cart-fixed-buttons .checkout-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.cart-fixed-buttons .delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cart-fixed-buttons .back-link {
+  background: none;
+  color: #3366cc;
+  text-decoration: none;
+}
+
+.cart-fixed-buttons .back-link:hover {
+  text-decoration: underline;
+}
+
+.cart-food-box {
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.cart-food-box:hover {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* 식품 이름 강조 */
+.cart-food-box strong {
+  display: block;
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+/* 가격 및 칼로리 */
+.cart-food-box p {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* 개별 삭제 버튼 */
+.cart-food-box .delete-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #ff5b5b;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cart-food-box .delete-btn:hover {
+  background-color: #cc3d3d;
+}

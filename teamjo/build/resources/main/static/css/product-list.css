@@ -72,6 +72,7 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   width: 350px;
   transition: transform 0.2s;
+  position: relative; /* 버튼 위치 기준 */
 }
 
 .product-card:hover {
@@ -101,4 +102,26 @@
 
 .product-info p {
   margin: 4px 0;
+}
+
+/* ✅ 장바구니 버튼 스타일 */
+.add-to-cart-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  z-index: 2;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
 }
