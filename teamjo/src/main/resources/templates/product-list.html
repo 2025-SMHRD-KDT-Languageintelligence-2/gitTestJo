@@ -37,7 +37,8 @@
           <p th:text="'탄수화물: ' + ${food.carbo} + 'g'">탄수화물</p>
           <p th:text="'단백질: ' + ${food.protein} + 'g'">단백질</p>
           <p th:text="'지방: ' + ${food.province} + 'g'">지방</p>
-          <a th:href="@{/detail/{id}(id=${food.foodId})}" class="detail-link">상세메뉴 보기 &gt;</a>
+          <a th:href="@{'/food-detail/' + ${food.foodId}}" class="detail-link">상세메뉴 보기 ></a>
+          
         </div>
 
         <!-- ✅ 반드시 카드 내부에 위치 -->

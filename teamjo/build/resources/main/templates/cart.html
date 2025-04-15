@@ -16,12 +16,23 @@
     <h3>🍚 밥류</h3>
     <div th:each="item : ${cartItems}" th:if="${item.type == '밥류'}" class="cart-food-box">
       <strong th:text="${item.name}">밥 이름</strong>
-      <p><span th:text="'가격: ' + ${item.price} + '원'"></span>, 
-         <span th:text="'칼로리: ' + ${item.calorie} + 'kcal'"></span></p>
+      <p>
+        <span th:text="'가격: ' + ${item.price} + '원'"></span>, 
+        <span th:text="'칼로리: ' + ${item.calorie} + 'kcal'"></span>
+      </p>
       <form th:action="@{/cart/delete}" method="post" style="margin-top:8px;">
         <input type="hidden" name="cartId" th:value="${item.cartId}" />
         <button type="submit" class="delete-btn">삭제</button>
       </form>
+      <div class="checkout-check">
+        <label>
+          <input type="checkbox" name="selectedCartIds"
+                 class="food-check"
+                 th:data-price="${item.price}" th:data-cal="${item.calorie}"
+                 th:value="${item.cartId}" form="checkoutForm" />
+          결제 선택
+        </label>
+      </div>
     </div>
   </div>
 
@@ -36,6 +47,15 @@
         <input type="hidden" name="cartId" th:value="${item.cartId}" />
         <button type="submit" class="delete-btn">삭제</button>
       </form>
+      <div class="checkout-check">
+        <label>
+          <input type="checkbox" name="selectedCartIds"
+                 class="food-check"
+                 th:data-price="${item.price}" th:data-cal="${item.calorie}"
+                 th:value="${item.cartId}" form="checkoutForm" />
+          결제 선택
+        </label>
+      </div>
     </div>
   </div>
 
@@ -50,14 +70,23 @@
         <input type="hidden" name="cartId" th:value="${item.cartId}" />
         <button type="submit" class="delete-btn">삭제</button>
       </form>
+      <div class="checkout-check">
+        <label>
+          <input type="checkbox" name="selectedCartIds"
+                 class="food-check"
+                 th:data-price="${item.price}" th:data-cal="${item.calorie}"
+                 th:value="${item.cartId}" form="checkoutForm" />
+          결제 선택
+        </label>
+      </div>
     </div>
   </div>
 
-  <!-- ✅ 총합 -->
+  <!-- ✅ 총합 (체크된 항목 기준) -->
   <div class="cart-summary" th:if="${not #lists.isEmpty(cartItems)}">
-    <h4>총합</h4>
-    <p><strong>총 가격:</strong> <span th:text="${totalPrice}">0</span> 원</p>
-    <p><strong>총 칼로리:</strong> <span th:text="${totalCalories}">0</span> kcal</p>
+    <h4>총합 (선택 항목 기준)</h4>
+    <p><strong>총 가격:</strong> <span id="selectedPrice">0</span> 원</p>
+    <p><strong>총 칼로리:</strong> <span id="selectedCal">0</span> kcal</p>
   </div>
 
   <!-- ✅ 버튼 영역 -->
@@ -66,7 +95,34 @@
     <form th:action="@{/cart/clear}" method="post" style="display:inline;">
       <button type="submit" class="delete-btn">🗑 장바구니 비우기</button>
     </form>
-    <button class="checkout-btn">💳 결제하기</button>
+    <!-- ✅ 선택 상품만 결제하는 폼 -->
+    <form id="checkoutForm" th:action="@{/checkout}" method="post" style="display:inline;">
+      <button type="submit" class="checkout-btn">💳 결제하기</button>
+    </form>
   </div>
+
+  <!-- ✅ JS: 체크된 항목 기준 총합 계산 -->
+  <script>
+    function updateSelectedSummary() {
+      let totalPrice = 0;
+      let totalCal = 0;
+
+      document.querySelectorAll('.food-check:checked').forEach(chk => {
+        totalPrice += parseInt(chk.dataset.price || 0);
+        totalCal += parseFloat(chk.dataset.cal || 0);
+      });
+
+      document.getElementById("selectedPrice").textContent = totalPrice.toLocaleString();
+      document.getElementById("selectedCal").textContent = totalCal.toFixed(1);
+    }
+
+    // 체크 이벤트 연결
+    document.querySelectorAll(".food-check").forEach(chk => {
+      chk.addEventListener("change", updateSelectedSummary);
+    });
+
+    // 최초 1회 실행
+    window.addEventListener("DOMContentLoaded", updateSelectedSummary);
+  </script>
 </body>
 </html>

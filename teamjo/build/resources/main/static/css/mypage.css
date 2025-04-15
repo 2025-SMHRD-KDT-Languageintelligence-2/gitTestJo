@@ -452,3 +452,12 @@ a {
   background-color: #27ae60;
 }
 
+#btn-arr {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  text-align: center;
+}
+

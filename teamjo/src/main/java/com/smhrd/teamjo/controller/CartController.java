@@ -52,7 +52,7 @@ public class CartController {
         UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
 
         if (loginUser == null) {
-            return "redirect:/login";
+            return "redirect:/main";
         }
 
         String userId = loginUser.getUid();

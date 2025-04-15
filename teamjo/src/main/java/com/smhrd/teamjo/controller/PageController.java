@@ -329,5 +329,21 @@ public class PageController {
         return "food-detail";
     }
 
+    @GetMapping("/checkout")
+    public String showCheckoutPage(HttpSession session, Model model) {
+        UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            return "redirect:/login";
+        }
+
+        // 이름, 전화번호, 주소가 있다고 가정
+        model.addAttribute("userName", loginUser.getName());
+        model.addAttribute("userPhone", loginUser.getPhone());
+        model.addAttribute("userAddress", loginUser.getAddress()); // 주소 컬럼이 있는 경우
+
+        // cartItems, totalPrice 등도 함께 전달
+        return "checkout";
+    }
     
 }
