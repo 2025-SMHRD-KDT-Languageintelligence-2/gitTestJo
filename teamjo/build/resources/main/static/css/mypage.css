@@ -316,7 +316,7 @@ body {
 /* 오른쪽 고정 버튼 */
 .fixed-button-area {
   position: fixed;
-  top: 150px;
+  top: 100px;
   right: 30px;
   display: flex;
   flex-direction: column;
