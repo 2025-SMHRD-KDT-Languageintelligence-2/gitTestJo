@@ -1,0 +1,147 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+  }
+  
+  h2 {
+    margin-top: 0;
+    color: #34495e;
+  }
+  
+  form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-step {
+    display: none;
+  }
+  
+  .form-step.active {
+    display: block;
+  }
+  
+  .form-group {
+    margin-bottom: 30px;
+  }
+  
+  .form-group p {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px 20px;
+  }
+  
+  .checkbox-grid label {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 6px;
+  }
+  
+  input[type="number"] {
+    width: 60px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .navigation {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .navigation button {
+    padding: 10px 25px;
+    margin: 0 8px;
+    background-color: #3498db;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navigation button:hover {
+    background-color: #2980b9;
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 25px 0;
+  }
+  
+  table.recommend-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 30px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  table.recommend-table th {
+    background-color: #3C8DBC;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+  }
+
+  table.recommend-table td {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 14px;
+    vertical-align: top;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  table.recommend-table tr td:first-child {
+    background-color: #f4f6f9;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  table.recommend-table td div {
+    margin-bottom: 4px;
+  }
+
+  .recommend-wrapper {
+    max-width: 1000px;
+    margin: 50px auto;
+    background: #fefefe;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  }
+
+  h2.recommend-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #3C8DBC;
+  }
