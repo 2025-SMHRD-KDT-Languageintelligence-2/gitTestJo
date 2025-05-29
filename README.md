@@ -24,12 +24,12 @@
 
 ## 🗂 디렉토리 구조
 
-gitTestJo/
-├── .vscode/ # VSCode 설정 파일
-├── python-diet-api/ # 파이썬 기반 다이어트 API 관련 코드
-├── teamjo/ # 조별 협업 코드 및 자료
-├── upload/ # 업로드된 파일 저장 디렉토리
-└── README.md # 프로젝트 설명서
+gitTestJo/<br/>
+├── .vscode/ # VSCode 설정 파일<br/>
+├── python-diet-api/ # 파이썬 기반 다이어트 API 관련 코드<br/>
+├── teamjo/ # 조별 협업 코드 및 자료<br/>
+├── upload/ # 업로드된 파일 저장 디렉토리<br/>
+└── README.md # 프로젝트 설명서<br/>
 
 ---
 
