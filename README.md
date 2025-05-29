@@ -1,19 +1,24 @@
-# 🧪 Git Test - 조별 협업 실습
+# 🥗 식단 자동 생성기 (Git 협업 실습 프로젝트)
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/2025-SMHRD-KDT-Languageintelligence-2/gitTestJo?color=blue)
 ![Last Commit](https://img.shields.io/github/last-commit/2025-SMHRD-KDT-Languageintelligence-2/gitTestJo?color=green)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)
 
-> 💡 SMHRD KDT 언어지능 2기 조별 협업 실습 프로젝트입니다.  
-> Git과 GitHub를 활용하여 팀원들과의 협업을 연습하는 것을 목표로 합니다.
+> 💡 SMHRD KDT 언어지능 2기 조별 프로젝트  
+> 본 프로젝트는 사용자 맞춤형 식단을 자동으로 생성하는 알고리즘을 구현하고, GitHub를 활용한 협업 실습을 병행합니다.
 
 ---
 
 ## 📌 프로젝트 소개
 
-- GitHub의 핵심 기능을 익히기 위한 실습 프로젝트입니다.
-- `clone`, `branch`, `commit`, `merge`, `pull request` 등의 버전 관리 흐름을 직접 체험합니다.
-- 조별 협업을 통해 실제 프로젝트에서의 팀 개발을 간접적으로 경험합니다.
+본 프로젝트는 다음과 같은 목적을 가지고 진행되었습니다:
+
+- **사용자 맞춤 식단 자동 생성**: 사용자의 선호도 및 조건(알레르기, 식단 목적 등)을 반영한 식단 추천 기능 구현
+- **협업 실습**: 조별로 GitHub를 통해 실시간 협업 및 버전 관리를 연습
+- **Python 기반 백엔드 구조**: FastAPI를 기반으로 한 경량화된 API 서버 설계
+- **데이터 처리 및 추천 로직 적용**: TF-IDF 및 Word2Vec 기반 유사도 분석을 통한 식단 추천 알고리즘 탑재
+
+해당 프로젝트는 실제 웹 애플리케이션 또는 앱 서비스로 확장 가능성을 염두에 두고 개발되었습니다.
 
 ---
 
