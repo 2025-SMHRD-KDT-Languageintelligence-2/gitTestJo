@@ -1,35 +1,38 @@
-# 🥗 식단 자동 생성기 (Git 협업 실습 프로젝트)
+# 🥗 식단 자동 생성 & 추천 시스템
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/2025-SMHRD-KDT-Languageintelligence-2/gitTestJo?color=blue)
 ![Last Commit](https://img.shields.io/github/last-commit/2025-SMHRD-KDT-Languageintelligence-2/gitTestJo?color=green)
-![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
 
-> 💡 SMHRD KDT 언어지능 2기 조별 프로젝트  
-> 본 프로젝트는 사용자 맞춤형 식단을 자동으로 생성하는 알고리즘을 구현하고, GitHub를 활용한 협업 실습을 병행합니다.
-
----
-
-## 📌 프로젝트 소개
-
-본 프로젝트는 다음과 같은 목적을 가지고 진행되었습니다:
-
-- **사용자 맞춤 식단 자동 생성**: 사용자의 선호도 및 조건(알레르기, 식단 목적 등)을 반영한 식단 추천 기능 구현
-- **협업 실습**: 조별로 GitHub를 통해 실시간 협업 및 버전 관리를 연습
-- **Python 기반 백엔드 구조**: FastAPI를 기반으로 한 경량화된 API 서버 설계
-- **데이터 처리 및 추천 로직 적용**: TF-IDF 및 Word2Vec 기반 유사도 분석을 통한 식단 추천 알고리즘 탑재
-
-해당 프로젝트는 실제 웹 애플리케이션 또는 앱 서비스로 확장 가능성을 염두에 두고 개발되었습니다.
+> **FastAPI + Spring Boot 기반 식단 자동 추천 시스템**  
+> 사용자 선호 기반으로 식단을 자동 생성 및 추천해주는 AI 기반 프로젝트입니다.  
+> 프론트와 백엔드를 분리하여 Python과 Java(Spring Boot)를 병행 개발하였습니다.
 
 ---
 
-## 🗂 디렉토리 구조
+## 📌 프로젝트 개요
 
-gitTestJo/<br/>
-├── .vscode/ # VSCode 설정 파일<br/>
-├── python-diet-api/ # 파이썬 기반 다이어트 API 관련 코드<br/>
-├── teamjo/ # 조별 협업 코드 및 자료<br/>
-├── upload/ # 업로드된 파일 저장 디렉토리<br/>
-└── README.md # 프로젝트 설명서<br/>
+- **프로젝트명**: 식단 자동 추천 시스템
+- **목표**: 사용자 입력 선호도 및 알레르기, 목표 등 건강 정보를 기반으로 식단을 자동 생성 및 추천
+- **주요 기능**
+  - 사용자 입력 UI (Spring + Thymeleaf)
+  - FastAPI 기반 추천 API 서버
+  - TF-IDF 기반 유사도 모델
+  - MySQL 연동을 통한 데이터 저장 및 관리
+  - CSS 적용된 웹 인터페이스
+
+---
+
+## ⚙️ 사용 기술 스택
+
+| 분야 | 기술 |
+|------|------|
+| 🧠 **AI 모델** | TF-IDF 기반 유사도 분석 |
+| 🐍 **추천 서버** | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white) |
+| ☕ **웹 서버** | ![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=java&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=spring-boot&logoColor=white) |
+| 💽 **데이터베이스** | ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white) |
+| 🎨 **프론트엔드** | Thymeleaf, HTML, CSS |
+| 🛠 **개발 도구** | VSCode, IntelliJ, GitHub |
 
 ---
 
@@ -41,5 +44,53 @@ gitTestJo/<br/>
 | 최재웅   | 백엔드 설계 코드 작성 |
 | 주재건   | 프론트엔드 설계 및 코드 작성 |
 | 김건도   | DB 설계, 산출문서 관리 |
+
+---
+
+## 🗂 디렉토리 구조
+
+gitTestJo/<br/>
+├── python-diet-api/ # FastAPI 기반 추천 API<br/>
+│ ├── app/<br/>
+│ │ ├── database.py<br/>
+│ │ ├── fooddb.csv<br/>
+│ │ ├── main.py<br/>
+│ │ ├── recommender.py<br/>
+│ │ └── model.py<br/>
+│ ├── static/css/<br/>
+│ │ └── preference-form.css<br/>
+│ └── requirements.txt<br/>
+│<br/>
+├── teamjo/ # Spring Boot 기반 프론트엔드 서버<br/>
+│ └── src/<br/>
+│ └── main/<br/>
+│ ├── java/com/smhrd/teamjo/<br/>
+│ │ ├── config, controller, service, etc<br/>
+│ └── resources/<br/>
+│ ├── static/<br/>
+│ ├── templates/<br/>
+│ └── application.properties<br/>
+│<br/>
+├── upload/ # 파일 업로드 디렉토리<br/>
+└── README.md<br/>
+
+---
+
+## 🚀 실행 방법
+
+### 1. FastAPI 백엔드 실행
+
+```bash
+cd python-diet-api
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+### 2. Spring 백엔드 실행
+
+```
+cd teamjo
+./gradlew bootRun
+```
 
 ---
