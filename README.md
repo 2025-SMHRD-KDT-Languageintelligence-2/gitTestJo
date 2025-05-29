@@ -88,7 +88,7 @@ uvicorn app.main:app --reload
 
 ### 2. Spring 백엔드 실행
 
-```
+```bash
 cd teamjo
 ./gradlew bootRun
 ```
